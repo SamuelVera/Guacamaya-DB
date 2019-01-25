@@ -1,5 +1,16 @@
 extends layout
-
+		
 block content
-  //- h1= title
-  //- p Welcome to #{title}
+	link(rel='stylesheet', href='/stylesheets/index.css')
+	.container
+		#main-card.col.l9.m12
+			.card
+				.card-content
+					span.card-title.center-align ¡Bienvenido a Guacamaya Airlines!
+					p(style="text-align:center; margin-top:20px;")
+						| El sitio actualmente
+						| se encuentra en construcción, por ahora solo puede agregar,
+						| editar y eliminar vuelos en la siguiente tabla
+				.card-action.center-align
+					a(href='#' style="color:#ff7043") Administrar vuelos
+		

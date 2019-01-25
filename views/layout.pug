@@ -1,34 +1,155 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
-    link(type='text/css', rel='stylesheet', href='/stylesheets/css/materialize.min.css', media='screen,projection')
-    script(type='text/javascript', src='/js/materialize.min.js')
-    // Let browser know website is optimized for mobile
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-  body
-      header
-        nav
-          nav.navbar.white
-            .nav-wrapper
-              a.brand-logo(href='#!',  style="color: black")
-                i
-                  img(src='/pictures/MiniLogo.png', style="height: 100%; width: auto ")
-                | Logo
-              ul.right.hide-on-med-and-down(style="color: black")
-                li(style="color: black")
-                  a(href='sass.html', style="color: black")
-                    i.material-icons search
-                li(style="color: black")
-                  a(href='badges.html', style="color: black")
-                    i.material-icons view_module
-                li(style="color: black")
-                  a(href='collapsible.html', style="color: black")
-                    i.material-icons refresh
-                li(style="color: black")
-                  a(href='mobile.html', style="color: black")
-                    i.material-icons more_vert
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+		link(type='text/css', rel='stylesheet', href='/stylesheets/css/materialize.min.css', media='screen,projection')
+		script(type='text/javascript', src='/js/materialize.min.js')
+		script(type='text/javascript', src='/js/test.js')
+		// Let browser know website is optimized for mobile
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		header
+			.navbar-fixed
+				nav.navbar.white
+					.nav-wrapper
+						a.brand-logo.center(href='#!',  style="color: black")
+							i
+								img(src='/pictures/MiniLogo.png', style="height: 115%; width: auto ")
+						ul.right.hide-on-med-and-down
+							li
+								a(href='sass.html', style="color: #ff2e2e")
+									i.material-icons search
+							li
+								a(href='badges.html', style="color: #ff2e2e")
+									i.material-icons view_module
+							li
+								a(href='collapsible.html', style="color: #ff2e2e")
+									i.material-icons refresh
+							li
+								a(href='mobile.html', style="color: #ff2e2e")
+									i.material-icons more_vert
+						a#menu-button.left(href='#!', data-target='sidenav-left', onclick="toggleSidebar()")
+							i.material-icons menu
+						script
+							include ../public/js/test.js
 
-        block content
+
+
+			//- ul#sidenav-left.sidenav
+			//- 	li
+			//- 		a.logo-container(href='https://themes.materializecss.com/pages/admin-dashboard')
+			//- 			| Admin
+			//- 			i.material-icons.left spa
+			//- 	li.no-padding
+			//- 		ul.collapsible.collapsible-accordion
+			//- 			li.bold.waves-effect.active
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Pages
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body(style='display: block;')
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-dashboard')
+			//- 								| Dashboard
+			//- 								i.material-icons web
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-fixed-chart')
+			//- 								| Fixed Chart
+			//- 								i.material-icons list
+			//- 						li
+			//- 							a.waves-effect.active(href='https://themes.materializecss.com/pages/admin-grid')
+			//- 								| Grid
+			//- 								i.material-icons dashboard
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-chat')
+			//- 								| Chat
+			//- 								i.material-icons chat
+			//- 			li.bold.waves-effect
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Charts
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-line-charts')
+			//- 								| Line Charts
+			//- 								i.material-icons show_chart
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-bar-charts')
+			//- 								| Bar Charts
+			//- 								i.material-icons equalizer
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-area-charts')
+			//- 								| Area Charts
+			//- 								i.material-icons multiline_chart
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-doughnut-charts')
+			//- 								| Doughnut Charts
+			//- 								i.material-icons pie_chart
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-financial-charts')
+			//- 								| Financial Charts
+			//- 								i.material-icons euro_symbol
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-interactive-charts')
+			//- 								| Interactive Charts
+			//- 								i.material-icons touch_app
+			//- 			li.bold.waves-effect
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Tables
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-fullscreen-table')
+			//- 								| Fullscreen with Chart
+			//- 								i.material-icons show_chart
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-table-custom-elements')
+			//- 								| Table with Custom Elements
+			//- 								i.material-icons settings
+			//- 			li.bold.waves-effect
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Calendar
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-calendar')
+			//- 								| Calendar
+			//- 								i.material-icons cloud
+			//- 			li.bold.waves-effect
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Headers
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-tabbed')
+			//- 								| Tabbed
+			//- 								i.material-icons tab
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-metrics')
+			//- 								| Metrics
+			//- 								i.material-icons web
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-search')
+			//- 								| Search
+			//- 								i.material-icons search
+			//- 			li.bold.waves-effect
+			//- 				a.collapsible-header(tabindex='0')
+			//- 					| Account
+			//- 					i.material-icons.chevron chevron_left
+			//- 				.collapsible-body
+			//- 					ul
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-log-in')
+			//- 								| Log In
+			//- 								i.material-icons person
+			//- 						li
+			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-settings')
+			//- 								| Settings
+			//- 								i.material-icons settings
+		block content

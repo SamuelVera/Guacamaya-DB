@@ -1,8 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
   /* padding: 50px; */
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Roboto", Helvetica, Arial, sans-serif;
+ 
+  background-color: #f4f4f4;
 }
 
 a {
   color: #00B7FF;
+}
+
+nav .sidenav-trigger{
+  position: relative;
+    z-index: 1;
+}
+
+nav a .sidenav-trigger{
+  display: block;
+}
+
+#sidenav-left{
+  left: -200px;
+  /* position: fixed; */
+}
+
+#sidenav-left.active{
+  left:0px;
+}
+
+#menu-button{
+  color: #ff2e2e;
+  display: block;
+  margin: 0 2%;
+
 }
