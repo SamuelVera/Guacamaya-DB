@@ -1,20 +1,26 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-// const controlardorPrueba = require("../controllers/pruebaController");
-
-// router.get("/", (req, res) => {
-//   res.redirect('/');
-// });
+const vuelosController = require('../controllers/vueloController');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('index', { title: 'Guacamaya Airlines' });
 });
 
-/* GET Flights Administration page. */
-router.get('/adminflights', (req, res, next) => {
-  res.render('adminflights', { title: 'Guacamaya Airlines' });
-});
+  /* GET Flights Administration page. */
+router.get('/adminflights',(req, res) => {
+  vuelosController.readEveryVuelo((vuelos, err, lenght) => {
+    if(err){
+      res.json({
+        success: false,
+        err,
+        msg: 'FAILED TO FETCH ALL FLIGTHS'
+      })
+    }else{
+      res.render('adminflights', { vuelos, lenght } );
+    }
+  })
+})
 
 /* GET Login page. */
 router.get('/login', (req, res, next) => {
@@ -25,18 +31,5 @@ router.get('/login', (req, res, next) => {
 router.get('/register', (req, res, next) => {
   res.render('register', { title: 'Guacamaya Airlines' });
 });
-
-// router.get('/a', (req, res) => {
-//   controlardorPrueba.deletePrueba(0,(products, err) => {
-//     if(err){
-//         console.log(err);
-//         res.json({
-//         success: false,
-//         msg: 'Fail'
-//       });
-//     }else
-//       res.redirect('/');
-//   });
-// });
 
 module.exports = router;

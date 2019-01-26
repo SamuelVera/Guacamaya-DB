@@ -11,36 +11,23 @@ block content
 					table.highlight.centered.responsive-table
 						thead
 							tr
+								th(scope='col') Código
 								th(scope='col') Destino
 								th(scope='col') Nro. Avión
 								th(scope='col') Fecha de despegue
 								th(scope='col') Precio base de venta
 						tbody
+						- for (var i = 0; i < lenght; i++)
 							tr
-								td BOS
-								td 12
-								td 25-01-2019
-								td $900.87
-							tr
-								td IST
-								td 2
-								td 17-03-2019
-								td $387.76
-							tr
-								td CCS
-								td 3
-								td 07-02-2019
-								td $700.00
-							tr
-								td HKG
-								td 4
-								td 17-02-2019
-								td $273.00
-							tr
-								td MAD
-								td 12
-								td 02-02-2019
-								td $782.00
+								td #{vuelos[i].codigo}
+								td #{vuelos[i].iata_Des}
+								if vuelos[i].nro_Avion
+									td #{vuelos[i].nro_Avion}
+								else
+									td No asignado
+								td #{vuelos[i].fecha_Prog}
+								td #{vuelos[i].pvb}
+							
 		.fixed-action-btn
 			a.btn-floating.btn-large.white.z-depth-3
 				i.large.material-icons(style="color:red") add

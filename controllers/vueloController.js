@@ -27,15 +27,14 @@ controller.createVuelo = async (vuelo, callback) => {
 
     //R del CRUD
 controller.readEveryVuelo = async (callback) => {
-    console.log('Acá voy yo');
     try{
         let response = await vueloModel.findAll({
             where:{
                 activo: 1
             }
         });
-        let vuelos = response.map(result = result.dataValues);
-        callback(vuelos, null);
+        let vuelos = response.map(result => result.dataValues);
+        callback(vuelos, null, vuelos.length);
     }catch(error){
         callback(null, error);
     }
@@ -43,7 +42,6 @@ controller.readEveryVuelo = async (callback) => {
 
     //R del CRUD
 controller.readVuelo = async (id, callback) => {
-    console.log('Aquiles voy');
     try{
         let response = await vueloModel.findAll({
                 where:{
@@ -52,7 +50,7 @@ controller.readVuelo = async (id, callback) => {
             }
         )
         let vuelo = response.map(result => result.dataValues);
-        callback(vuelo, null);
+        callback(vuelo[0], null);
     }catch(error){
         callback(null, error);
     }
