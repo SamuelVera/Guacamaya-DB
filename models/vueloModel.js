@@ -4,6 +4,16 @@ const db = require('../config/guacamaya_db');
 
     //Modelo del avión
 const vuelo = db.define('vuelos',{
+    codigo: {
+        type: sequelize.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true,
+        validate: {
+            isNumeric: true,
+            notEmpty: true
+        }
+    },
     pvb: {
         type: sequelize.INTEGER,
         allowNull: false,
@@ -42,6 +52,9 @@ const vuelo = db.define('vuelos',{
             notEmpty: true
         }
     }
+},{
+    timestamps: false,
+    freezeTableName: true
 });
 
 module.exports = vuelo;
