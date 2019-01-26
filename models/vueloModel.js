@@ -36,6 +36,7 @@ const vuelo = db.define('vuelos',{
     },
     activo:{
         type: sequelize.TINYINT,
+        allowNull: false,
         defaultValue: 1,
         validate: {
             notEmpty: true

@@ -1,0 +1,42 @@
+doctype html
+html
+    head
+        title= title
+        //- link(rel="preload", href='https://unpkg.com/@clr/ui/clr-ui.min.css', as="style")
+        link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+        link(type='text/css', rel='stylesheet', href='/stylesheets/css/materialize.min.css', media='screen,projection')
+        link(rel='stylesheet', href='/stylesheets/login.css')
+        link(rel='stylesheet', href='https://unpkg.com/@clr/ui/clr-ui.min.css')
+        // Let browser know website is optimized for mobile
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    body
+
+        block content
+            .login-wrapper
+                form.login
+                    section.title
+                        h3.welcome                   
+                        |             Registro
+                        h5.hint Ingrese su nombre de usuario y contraseña para acceder
+                    .login-group
+                        clr-input-container
+                            input(type='text', name='username', clrinput, placeholder='Usuario')
+                        clr-input-container
+                            input(type='text', name='name', clrinput, placeholder='Nombre')
+                        clr-input-container
+                            input(type='text', name='last-name', clrinput, placeholder='Apellido')
+                        clr-input-container
+                            input(type='email', name='email', clrinput, placeholder='Correo electrónico')
+                        clr-input-container
+                            input(type='number', name='age', clrinput, placeholder='Edad')
+                        clr-password-container
+                            input(type='password', name='password', clrpassword, placeholder='Contraseña')
+                        //- clr-checkbox-wrapper
+                        //-     label Recuerdame
+                        //-     input(type='checkbox', name='rememberMe', clrcheckbox)
+                        //- .error.active
+                        //-     | Invalid user name or password
+                        button.btn.btn-primary(type='submit') REGISTRARSE
+                        a.signup(href='/login') ¿Ya tienes una cuenta? Ingresa aquí
+            .logo
+                img(src="../pictures/LoginLogo.png", alt="")
