@@ -13,9 +13,63 @@
 
 .action{
     position: absolute;
-    visibility: hidden;
-    top: 0px;
-    right: 0px;
-    width: 57px;
-    height: 58px;
+    /* visibility: hidden; */
+    top: -4px;
+    right: -2px;
+    width: 62px;
+    height: 62px;
+    background: inherit;
+    transition: background .5s ease;
+}
+
+.action:hover{
+    background-color: rgb(235, 235, 235);
+}
+
+.btnicon{
+    color:red!important;
+    top: 2px;
+    left: -1px;
+    position: absolute;
+}
+
+.submit{
+    width: 100%;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+.edit{
+    color:#ff7043!important;
+    position: absolute;
+    bottom: 10px;
+    left: 38%;
+    right: 35%;
+    transition: color 1s ease;
+}
+
+.edit:hover{
+    color:#dc613c!important;
+}
+
+.deletebtn{
+    background-color: #ef5350;
+    transition: background-color 1s ease;
+}
+
+.deletebtn:hover{
+    background-color: #c62828;
+}
+
+.editbtn{
+    background-color:#ba68c8;
+    transition: background-color 1s ease;
+}
+
+.editbtn:hover{
+    background-color: #7e57c2;
 }
