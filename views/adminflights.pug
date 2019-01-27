@@ -18,7 +18,9 @@ block content
 								th(scope='col') Nro. Avión
 								th(scope='col') Fecha de despegue
 								th(scope='col') Precio base de venta
-								th(scope='col') Seleccionar
+								th(scope='col') Editar
+								th(scope='col') Eliminar
+								//th(scope='col') Seleccionar
 						tbody
 						- for (var i = 0; i < length; i++)
 							tr
@@ -31,41 +33,47 @@ block content
 								td #{vuelos[i].fecha_Prog}
 								td #{vuelos[i].pvb}
 								td
+									form(action=`edit/${vuelos[i].codigo}`,method="POST")
+										button.btn.btn-outline-dark(type='submit') Editar
+								td
+									form(action=`delete/${vuelos[i].codigo}`,method="POST")
+										button.btn.btn-outline-dark(type='submit') Eliminar
+								//td
 									form(method="POST")
 										p
 											label
 												input(type='checkbox')
 												span
-									#edit.fixed-action-btn
-										a.btn-floating.btn-large.white
-											i.large.material-icons(style="color:red") edit
-												button.action(type='submit', formaction="edit")
-									#delete.fixed-action-btn
-										a.btn-floating.btn-large.white
-											i.large.material-icons(style="color:red") delete
-												button.action(type='submit', formaction="delete")
+										#edit.fixed-action-btn
+											a.btn-floating.btn-large.white
+												i.large.material-icons(style="color:red") edit
+													button.action(type='submit', formaction=`edit`)
+										#delete.fixed-action-btn
+											a.btn-floating.btn-large.white
+												i.large.material-icons(style="color:red") delete
+													button.action(type='submit', formaction=`delete`)
 						- var nextFlight= i;
 						form(action='add' method="POST")
 							tr
-								td #{nextFlight+1}
+								td Auto
 								td
 									.input-field.col.s12
-										input#destination.validate(type='text', maxlength=3, style="text-transform:uppercase", required)
+										input#destination.validate(type='text', maxlength=3, style="text-transform:uppercase", required,  name= 'iata_Des')
 										label(for='destination', style="font-size:13px") Ingrese el destino del vuelo
 								td
 									.input-field.col.s12
-										input#airplane.validate(type='number', min=0)
+										input#airplane.validate(type='number', min=0, name='nro_Avion')
 										label(for='airplane', style="font-size:13px") Ingrese el número del avión
 								td
 									.input-field.col.s12
-										input#date.validate(type='date', min="2019-01-26", required)
+										input#date.validate(type='date', min="2019-01-26", required, name= 'fecha_Prog')
 										label(for='date', style="font-size:13px") Ingrese la fecha de despegue
 								td
 									.input-field.col.s12
-										input#price.validate(type='number', min=0, step=".01", required)
+										input#price.validate(type='number', min=0, step=".01", required, name= 'pvb')
 										label(for='price', style="font-size:12px") Ingrese el precio de venta base
 							#add.fixed-action-btn
-								a.btn-floating.btn-large.white.z-depth-3
+								a.btn-floating.btn-large.white.z-depth-3.action(type='submit')
 									i.large.material-icons(style="color:red") add
 										button.action(type='submit')
 					script
