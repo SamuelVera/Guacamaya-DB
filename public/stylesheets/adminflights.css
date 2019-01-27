@@ -14,10 +14,10 @@
 .action{
     position: absolute;
     /* visibility: hidden; */
-    top: -1px;
+    top: -4px;
     right: -2px;
-    width: 58px;
-    height: 59px;
+    width: 62px;
+    height: 62px;
     background: inherit;
     transition: background .5s ease;
 }
@@ -28,8 +28,8 @@
 
 .btnicon{
     color:red!important;
-    top: -1px;
-    left: -2px;
+    top: 2px;
+    left: -1px;
     position: absolute;
 }
 
