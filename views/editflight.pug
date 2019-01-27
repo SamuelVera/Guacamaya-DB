@@ -9,7 +9,7 @@ block content
 			.card.z-depth-3
 				.card-content(style="background-color: #f5f5f5  ")
 					span.card-title.center-align  Administrar vuelos
-				.card-action
+				.card-action(style="    position: relative;")
 					table#tabla.highlight.centered.responsive-table
 						thead
 							tr
@@ -38,11 +38,14 @@ block content
 									.input-field.col.s12
 										input#price.validate(type='number', value= vuelo.pvb, min=0, step=".01", required, name= 'pvb')
 										label(for='price', style="font-size:12px") Ingrese el precio de venta base
-							#add.fixed-action-btn
-								a.btn-floating.btn-large.white.z-depth-3.action(type='submit')
-									i.large.material-icons(style="color:red") add
-										button.action(type='submit')
-					a(href='/adminflights', style='color:#ff7043') Volver a Administrar vuelos
+							a.edit(href='/adminflights') Volver a Administrar vuelos
+								button.submit(type='submit')
+							//- #add.fixed-action-btn
+							//- 	a.btn-floating.btn-large.white.z-depth-3
+							//- 		button.action(type='submit')
+							//- 			i.btnicon.large.material-icons(style="color:red") edit
+										
+
 					script
 						include ../public/js/test.js
 

@@ -34,25 +34,25 @@ block content
 								td #{vuelos[i].pvb}
 								td
 									form(action=`edit/${vuelos[i].codigo}`,method="POST")
-										button.btn.btn-outline-dark(type='submit') Editar
+										button.btn.btn-outline-dark.editbtn(type='submit') Editar
 								td
 									form(action=`delete/${vuelos[i].codigo}`,method="POST")
-										button.btn.btn-outline-dark(type='submit') Eliminar
+										button.btn.btn-outline-dark.deletebtn(type='submit') Eliminar
 								//td
-									form(method="POST")
+									form#myForm(method="POST")
 										p
 											label
-												input(type='checkbox')
+												input(type='checkbox', id="check" name=`${vuelos[i].codigo}`)
 												span
 										#edit.fixed-action-btn
 											a.btn-floating.btn-large.white
-												i.large.material-icons(style="color:red") edit
-													button.action(type='submit', formaction=`edit`)
+												button.action(type='submit', formaction=`edit/${document.getElementById("check").name}`)
+													i.btnicon.large.material-icons(style="color:red") edit
 										#delete.fixed-action-btn
 											a.btn-floating.btn-large.white
-												i.large.material-icons(style="color:red") delete
-													button.action(type='submit', formaction=`delete`)
-						- var nextFlight= i;
+												button.action(type='submit', formaction=`delete/${vuelo.codigo}`)
+													i.btnicon.large.material-icons(style="color:red") delete
+													
 						form(action='add' method="POST")
 							tr
 								td Auto
@@ -73,9 +73,10 @@ block content
 										input#price.validate(type='number', min=0, step=".01", required, name= 'pvb')
 										label(for='price', style="font-size:12px") Ingrese el precio de venta base
 							#add.fixed-action-btn
-								a.btn-floating.btn-large.white.z-depth-3.action(type='submit')
-									i.large.material-icons(style="color:red") add
-										button.action(type='submit')
+								a.btn-floating.btn-large.white.z-depth-3
+									button.action(type='submit')
+										i.btnicon.large.material-icons add
+
 					script
 						include ../public/js/test.js
 
@@ -101,4 +102,4 @@ block scripts
 	script(type='text/javascript', src='/js/materialize.min.js', defer)
 	script(type='text/javascript', src='/js/test.js', defer)
 	script(type='text/javascript', src='/js/jquery-3.3.1.js', defer)
-	//- script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", defer)
+	script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer)
