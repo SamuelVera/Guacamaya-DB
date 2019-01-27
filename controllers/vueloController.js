@@ -41,11 +41,11 @@ controller.readEveryVuelo = async (callback) => {
 };
 
     //R del CRUD
-controller.readVuelo = async (id, callback) => {
+controller.readVuelo = async (codigo, callback) => {
     try{
         let response = await vueloModel.findAll({
                 where:{
-                    id
+                    codigo
                 }
             }
         )
@@ -57,24 +57,27 @@ controller.readVuelo = async (id, callback) => {
 };
 
     //U del CRUDO
-controller.updateVuelo = async (vuelo, callback) => {
-    console.log('Ahí viene la piedra');
+controller.updateVuelo = async (vuelo, codigo, callback) => {
     try{
         let response = await vueloModel.update({
             pvb: vuelo.pvb,
             iata_Des: vuelo.iata_Des,
             fecha_Prog: vuelo.fecha_Prog,
             nro_Avion: vuelo.nro_Avion
+        },{
+            where:{
+                codigo
+            }
         })
         callback(null);
     }catch(error){
+        console.log(error);
         callback(error);
     }
 };
 
     //D del PETRÓLEO
-controller.deleteVuelo = async (id, callback) => {
-    console.log('Ahí viene la piedrota');
+controller.deleteVuelo = async (codigo, callback) => {
     try{
         let response = await vueloModel.update(
         {
@@ -82,7 +85,7 @@ controller.deleteVuelo = async (id, callback) => {
         },
         {
             where:{
-                id
+                codigo
             }
         })
         callback(null);
