@@ -1,5 +1,5 @@
 
-
+// INICIALIZACION DE LOS BOTONES FLOTANTES
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.fixed-action-btn');
     var instances = M.FloatingActionButton.init(elems, {direction: "left"})});
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
          alert($(".responsive-table tr.selected td:first").html());
      });
 
+     //REGRESA LA FECHA ACTUAL PARA SETEARLA COMO MIN AL MOMENTO DE AGREGAR VUELO
 function actualDate(): Date {
 var today = new Date();
 var dd = today.getDate();
