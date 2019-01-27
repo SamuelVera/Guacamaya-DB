@@ -1,0 +1,21 @@
+.selected {
+    background-color: brown;
+    color: #FFF;
+}
+
+#add{
+    transform: translateX(-180px);
+}
+
+#edit{
+    transform: translateX(-90px);
+}
+
+.action{
+    position: absolute;
+    visibility: hidden;
+    top: 0px;
+    right: 0px;
+    width: 57px;
+    height: 58px;
+}

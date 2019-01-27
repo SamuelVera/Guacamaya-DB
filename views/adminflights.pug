@@ -1,14 +1,16 @@
 extends layout
 		
 block content
+	title= title
 	link(rel='stylesheet', href='/stylesheets/adminflights.css')
-	.container
+	link(rel="preload", href='/js/jquery-3.3.1.js', as="script")
+	.container 
 		#main-card.col.l9.m12
 			.card.z-depth-3
 				.card-content(style="background-color: #f5f5f5  ")
 					span.card-title.center-align  Administrar vuelos
 				.card-action
-					table.highlight.centered.responsive-table
+					table#tabla.highlight.centered.responsive-table
 						thead
 							tr
 								th(scope='col') Código
@@ -16,8 +18,9 @@ block content
 								th(scope='col') Nro. Avión
 								th(scope='col') Fecha de despegue
 								th(scope='col') Precio base de venta
+								th(scope='col') Seleccionar
 						tbody
-						- for (var i = 0; i < lenght; i++)
+						- for (var i = 0; i < length; i++)
 							tr
 								td #{vuelos[i].codigo}
 								td #{vuelos[i].iata_Des}
@@ -27,20 +30,67 @@ block content
 									td No asignado
 								td #{vuelos[i].fecha_Prog}
 								td #{vuelos[i].pvb}
-							
-		.fixed-action-btn
-			a.btn-floating.btn-large.white.z-depth-3
-				i.large.material-icons(style="color:red") add
-			ul
-				li
-					a.btn-floating.red
-						i.material-icons insert_chart
-				li
-					a.btn-floating.yellow.darken-1
-						i.material-icons format_quote
-				li
-					a.btn-floating.green
-						i.material-icons publish
-				li
-					a.btn-floating.blue
-						i.material-icons attach_file
+								td
+									form(method="POST")
+										p
+											label
+												input(type='checkbox')
+												span
+									#edit.fixed-action-btn
+										a.btn-floating.btn-large.white
+											i.large.material-icons(style="color:red") edit
+												button.action(type='submit', formaction="edit")
+									#delete.fixed-action-btn
+										a.btn-floating.btn-large.white
+											i.large.material-icons(style="color:red") delete
+												button.action(type='submit', formaction="delete")
+						- var nextFlight= i;
+						form(action='add' method="POST")
+							tr
+								td #{nextFlight+1}
+								td
+									.input-field.col.s12
+										input#destination.validate(type='text', maxlength=3, style="text-transform:uppercase", required)
+										label(for='destination', style="font-size:13px") Ingrese el destino del vuelo
+								td
+									.input-field.col.s12
+										input#airplane.validate(type='number', min=0)
+										label(for='airplane', style="font-size:13px") Ingrese el número del avión
+								td
+									.input-field.col.s12
+										input#date.validate(type='date', min="2019-01-26", required)
+										label(for='date', style="font-size:13px") Ingrese la fecha de despegue
+								td
+									.input-field.col.s12
+										input#price.validate(type='number', min=0, step=".01", required)
+										label(for='price', style="font-size:12px") Ingrese el precio de venta base
+							#add.fixed-action-btn
+								a.btn-floating.btn-large.white.z-depth-3
+									i.large.material-icons(style="color:red") add
+										button.action(type='submit')
+					script
+						include ../public/js/test.js
+
+
+
+				//- script
+				//- 	include ../public/js/test.js
+				//- ul
+				//- 	li
+				//- 		a.btn-floating.red
+				//- 			i.material-icons insert_chart
+				//- 	li
+				//- 		a.btn-floating.yellow.darken-1
+				//- 			i.material-icons format_quote
+				//- 	li
+				//- 		a.btn-floating.green
+				//- 			i.material-icons publish
+				//- 	li
+				//- 		a.btn-floating.blue
+				//- 			i.material-icons attach_file
+
+block scripts
+	script(type='text/javascript', src='/js/materialize.min.js', defer)
+	script(type='text/javascript', src='/js/test.js', defer)
+	script(type='text/javascript', src='/js/jquery-3.3.1.js', defer)
+	//- script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", defer)

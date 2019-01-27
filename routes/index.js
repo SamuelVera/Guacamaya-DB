@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
 
   /* GET Flights Administration page. */
 router.get('/adminflights',(req, res) => {
-  vuelosController.readEveryVuelo((vuelos, err, lenght) => {
+  vuelosController.readEveryVuelo((vuelos, err, length) => {
     if(err){
       res.json({
         success: false,
@@ -17,7 +17,7 @@ router.get('/adminflights',(req, res) => {
         msg: 'FAILED TO FETCH ALL FLIGTHS'
       })
     }else{
-      res.render('adminflights', { vuelos, lenght } );
+      res.render('adminflights', { title: 'Guacamaya Airlines', vuelos, length });
     }
   })
 })
