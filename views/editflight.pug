@@ -1,0 +1,71 @@
+extends layout
+		
+block content
+	title= title
+	link(rel='stylesheet', href='/stylesheets/adminflights.css')
+	link(rel="preload", href='/js/jquery-3.3.1.js', as="script")
+	.container 
+		#main-card.col.l9.m12
+			.card.z-depth-3
+				.card-content(style="background-color: #f5f5f5  ")
+					span.card-title.center-align  Administrar vuelos
+				.card-action
+					table#tabla.highlight.centered.responsive-table
+						thead
+							tr
+								th(scope='col') Código
+								th(scope='col') Destino
+								th(scope='col') Nro. Avión
+								th(scope='col') Fecha de despegue
+								th(scope='col') Precio base de venta
+						tbody
+						form(action=`update/${vuelo.codigo}` method='POST')
+							tr
+								td #{vuelo.codigo}
+								td
+									.input-field.col.s12
+										input#destination.validate(type='text', value= vuelo.iata_Des ,maxlength=3, style="text-transform:uppercase", required,  name= 'iata_Des')
+										label(for='destination', style="font-size:13px") Ingrese el destino del vuelo
+								td
+									.input-field.col.s12
+										input#airplane.validate(type='number', value= vuelo.nro_Avion, min=0, name='nro_Avion')
+										label(for='airplane', style="font-size:13px") Ingrese el número del avión
+								td
+									.input-field.col.s12
+										input#date.validate(type='date', value= vuelo.fecha_Prog ,min="2019-01-26", required, name= 'fecha_Prog')
+										label(for='date', style="font-size:13px") Ingrese la fecha de despegue
+								td
+									.input-field.col.s12
+										input#price.validate(type='number', value= vuelo.pvb, min=0, step=".01", required, name= 'pvb')
+										label(for='price', style="font-size:12px") Ingrese el precio de venta base
+							#add.fixed-action-btn
+								a.btn-floating.btn-large.white.z-depth-3.action(type='submit')
+									i.large.material-icons(style="color:red") add
+										button.action(type='submit')
+					a(href='/adminflights', style='color:#ff7043') Volver a Administrar vuelos
+					script
+						include ../public/js/test.js
+
+
+
+				//- script
+				//- 	include ../public/js/test.js
+				//- ul
+				//- 	li
+				//- 		a.btn-floating.red
+				//- 			i.material-icons insert_chart
+				//- 	li
+				//- 		a.btn-floating.yellow.darken-1
+				//- 			i.material-icons format_quote
+				//- 	li
+				//- 		a.btn-floating.green
+				//- 			i.material-icons publish
+				//- 	li
+				//- 		a.btn-floating.blue
+				//- 			i.material-icons attach_file
+
+block scripts
+	script(type='text/javascript', src='/js/materialize.min.js', defer)
+	script(type='text/javascript', src='/js/test.js', defer)
+	script(type='text/javascript', src='/js/jquery-3.3.1.js', defer)
+	//- script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", defer)
