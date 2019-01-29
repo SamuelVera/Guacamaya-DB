@@ -3,7 +3,6 @@ extends layout
 block content
 	title= title
 	link(rel='stylesheet', href='/stylesheets/adminflights.css')
-	link(rel="preload", href='/js/jquery-3.3.1.js', as="script")
 	.container 
 		#main-card.col.l9.m12
 			.card.z-depth-3
@@ -76,8 +75,7 @@ block content
 									button.action(type='submit')
 										i.btnicon.large.material-icons add
 
-					script
-						include ../public/js/test.js
+
 
 
 
@@ -98,7 +96,7 @@ block content
 				//- 			i.material-icons attach_file
 
 block scripts
-	script(type='text/javascript', src='/js/materialize.min.js', defer)
-	script(type='text/javascript', src='/js/test.js', defer)
-	script(type='text/javascript', src='/js/jquery-3.3.1.js', defer)
-	script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" defer)
+	script( src="http://code.jquery.com/jquery-3.3.1.slim.min.js", defer)
+	script(type='text/javascript', src='../js/materialize.min.js', defer)
+	script(type='text/javascript', src='../js/test.js', defer)
+	//- script(type='text/javascript', src='../js/jquery-3.3.1.js', defer)
