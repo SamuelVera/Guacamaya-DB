@@ -13,16 +13,16 @@ html
 
         block content
             .login-wrapper
-                form.login
+                form.login(action= 'login' method= 'POST')
                     section.title
                         h3.welcome                   
                         |             Bienvenido
                         h5.hint Ingrese su nombre de usuario y contraseña para acceder
                     .login-group
                         clr-input-container
-                            input(type='text', name='username', clrinput, placeholder='Usuario')
+                            input(type='text', maxlenght=15, name='email', clrinput, placeholder='Correo Electrónico')
                         clr-password-container
-                            input(type='password', name='password', clrpassword, placeholder='Contraseña')
+                            input(type='password', maxlenght=20, name='password', clrpassword, placeholder='Contraseña')
                         //- clr-checkbox-wrapper
                         //-     label Recuerdame
                         //-     input(type='checkbox', name='rememberMe', clrcheckbox)
