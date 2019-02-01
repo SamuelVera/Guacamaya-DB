@@ -1,0 +1,16 @@
+doctype html
+body
+    -if(!user)
+        h1 CONECTANDO...
+    -else
+        h1 YOU MADE IT #{user.name}
+            #{user.ape}
+            #{user.ci}
+            #{user.fecha_nac} 
+            -if(user.sexo == 0)
+                h1 MASCULINO
+            -else
+                h2 FEMENINO 
+            -if(user.isAdmin)
+                h3 ADMIN POWER PAPÁ
+            a(href='/logout') Salir

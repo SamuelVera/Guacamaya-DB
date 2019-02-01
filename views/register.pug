@@ -13,24 +13,26 @@ html
 
         block content
             .login-wrapper
-                form.login
+                form.login(action= 'register' method= 'POST')
                     section.title
                         h3.welcome                   
                         |             Registro
                         h5.hint Ingrese su nombre de usuario y contraseña para acceder
                     .login-group
                         clr-input-container
-                            input(type='text', name='username', clrinput, placeholder='Usuario')
+                            input(type='text', name='email', maxlength=30, clrinput, placeholder='Correo Electrónico')
                         clr-input-container
-                            input(type='text', name='name', clrinput, placeholder='Nombre')
+                            input(type='number', name='ci', min=0, clrinput, placeholder='Cédula de Identidad')
                         clr-input-container
-                            input(type='text', name='last-name', clrinput, placeholder='Apellido')
+                            input(type='text', name='name', maxlength=15, clrinput, placeholder='Nombre')
                         clr-input-container
-                            input(type='email', name='email', clrinput, placeholder='Correo electrónico')
+                            input(type='text', name='ape', maxlength=15, clrinput, placeholder='Apellido')
                         clr-input-container
-                            input(type='number', name='age', clrinput, placeholder='Edad')
+                            input(type='date', name='fecha_nac', min='1900-01-01', clrinput, placeholder='Fecha de Nacimiento')
+                        clr-input-container
+                            input(type='number', name='sexo', min=0, max=1, clrinput, placeholder='0 Masculino/1 Femenino')
                         clr-password-container
-                            input(type='password', name='password', clrpassword, placeholder='Contraseña')
+                            input(type='password', name='password', maxlenght=20, clrpassword, placeholder='Contraseña')
                         //- clr-checkbox-wrapper
                         //-     label Recuerdame
                         //-     input(type='checkbox', name='rememberMe', clrcheckbox)
