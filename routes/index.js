@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const vuelosController = require('../controllers/vueloController');
-const passport = require('passport');
-const bcrypt = require('bcryptjs');
-const User = require('../models/users');
-const { ROUNDS } = process.env;
+const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -95,56 +93,28 @@ router.post('/edit/update/:codigo', (req, res) => {
   }
 })
 
-/* GET Login page. */
+/* GET Login page */
 router.get('/login', (req, res, next) => {
   res.render('login', { title: 'Guacamaya Airlines' });
 });
+router.post('/login',  authController.signin);
 
-/* GET Register page. */
+/* GET Register page */
 router.get('/register', (req, res, next) => {
   res.render('register', { title: 'Guacamaya Airlines' });
 });
+router.post('/register', userController.register, authController.signin);
 
-router.get('/logged-in', async (req, res) => {
-  var user = req.user;
+//Is logged
+router.get('/logged', (req, res) => {
+  const user = req.user;
   res.render('verificarRegistro', { user , title: 'Guacamaya Airlines' } );
-});
+})
 
 //Get logout
 router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/');
-});
-
-  //Registrarse como usuario cliente
-const register = async (req, res, next) => {
-  try{
-    let { name, email, ci, password, ape, fecha_nac, sexo } = req.body; //Traer del form
-    const salt = await bcrypt.genSalt(parseInt(ROUNDS));
-    const hash = await bcrypt.hash(password, salt); //Hasheo del password
-    let response = await User.create({
-      name,
-      email,
-      ci,
-      password: hash,
-      ape,
-      fecha_nac,
-      sexo
-    });
-    next();
-  }catch(err){
-    next(err);
-  }
-}
-  
-router.post("/register", register, passport.authenticate('local',
-  {failureRedirect: '/login', successRedirect: '/login'}), (req, res) => {
-    res.redirect('/login');
-});
-
-router.post("/login", passport.authenticate('local',
-  { failureRedirect: '/login', successRedirect: '/logged-in' }), async (req, res) => {
-    res.redirect('/logged-in');
 });
 
 module.exports = router;
