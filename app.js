@@ -1,24 +1,36 @@
-require("dotenv").config({ path: "variables.env" });
 const express = require('express');
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const routes = require('./routes/index');
-const sequelize = require('./config/guacamaya_db');
 const passport = require('passport');
+const promisify = require("es6-promisify").promisify;
+const flash = require("connect-flash");
+const expressValidator = require("express-validator");
+const sequelize = require('./config/guacamaya_db');
+const routes = require('./routes/index');
+const helpers = require("./helpers");
+const errorHandlers = require("./handlers/errorHandlers");
 require("./config/passport");
 
 const app = express();
 
+  //Engine del template
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+  //User archivos del servidor
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: true }));
+
+  //Convertir las peticiones a json
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+  //req.cookies para las cookies de la petición
 app.use(cookieParser());
 
+  //Guardar informacion de los visitantes cada vez que hacen una peticion
 const store = new SequelizeStore({
   db: sequelize,
   checkExpirationInterval: 15 * 60 * 1000,
@@ -40,18 +52,31 @@ app.use(
   app.use(passport.initialize());
   app.use(passport.session());
   
-  //Conexión a la DB
-  sequelize
-  .authenticate()
-  .then(value => value)
-  .catch(err => {
-    console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
+  //Mandar mensajes de error a los visitantes de nuestra página
+  app.use(flash());
+
+  //Convertira las algunas API basadas en callback a Promesas
+  app.use((req, res, next) => {
+    req.login = promisify(req.login, req);
+    next();
   });
   
   sequelize.sync({logging: false});
   
   app.use("/", routes);
-  app.set("port", process.env.PORT || 7777);
-const server = app.listen(app.get("port"), () => {
-  console.log(`Express running → PORT ${server.address().port} 🔥`);
-});
+
+  //Si no conseguimos el archivo le mandamos 404 al cliente
+  app.use(errorHandlers.notFound);
+
+  // Si el error es del cliente le advertimos con un flash
+ app.use(errorHandlers.flashValidationErrors);
+
+ // Si estamos desarrollando y la app falla veamos donde esta el error
+ if(app.get("env") === "development") {
+  app.use(errorHandlers.developmentErrors);
+ }
+
+// Si la app falla y estamos en produccion los errores cambian
+app.use(errorHandlers.productionErrors);
+
+module.exports = app;
