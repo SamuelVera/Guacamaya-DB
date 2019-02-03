@@ -1,6 +1,25 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+	link(rel='stylesheet', href='/stylesheets/error.css')
+	-if(message == "Not Found")
+		title= 'title'
+		//- h1 #{message}
+		.container
+			#main-card.col.l9.m12
+				.card.z-depth-3
+					.card-content
+						.card-image.center-align
+							img(src='/pictures/Oops.png')
+						.card-content.center-align
+							span.card-title 404 - Página no encontrada :(
+							p
+								| La página que estás buscando puede que haya sido removida,
+								| ha cambiado su nombre o se encuentra temporalmente deshabilitada.
+						.card-action.center-align
+							a(href='/', style='color:#ff7043;') Regresar a la página principal
+
+	-else
+		h3 hi
+	//- h5= error.status
+	//- pre #{error.status}

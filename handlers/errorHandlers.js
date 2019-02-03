@@ -20,7 +20,7 @@ exports.catchErrors = fn => {
     err.status = 404;
     next(err);
   };
-  
+
   /*
     MongoDB Validation Error Handler
     Detect if there are mongodb validation errors that we can nicely show via flash messages
@@ -66,6 +66,7 @@ exports.catchErrors = fn => {
     res.status(err.status || 500);
     res.render("error", {
       message: err.message,
-      error: {}
+      error: err.status,
+      title: 'Error:'
     });
   };

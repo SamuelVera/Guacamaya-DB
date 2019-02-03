@@ -23,6 +23,18 @@ app.set("view engine", "pug");
   //User archivos del servidor
 app.use(express.static(path.join(__dirname, "public")));
 
+// Handle 404
+// app.use(function(req, res) {
+//   res.status(400);
+//  res.render('404.pug', {title: '404: File Not Found'});
+// });
+
+// Handle 500
+// app.use(function(error, req, res, next) {
+//   res.status(500);
+//  res.render('500.pug', {title:'500: Internal Server Error', error: error});
+// });
+
   //Convertir las peticiones a json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
