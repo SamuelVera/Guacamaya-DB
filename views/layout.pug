@@ -30,131 +30,132 @@ html
 							li
 								a(href='mobile.html', style="color: #ff2e2e")
 									i.material-icons more_vert
-						a#menu-button.left(href='#!', data-target='sidenav-left', onclick="toggleSidebar()")
+						a.left(href='#!', data-target='slide-out')
 							i.material-icons menu
-						
 
+			ul#slide-out.sidenav
+				li
+					a.logo-container(href='#')
+						//- img(src="pictures/TabIcon.png", alt="")
+						| Admin
+						i.material-icons.left person
+				li.no-padding
+					ul.collapsible.collapsible-accordion
+						li.bold.waves-effect.active
+							a#pages.collapsible-header(tabindex='0')
+								| Pages
+								i#pagesicon.material-icons.chevron.right chevron_left
+							.collapsible-body(style='display: block;')
+								ul
+									li
+										a.waves-effect(href='#')
+											| Dashboard
+											i.material-icons web
+									li
+										a.waves-effect(href='ht#')
+											| Fixed Chart
+											i.material-icons list
+									li
+										a.waves-effect.active(href='#')
+											| Grid
+											i.material-icons dashboard
+									li
+										a.waves-effect(href='#')
+											| Chat
+											i.material-icons chat
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Charts
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Line Charts
+											i.material-icons show_chart
+									li
+										a.waves-effect(href='#')
+											| Bar Charts
+											i.material-icons equalizer
+									li
+										a.waves-effect(href='#')
+											| Area Charts
+											i.material-icons multiline_chart
+									li
+										a.waves-effect(href='#')
+											| Doughnut Charts
+											i.material-icons pie_chart
+									li
+										a.waves-effect(href='#')
+											| Financial Charts
+											i.material-icons euro_symbol
+									li
+										a.waves-effect(href='#')
+											| Interactive Charts
+											i.material-icons touch_app
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Tables
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Fullscreen with Chart
+											i.material-icons show_chart
+									li
+										a.waves-effect(href='#')
+											| Table with Custom Elements
+											i.material-icons settings
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Calendar
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Calendar
+											i.material-icons cloud
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Headers
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Tabbed
+											i.material-icons tab
+									li
+										a.waves-effect(href='#')
+											| Metrics
+											i.material-icons web
+									li
+										a.waves-effect(href='#')
+											| Search
+											i.material-icons search
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Account
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Log In
+											i.material-icons person
+									li
+										a.waves-effect(href='#')
+											| Settings
+											i.material-icons settings
+			a#menu-button.sidenav-trigger.show-on-large(href='#', data-target='slide-out')
+				i.material-icons menu
 
-
-			//- ul#sidenav-left.sidenav
-			//- 	li
-			//- 		a.logo-container(href='https://themes.materializecss.com/pages/admin-dashboard')
-			//- 			| Admin
-			//- 			i.material-icons.left spa
-			//- 	li.no-padding
-			//- 		ul.collapsible.collapsible-accordion
-			//- 			li.bold.waves-effect.active
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Pages
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body(style='display: block;')
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-dashboard')
-			//- 								| Dashboard
-			//- 								i.material-icons web
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-fixed-chart')
-			//- 								| Fixed Chart
-			//- 								i.material-icons list
-			//- 						li
-			//- 							a.waves-effect.active(href='https://themes.materializecss.com/pages/admin-grid')
-			//- 								| Grid
-			//- 								i.material-icons dashboard
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-chat')
-			//- 								| Chat
-			//- 								i.material-icons chat
-			//- 			li.bold.waves-effect
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Charts
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-line-charts')
-			//- 								| Line Charts
-			//- 								i.material-icons show_chart
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-bar-charts')
-			//- 								| Bar Charts
-			//- 								i.material-icons equalizer
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-area-charts')
-			//- 								| Area Charts
-			//- 								i.material-icons multiline_chart
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-doughnut-charts')
-			//- 								| Doughnut Charts
-			//- 								i.material-icons pie_chart
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-financial-charts')
-			//- 								| Financial Charts
-			//- 								i.material-icons euro_symbol
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-interactive-charts')
-			//- 								| Interactive Charts
-			//- 								i.material-icons touch_app
-			//- 			li.bold.waves-effect
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Tables
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-fullscreen-table')
-			//- 								| Fullscreen with Chart
-			//- 								i.material-icons show_chart
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-table-custom-elements')
-			//- 								| Table with Custom Elements
-			//- 								i.material-icons settings
-			//- 			li.bold.waves-effect
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Calendar
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-calendar')
-			//- 								| Calendar
-			//- 								i.material-icons cloud
-			//- 			li.bold.waves-effect
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Headers
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-tabbed')
-			//- 								| Tabbed
-			//- 								i.material-icons tab
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-metrics')
-			//- 								| Metrics
-			//- 								i.material-icons web
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-header-search')
-			//- 								| Search
-			//- 								i.material-icons search
-			//- 			li.bold.waves-effect
-			//- 				a.collapsible-header(tabindex='0')
-			//- 					| Account
-			//- 					i.material-icons.chevron chevron_left
-			//- 				.collapsible-body
-			//- 					ul
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-log-in')
-			//- 								| Log In
-			//- 								i.material-icons person
-			//- 						li
-			//- 							a.waves-effect(href='https://themes.materializecss.com/pages/admin-settings')
-			//- 								| Settings
-			//- 								i.material-icons settings
 		block content
 		//- Content
 
 		block scripts
-			script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js", defer)
+			script(src="https://code.jquery.com/jquery-3.3.1.min.js", defer)
 			script(type='text/javascript', src='/js/materialize.min.js', defer)
 			script(type='text/javascript', src='/js/test.js', defer)

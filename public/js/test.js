@@ -32,3 +32,52 @@ if(mm<10) {
 today = mm + '/' + dd + '/' + yyyy;
 return today;
 }
+
+function toggleSidebar(){
+    document.getElementById('sidenav-left').classList.toggle('active');
+}
+
+// INICIALIZACION DEL SIDENAV
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+
+// INICIALIZACIOON DE LOS COLLAPSIBLES
+$(document).ready(function(){
+    $('.collapsible').collapsible();
+ });
+
+//CUANDO SE LE DE CLICK A UN TITULO DEL SIDENAV CAMBIARÁ EL ESTILO DE SU COLLAPSIBLE QUE TIENE ADENTRO
+$(".collapsible-header").click(function(){
+        $(".collapsible-body").css("border-bottom" , "1px solid rgba(0,0,0,0.2)");
+        $(".collapsible-body").css("background-color" , "#f2f2f2");
+});
+
+
+$("#pages").focusin(function(){
+    $("#pagesicon").css("transform" , "rotate(-90deg)");
+});
+$("#pages").focusout(function(){
+    $("#pagesicon").css("transform" , "rotate(0deg)");
+});
+
+// $("#pages").click(function(){
+//     $("#pagesicon").animate({
+//         transform: "rotate(-90deg)"
+//     });
+// });
+
+// $("#pages").focusout(function(){
+//     $("#pagesicon").animate({
+//         transform: "rotate(0deg)"
+//     });
+// });
+// $(".collapsible-header").click(function(){
+//     $(".chevron").css("transform" , "rotate(-90deg)");
+// });
+// $(".collapsible-header").click(function(){
+//     $(".chevron").css("transform" , "rotate(-90deg)");
+// });
+// $(".collapsible-header").click(function(){
+//     $(".chevron").css("transform" , "rotate(-90deg)");
+// });
