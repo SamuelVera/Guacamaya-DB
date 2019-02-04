@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+/* --------------------------------------------------------------------------FONDO-------------------------------------------------------------- */
 body {
   /* padding: 50px; */
   font: 14px "Roboto", Helvetica, Arial, sans-serif;
@@ -23,18 +24,103 @@ nav a .sidenav-trigger{
   display: block;
 }
 
-#sidenav-left{
-  left: -200px;
-  /* position: fixed; */
-}
-
-#sidenav-left.active{
-  left:0px;
-}
 
 #menu-button{
   color: #ff2e2e;
   display: block;
   margin: 0 2%;
+  margin-top: -44px;
+  z-index: 998;
+  position: fixed;
+}
+/* --------------------------------------------------------------------------SIDENAV------------------------------------------------------------------------ */
+.collapsible .collapsible-header {
+  text-transform: uppercase;
+  height: 64px;
+  line-height: 64px;
+  background-color: transparent;
+  border: none;
+  line-height: inherit;
+  height: inherit;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(0,0,0,0.2)!important;
+  box-sizing: content-box;
+}
 
+.collapsible .collapsible-header:focus {
+  border-bottom: none!important;
+}
+
+.collapsible .collapsible-body {
+  padding-bottom: 16px;
+  padding: 0;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.collapsible .collapsible-body:focus {
+  border-bottom: 1px solid rgba(0,0,0,0.2)!important;
+}
+
+.collapsible>li.waves-effect {
+  display: block;
+}
+
+.sidenav .logo-container {
+  padding: 0 16px;
+  height: 64px;
+  line-height: 64px;
+  font-size: 24px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  box-sizing: content-box;
+}
+
+.logo-container img {
+  border-style: none;
+  /* float: left; */
+  width: 40px;
+  vertical-align: center;
+  top: 10px;
+  position: relative;
+  left: 10px;
+}
+
+.logo-container i{
+  top: 8px;
+  vertical-align: center;
+  position: relative;
+}
+
+.sidenav i{
+  color:   #ff2e2e!important;
+}
+
+.sidenav a{
+  font-weight: bold!important;
+}
+
+.sidenav .chevron{
+  margin-right: 0px!important;
+  /* transform: rotate(90deg); */
+}
+
+/* --------------------------------------------------------------------------SCROLLBAR------------------------------------------------------------------------ */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #fff; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555; 
 }
