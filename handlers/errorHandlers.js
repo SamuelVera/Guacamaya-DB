@@ -64,7 +64,11 @@ exports.catchErrors = fn => {
   */
   exports.productionErrors = (err, req, res, next) => {
     res.status(err.status || 500);
+    console.log(err);
+    console.log(err.status);
+    console.log(err.message);
     res.render("error", {
+      err,
       message: err.message,
       error: err.status,
       title: 'Error:'
