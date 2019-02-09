@@ -117,4 +117,17 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
+//Get the facebook page to login
+router.post('/login/facebook',  authController.signinWithFacebook);
+// router.get('/login/facebook',
+//   passport.authenticate('facebook'));
+
+  //This is the URL to wich Facebook will redirect the user after they have logged in
+router.get('/return', 
+  authController.signinWithFacebookReturn,
+  function(req, res) {
+    console.log('hola');
+    res.redirect('/');
+  });
+
 module.exports = router;

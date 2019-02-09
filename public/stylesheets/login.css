@@ -70,3 +70,10 @@
     background-size: 0 100%;
     transition: background .2s ease;
 }
+
+.fb-login-button{
+    position: absolute!important;
+    z-index: 99;
+    margin: 0 12%;
+    bottom: 10%; 
+}  
