@@ -1,0 +1,16 @@
+.progress{
+    position: absolute;
+    height: 4px;
+    display: block;
+    width: 182%;
+    background-color: #ffcc70;
+    border-radius: 2px;
+    margin: .5rem 0 1rem 0;
+    overflow: hidden;
+    top: -15px;
+    left: -293px;
+}
+
+h4{
+    text-align: center;
+}

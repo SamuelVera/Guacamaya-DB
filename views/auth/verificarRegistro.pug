@@ -1,0 +1,50 @@
+extends ../template/layout
+		
+block content
+	link(rel='stylesheet', href='/stylesheets/verificarRegistro.css')
+	body
+		.container
+			#main-card.col.l9.m12
+				.card.z-depth-3
+					.card-content
+						-if(!user)
+							.progress
+								.indeterminate
+							h4 CONECTANDO...
+							script.
+								function pageloadEvery() {
+								setTimeout('window.location.reload(true)', 1);
+								}
+						-else
+							h4 YOU MADE IT #{user.name}
+								#{user.ape}
+								#{user.ci}
+								#{user.fecha_nac}
+								-if(user.sexo == 0)
+									h4 MASCULINO
+								-else
+									h4 FEMENINO
+								-if(user.isAdmin)
+									h4 ADMIN POWER PAPÁ
+								a(href='/logout') Salir
+
+//- doctype html
+//- body(onload="javascript:pageloadEvery();")
+//-     -if(!user)
+//-         h1 CONECTANDO...
+//-         script.
+//-             function pageloadEvery() {
+//-             setTimeout('window.location.reload(true)', 1);
+//-             }
+//-     -else
+//-         h1 YOU MADE IT #{user.name}
+//-             #{user.ape}
+//-             #{user.ci}
+//-             #{user.fecha_nac} 
+//-             -if(user.sexo == 0)
+//-                 h1 MASCULINO
+//-             -else
+//-                 h2 FEMENINO 
+//-             -if(user.isAdmin)
+//-                 h3 ADMIN POWER PAPÁ
+//-             a(href='/logout') Salir

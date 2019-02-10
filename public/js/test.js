@@ -33,10 +33,6 @@ today = mm + '/' + dd + '/' + yyyy;
 return today;
 }
 
-function toggleSidebar(){
-    document.getElementById('sidenav-left').classList.toggle('active');
-}
-
 // INICIALIZACION DEL SIDENAV
 $(document).ready(function(){
     $('.sidenav').sidenav();
@@ -53,23 +49,37 @@ $(".collapsible-header").click(function(){
         $(".collapsible-body").css("background-color" , "#f2f2f2");
 });
 
-
+//ESTO ES PARA CMABIAR LAS FLECHAS QUE ESTÁN EN LOS COLLAPSIBLE EN EL SIDENAV PARA QUE CAMBIEN CUANDO SE LE DE CLICK O PIERDAN/GANEN EL FOCO
 $("#pages").focusin(function(){
-    $("#pagesicon").css("transform" , "rotate(-90deg)");
+    $("#pagesicon").addClass("focusin").removeClass("focusout");
 });
 $("#pages").focusout(function(){
-    $("#pagesicon").css("transform" , "rotate(0deg)");
+    // $("#pagesicon").addClass("focusout");
+    // $(".chevron").switchClass("focusin", "focusout")
+    $("#pagesicon").addClass("focusout").removeClass("focusin");
 });
+
+
+// $("#pages").focusin(function(){
+//     $("#pagesicon").css("transform" , "rotate(-90deg)");
+// });
+// $("#pages").focusout(function(){
+//     $("#pagesicon").css("transform" , "rotate(0deg)");
+// });
 
 // $("#pages").click(function(){
 //     $("#pagesicon").animate({
-//         transform: "rotate(-90deg)"
+//         step: function () {
+//             $(this).css('-webkit-transform', 'rotate(-90deg)')
+//         }
 //     });
 // });
 
-// $("#pages").focusout(function(){
-//     $("#pagesicon").animate({
-//         transform: "rotate(0deg)"
+// $(".collapsible-header").click(function(){
+//     $(".chevron").animate({
+//         step: function () {
+//             $(this).css('-webkit-transform', 'rotate(0deg)')
+//         }
 //     });
 // });
 // $(".collapsible-header").click(function(){

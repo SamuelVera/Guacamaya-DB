@@ -6,20 +6,21 @@ const authController = require('../controllers/authController');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Guacamaya Airlines' });
+  res.render(require.resolve('../views/home/index.pug'), { title: 'Guacamaya Airlines' });
 });
 
   /* GET Flights Administration page. */
 router.get('/adminflights',(req, res) => {
   vuelosController.readEveryVuelo((vuelos, err, length) => {
     if(err){
+      console.log(err);
       res.json({
         success: false,
         err,
         msg: 'FAILED TO FETCH ALL FLIGTHS'
       })
     }else{
-      res.render('adminflights', { title: 'Guacamaya Airlines', vuelos, length });
+      res.render(require.resolve('../views/flights/adminflights.pug'), { title: 'Guacamaya Airlines', vuelos, length });
     }
   })
 })
@@ -62,6 +63,7 @@ router.post('/edit/:codigo', (req, res) => {
   if(!!req.params.codigo){
     vuelosController.readVuelo(req.params.codigo, (vuelo, err) => {
       if(err){
+        console.log(err);
         res.json({
           success: false,
           err,
@@ -69,7 +71,7 @@ router.post('/edit/:codigo', (req, res) => {
         })
       }else{
         console.log(vuelo);
-        res.render('editflight', {vuelo});
+        res.render(require.resolve('../views/flights/editflight.pug'), {vuelo});
       }
     })
   }
@@ -95,20 +97,20 @@ router.post('/edit/update/:codigo', (req, res) => {
 
 /* GET Login page */
 router.get('/login', (req, res, next) => {
-  res.render('login', { title: 'Guacamaya Airlines' });
+  res.render(require.resolve('../views/auth/login.pug'), { title: 'Guacamaya Airlines' });
 });
 router.post('/login',  authController.signin);
 
 /* GET Register page */
 router.get('/register', (req, res, next) => {
-  res.render('register', { title: 'Guacamaya Airlines' });
+  res.render(require.resolve('../views/auth/register.pug'), { title: 'Guacamaya Airlines' });
 });
 router.post('/register', userController.register, authController.signin);
 
 //Is logged
 router.get('/logged', (req, res) => {
   const user = req.user;
-  res.render('verificarRegistro', { user , title: 'Guacamaya Airlines' } );
+  res.render(require.resolve('../views/auth/verificarRegistro.pug'), { user , title: 'Guacamaya Airlines' } );
 })
 
 //Get logout

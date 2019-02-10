@@ -99,9 +99,23 @@ nav a .sidenav-trigger{
   font-weight: bold!important;
 }
 
-.sidenav .chevron{
+.chevron{
   margin-right: 0px!important;
-  /* transform: rotate(90deg); */
+  /* transform: rotate(0deg); */
+}
+
+#pagesicon{
+  transform: rotate(0deg);
+}
+
+#pagesicon.focusin{
+  transform: rotate(-90deg);
+  transition: transform .2s;
+}
+
+#pagesicon.focusout{
+  transform: rotate(0deg);
+  transition: transform .2s;
 }
 
 /* --------------------------------------------------------------------------SCROLLBAR------------------------------------------------------------------------ */

@@ -52,7 +52,7 @@ exports.catchErrors = fn => {
     res.format({
       // Based on the `Accept` http header
       "text/html": () => {
-        res.render("error", errorDetails);
+        res.render(require.resolve('../views/errors/error.pug'), errorDetails);
       }, // Form Submit, Reload the page
       "application/json": () => res.json(errorDetails) // Ajax call, send JSON back
     });
@@ -64,7 +64,11 @@ exports.catchErrors = fn => {
   */
   exports.productionErrors = (err, req, res, next) => {
     res.status(err.status || 500);
-    res.render("error", {
+    console.log(err);
+    console.log(err.status);
+    console.log(err.message);
+    res.render(require.resolve('../views/errors/error.pug'), {
+      err,
       message: err.message,
       error: err.status,
       title: 'Error:'
