@@ -49,10 +49,9 @@ $(".collapsible-header").click(function(){
         $(".collapsible-body").css("background-color" , "#f2f2f2");
 });
 
-
+//ESTO ES PARA CMABIAR LAS FLECHAS QUE ESTÁN EN LOS COLLAPSIBLE EN EL SIDENAV PARA QUE CAMBIEN CUANDO SE LE DE CLICK O PIERDAN/GANEN EL FOCO
 $("#pages").focusin(function(){
     $("#pagesicon").addClass("focusin").removeClass("focusout");
-
 });
 $("#pages").focusout(function(){
     // $("#pagesicon").addClass("focusout");
