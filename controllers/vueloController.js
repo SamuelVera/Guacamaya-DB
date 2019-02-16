@@ -8,7 +8,6 @@ const controller = {};
 
     //C del CRUD
 controller.createVuelo = async (vuelo, callback) => {
-    console.log('Ahí viene');
     if(!!vuelo){
         try{
             let response = await vueloModel.create({
