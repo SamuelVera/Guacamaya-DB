@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 Sequelize.Promise = global.Promise;
 const md5 = require('md5');
 const bcrypt = require('bcryptjs');
-const sequelize = require('../config/guacamaya_db');
+const sequelize = require('../../config/guacamaya_db');
 const SALT = process.env;
 
 const User = sequelize.define('usuarios', {
