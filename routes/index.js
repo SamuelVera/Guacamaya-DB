@@ -6,7 +6,7 @@ const authController = require('../controllers/authController');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  res.render(require.resolve('../views/home/index.pug'), { title: 'Guacamaya Airlines' });
+  res.render(require.resolve('../views/user/home-user/index.pug'), { title: 'Guacamaya Airlines' });
 });
 
   /* GET Flights Administration page. */

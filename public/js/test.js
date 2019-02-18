@@ -59,6 +59,20 @@ $("#pages").focusout(function(){
     $("#pagesicon").addClass("focusout").removeClass("focusin");
 });
 
+// <-----------------------------------------------------------------------------------------------------------VISTA DE USER--------------------------------------------------------------------------------------------------------------------->
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.carousel.carousel-slider');
+    var instance = M.Carousel.init( elems, {
+        fullWidth: true,
+        indicators: true
+    });
+  });
+
+  $(document).ready(function(){
+    $('.slider').slider();
+  });
+
+//   setTimeout($.proxy($('.carousel').carousel('next'), $('.carousel'), "jQuery"), 500);
 
 // $("#pages").focusin(function(){
 //     $("#pagesicon").css("transform" , "rotate(-90deg)");
