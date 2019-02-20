@@ -72,7 +72,20 @@ document.addEventListener('DOMContentLoaded', function() {
     $('.slider').slider();
   });
 
-//   setTimeout($.proxy($('.carousel').carousel('next'), $('.carousel'), "jQuery"), 500);
+  // <-----------------------------------------------------------------------------------------------------------VISTA DE ADMIN--------------------------------------------------------------------------------------------------------------------->
+
+  $(document).ready(function() {
+    $.noConflict();//AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
+    var table =$('#flights').DataTable( {
+        columnDefs: [
+            {
+                targets: [ 0, 1, 2 ],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ]
+    } );
+} );
+
 
 // $("#pages").focusin(function(){
 //     $("#pagesicon").css("transform" , "rotate(-90deg)");
