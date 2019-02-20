@@ -59,6 +59,33 @@ $("#pages").focusout(function(){
     $("#pagesicon").addClass("focusout").removeClass("focusin");
 });
 
+// <-----------------------------------------------------------------------------------------------------------VISTA DE USER--------------------------------------------------------------------------------------------------------------------->
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.carousel.carousel-slider');
+    var instance = M.Carousel.init( elems, {
+        fullWidth: true,
+        indicators: true
+    });
+  });
+
+  $(document).ready(function(){
+    $('.slider').slider();
+  });
+
+  // <-----------------------------------------------------------------------------------------------------------VISTA DE ADMIN--------------------------------------------------------------------------------------------------------------------->
+
+  $(document).ready(function() {
+    $.noConflict();//AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
+    var table =$('#flights').DataTable( {
+        columnDefs: [
+            {
+                targets: [ 0, 1, 2 ],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ]
+    } );
+} );
+
 
 // $("#pages").focusin(function(){
 //     $("#pagesicon").css("transform" , "rotate(-90deg)");

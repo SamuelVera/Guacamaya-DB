@@ -1,0 +1,162 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+		link(type='text/css', rel='stylesheet', href='/stylesheets/css/materialize.min.css', media='screen,projection')
+		//- link(rel="preload", href="https://code.jquery.com/jquery-3.3.1.slim.min.js", as="script")
+		link(rel='icon', href='/pictures/TabIcon.png')
+		// Let browser know website is optimized for mobile
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+	body
+		header
+			.navbar-fixed
+				nav.navbar.white
+					.nav-wrapper
+						a.brand-logo.center(href='/',  style="color: black")
+							i
+								img(src='/pictures/MiniLogo.png', style="height: 115%; width: auto ")
+						ul.right.hide-on-med-and-down
+							li
+								a(href='sass.html', style="color: #ff2e2e")
+									i.material-icons search
+							li
+								a(href='badges.html', style="color: #ff2e2e")
+									i.material-icons view_module
+							li
+								a(href='collapsible.html', style="color: #ff2e2e")
+									i.material-icons refresh
+							li
+								a(href='mobile.html', style="color: #ff2e2e")
+									i.material-icons more_vert
+						a.left(href='#!', data-target='slide-out')
+							i.material-icons menu
+
+			ul#slide-out.sidenav
+				li
+					a.logo-container(href='#')
+						//- img(src="pictures/TabIcon.png", alt="")
+						| Admin
+						i.material-icons.left person
+				li.no-padding
+					ul.collapsible.collapsible-accordion
+						li.bold.waves-effect
+							a#pages.collapsible-header(tabindex='0')
+								| Pages
+								i#pagesicon.material-icons.chevron.right chevron_left
+							.collapsible-body(style='display: block;')
+								ul
+									li
+										a.waves-effect(href='#')
+											| Dashboard
+											i.material-icons web
+									li
+										a.waves-effect(href='ht#')
+											| Fixed Chart
+											i.material-icons list
+									li
+										a.waves-effect.active(href='#')
+											| Grid
+											i.material-icons dashboard
+									li
+										a.waves-effect(href='#')
+											| Chat
+											i.material-icons chat
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Charts
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Line Charts
+											i.material-icons show_chart
+									li
+										a.waves-effect(href='#')
+											| Bar Charts
+											i.material-icons equalizer
+									li
+										a.waves-effect(href='#')
+											| Area Charts
+											i.material-icons multiline_chart
+									li
+										a.waves-effect(href='#')
+											| Doughnut Charts
+											i.material-icons pie_chart
+									li
+										a.waves-effect(href='#')
+											| Financial Charts
+											i.material-icons euro_symbol
+									li
+										a.waves-effect(href='#')
+											| Interactive Charts
+											i.material-icons touch_app
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Tables
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Fullscreen with Chart
+											i.material-icons show_chart
+									li
+										a.waves-effect(href='#')
+											| Table with Custom Elements
+											i.material-icons settings
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Calendar
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Calendar
+											i.material-icons cloud
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Headers
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='#')
+											| Tabbed
+											i.material-icons tab
+									li
+										a.waves-effect(href='#')
+											| Metrics
+											i.material-icons web
+									li
+										a.waves-effect(href='#')
+											| Search
+											i.material-icons search
+						li.bold.waves-effect
+							a.collapsible-header(tabindex='0')
+								| Cuenta
+								i.material-icons.chevron.right chevron_left
+							.collapsible-body
+								ul
+									li
+										a.waves-effect(href='/login')
+											| Iniciar Sesión
+											i.material-icons person
+									li
+										a.waves-effect(href='#')
+											| Settings
+											i.material-icons settings
+			a#menu-button.sidenav-trigger.show-on-large(href='#', data-target='slide-out')
+				i.material-icons menu
+
+		block content
+		//- Content
+
+		block scripts
+			//- script(src="https://code.jquery.com/jquery-3.3.1.js", defer)
+			script(type='text/javascript', src='/js/jquery-3.3.1.js', defer)
+			script(type='text/javascript', src='/js/materialize.min.js', defer)
+			script(type='text/javascript', src='/js/test.js', defer)

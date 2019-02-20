@@ -1,0 +1,85 @@
+#main-card{
+    /* margin: 0 auto; */
+}
+
+/* -----------------------------------------------------------------------------------------------------IMAGENES DEL CAROUSEL------------------------------------------------------------------------------------------------------ */
+.carousel-item{
+    background-color: rgba(0, 0, 0, 0.3);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#first-item{
+    background-image: url('https://images.unsplash.com/photo-1544290738-5eac75f630f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80');
+}
+
+#second-item{
+    background-image: url('https://images.unsplash.com/photo-1530469353049-18df0403f42b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1040&q=80');
+}
+
+#third-item{
+    background-image: url('https://images.unsplash.com/photo-1472664596512-0d00517b6ae0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+}
+
+#fourth-item{
+    background-image: url('https://images.unsplash.com/photo-1465694930354-a394444f1294?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+}
+
+.darker h2{
+    padding-top: 30px;
+    text-shadow: 1px 3px 10px rgba(0,0,0, 0.3);
+    font-size: 41px!important;
+    font-weight: 700!important;
+}
+
+.darker h2{
+    text-shadow: 1px 3px 10px rgba(0,0,0, 0.3);
+}
+
+/* -----------------------------------------------------------------------------------------------------SLIDER------------------------------------------------------------------------------------------------------ */
+
+.slider{
+    height: 400px!important;
+}
+
+.darker{
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 101%;
+    width: 100%;
+    transform: translateY(-100%);
+}
+
+.caption h3, .caption h5{
+    text-shadow: 1px 3px 10px rgba(0,0,0, 0.6);
+}
+
+#welcome{
+    width: 80%;
+    left: 10%;
+}
+
+#where-to-go{
+    padding-top: 30px;
+    text-shadow: 1px 3px 10px rgba(0,0,0, 0.3);
+    font-size: 30px;
+    font-weight: 700;
+    color: whitesmoke;
+}
+
+#svg1926{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.ve, .us, .fr, .ae {
+    fill: #ef5350!important;
+    transition: fill 1s;
+}
+
+
+.ve:hover, .us:hover, .fr:hover, .ae:hover {
+    cursor: pointer;
+    fill: #b71c1c!important;
+}

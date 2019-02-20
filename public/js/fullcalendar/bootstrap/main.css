@@ -1,0 +1,130 @@
+/*!
+@fullcalendar/bootstrap v4.0.0-beta.2
+Docs & License: https://fullcalendar.io/
+(c) 2019 Adam Shaw
+*/
+
+.fc.fc-bootstrap a {
+  text-decoration: none; }
+
+.fc.fc-bootstrap a[data-goto]:hover {
+  text-decoration: underline; }
+
+.fc-bootstrap hr.fc-divider {
+  border-color: inherit; }
+
+.fc-bootstrap .fc-today.alert {
+  border-radius: 0; }
+
+.fc-bootstrap a.fc-event:not([href]):not([tabindex]) {
+  color: #fff; }
+
+.fc-bootstrap .fc-popover.card {
+  position: absolute; }
+
+/* Popover
+--------------------------------------------------------------------------------------------------*/
+.fc-bootstrap .fc-popover .card-body {
+  padding: 0; }
+
+/* TimeGrid Slats (lines that run horizontally)
+--------------------------------------------------------------------------------------------------*/
+.fc-bootstrap .fc-time-grid .fc-slats table {
+  /* some themes have background color. see through to slats */
+  background: none; }
+
+  .fc-left h2{
+    color: rgba(0,0,0,0.54);
+    display: inline-block;
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 64px;
+    margin-left: 8px;
+  }
+
+ 
+.fc-left .btn-group .fc-prev-button, .fc-left .btn-group .fc-next-button {
+  color: rgba(255,255,255,0.87) !important;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0 2px;
+  box-shadow: none;
+  border: 0;
+  border-radius: 50%;
+  background: #ef5350!important;
+  margin-top: 12px!important;
+  margin-right: 8px!important;
+  margin-left: 8px!important;
+}
+
+.fc-prev-button::before {
+  content: '<';
+  font-weight: bold;
+  font-size: 22px;
+  position: absolute;
+  top: 1px;
+  left: 10px;
+}
+
+.fc-next-button::before {
+  content: '>';
+  font-weight: bold;
+  font-size: 22px;
+  position: absolute;
+  top: 1px;
+  left: 14px;
+}
+
+.fc-left .fc-today-button {
+  position: relative;
+  margin-top: 17px;
+}
+
+.fc-toolbar.fc-header-toolbar {
+  margin-bottom: 1em;
+  padding: 0 16px;
+}
+
+ .fc-right .btn-group .waves-effect{
+  margin-left: 8px;
+}
+
+.fc .fc-content, .fc .fc-divider, .fc .fc-list-heading td, .fc .fc-list-view, .fc .fc-popover, .fc .fc-row, .fc tbody, .fc td, .fc th, .fc thead {
+  border-color: #e0e0e0;
+}
+
+.fc-row .fc-content-skeleton td, .fc-row .fc-mirror-skeleton td {
+  border-bottom: 0 hidden;
+}
+
+.fc-dayGrid-view th.fc-week-number span, .fc-head .fc-head-container .fc-day-header {
+  color: rgba(0,0,0,0.54);
+  font-weight: 400;
+  text-align: left;
+}
+
+.fc-dayGrid-view th.fc-week-number span, .fc-day-top .fc-day-number, .fc-week-number, .fc-head-container .fc-day-header {
+    padding-top: 6px;
+    padding-left: 8px;
+}
+
+.fc-dayGrid-view th.fc-week-number, .fc-dayGrid-view th.fc-day-number {
+  padding-top: 6px;
+  transform: translateX(-8px);
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+  float: left;
+}
+
+.fc-dayGrid-view td.fc-week-number {
+  text-align: left;
+  transform: translateY(4px);
+}
+
+.fc thead {
+  border-bottom: 0 hidden;
+}
+
