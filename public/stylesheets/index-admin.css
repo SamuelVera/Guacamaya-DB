@@ -9,3 +9,20 @@
     color: whitesmoke;
 }
 
+
+#svg1926{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.ve, .us, .fr, .ae {
+    fill: #ef5350!important;
+    transition: fill 1s;
+}
+
+
+.ve:hover, .us:hover, .fr:hover, .ae:hover {
+    cursor: pointer;
+    fill: #b71c1c!important;
+}

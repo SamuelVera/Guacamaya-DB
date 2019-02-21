@@ -4,14 +4,19 @@ const vuelosController = require('../controllers/vueloController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
-/* GET home page. */
+/* GET home user page. */
 router.get('/', (req, res, next) => {
   res.render(require.resolve('../views/user/home-user/index.pug'), { title: 'Guacamaya Airlines' });
 });
 
-/* GET home page. */
+/* GET home-admin page. */
 router.get('/home-admin', (req, res, next) => {
   res.render(require.resolve('../views/admin/home-admin/index.pug'), { title: 'Guacamaya Airlines' });
+});
+
+/* GET airline page. */
+router.get('/airline', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/airline.pug'), { title: 'Guacamaya Airlines' });
 });
 
   /* GET Flights Administration page. */
