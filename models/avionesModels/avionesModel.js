@@ -1,6 +1,10 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
+const ruta = require('../rutaModels/rutaModel');
+const modelo = require('../modeloAvionModels/modelo_avionModel');
+const avion_alquilado = require('./avion_alquiladoModel');
+const avion_mantenimiento = require('./avion_mantenimientoModel');
 
 const avion = db.define('aviones',{
     nro_fab:{
@@ -10,28 +14,6 @@ const avion = db.define('aviones',{
         allowNull: false,
         validate:{
             isAlphanumeric: true,
-            notEmpty: true
-        }
-    },
-    ruta:{
-        type:sequelize.INTEGER,
-        validate:{
-            isNumeric: true
-        }
-    },
-    modelo:{ //Máximo 10 caracteres
-        type:sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlphanumeric: true,
-            notEmpty: true
-        }
-    },
-    alquilado:{ //Los aviones por defecto no son alquilados
-        type:sequelize.TINYINT,
-        allowNull: false,
-        defaultValue: 0,
-        validate:{
             notEmpty: true
         }
     },
@@ -46,7 +28,7 @@ const avion = db.define('aviones',{
             max: 3
         }
     },
-    equipo_med:{ //Todos los aviones por defecto tienen su equipo médico
+    equipo_medico:{ //Todos los aviones por defecto tienen su equipo médico
         type:sequelize.TINYINT,
         allowNull: false,
         defaultValue: 1,
@@ -54,7 +36,7 @@ const avion = db.define('aviones',{
             notEmpty: true
         }
     },
-    nro_trip:{ //Por defecto no hay tripulación asignada
+    nro_tripulantes:{ //Por defecto no hay tripulación asignada
         type:sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
@@ -62,10 +44,44 @@ const avion = db.define('aviones',{
             isNumeric: true,
             notEmpty: true
         }
+    },
+    activo:{
+        type: sequelize.TINYINT,
+        defaultValue: 1,
+        allowNull: false,
+        validate:{
+            notEmpty: true
+        }
     }
 },{
     timestamps: false,
     freezeTableName: true
+})
+
+    //Un avión tiene un modelo (FK del modelo)
+avion.belongsTo(modelo, {
+    foreignKey: 'modelo', targetKey: 'numero',
+    onDelete: 'SET NULL', onUpdate:'CASCADE',
+})
+
+    //Un avión tiene una ruta (FK de la ruta)
+avion.belongsTo(ruta, {
+    foreignKey: 'nro_ruta', targetKey: 'numero',
+    onDelete: 'SET NULL', onUpdate:'CASCADE'
+})
+
+    //Resulta de la normalización de avión para evitar redundancia
+    //(FK va a la relación avion_mantenimiento)
+avion.hasMany(avion_mantenimiento, {
+    foreignKey: 'nro_avion', sourceKey: 'nro_fab',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+    //Resulta de la normalización de avión para evitar nulls y redundancia
+    //(FK va a la relación avion_alquilado)
+avion.hasMany(avion_alquilado, {
+    foreignKey: 'avion', sourceKey: 'nro_fab',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
 module.exports = avion;
