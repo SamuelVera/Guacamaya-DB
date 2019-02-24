@@ -43,7 +43,7 @@ const ruta = db.define('rutas', {
 })
 
     //La ruta tiene un origen que es un aeropuerto
-    //(La FK se coloca en la ruta )
+    //(La FK se coloca en la ruta)
 ruta.belongsTo(aeropuerto, {foreignKey: 'origen', targetKey: 'iata',
 onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 
