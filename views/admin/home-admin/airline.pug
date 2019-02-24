@@ -7,7 +7,39 @@ block content
 	script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js', defer)
 	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css')
 	link(rel='stylesheet', href='https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css')
+	//- script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBOPsZ8F4zfrxnwrPrMNmFnP_04u31ObUY&callback=initMap', type='text/javascript')
+	link(href='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css', rel='stylesheet', type='text/css')
+
 	.container
+		.row
+			.col.s8
+				.card.z-depth-3
+					//- #googleMap(style='width:100%;height:400px;')
+					#map(style='width:100%;height:300px;')
+						script(type='text/javascript', src='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.js')
+						script(type='text/javascript', src='https://tiles.unwiredmaps.com/js/leaflet-unwired.js')
+						script(type='text/javascript').
+							// Maps access token goes here
+							var key = 'pk.a5c3fbf2119bfb2275b62eddbccd76b3';
+							// Add layers that we need to the map
+							var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+							// Initialize the map
+							var map = L.map('map', {
+							center: [10.597522, -67.005316], // Map loads with this location as center
+							zoom: 14,
+							scrollWheelZoom: false,
+							layers: [streets] // Show 'streets' by default
+							});
+							var marker = L.marker([10.597522, -67.005316]).addTo(map);
+							// Add the 'scale' control
+							//- L.control.scale().addTo(map);
+							marker.bindPopup(" <b style='font-family: Roboto '>Sede Caracas</b><br><p style='font-family: Roboto; font-size: 12px '>Aereopuerto Internacional de Maiquetia Simón Bolívar.</p>").openPopup();
+			.col.s4
+				.card.z-depth-3
+					a.weatherwidget-io(href='https://forecast7.com/en/10d60n66d99/maiquetia/', data-label_1='MAIQUETÍA', data-label_2='WEATHER', data-theme='pure') MAIQUETÍA WEATHER
+					script.
+						!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+
 		#title.col.s12 Vuelos
 			h5(style="margin-top:10px") A continación se muestran todos los vuelos de la sede
 		.card.z-depth-3

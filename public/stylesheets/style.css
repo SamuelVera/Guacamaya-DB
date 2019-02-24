@@ -30,8 +30,12 @@ nav a .sidenav-trigger{
   display: block;
   margin: 0 2%;
   margin-top: -44px;
-  z-index: 998;
+  z-index: 1002;
   position: fixed;
+}
+
+.navbar-fixed{
+  z-index: 1001!important;
 }
 /* --------------------------------------------------------------------------SIDENAV------------------------------------------------------------------------ */
 .collapsible .collapsible-header {

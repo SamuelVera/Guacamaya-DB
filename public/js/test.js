@@ -120,6 +120,16 @@ function applyWhenElementExists(selector, myFunction, intervalTime) {
     // $('.flights_first').before(buttonPrevious);
    }, 50);
 
+  // <-----------------------------------------------------------------------------------------------------------MAPA EN VISTA DE AEREOLINEA--------------------------------------------------------------------------------------------------------------------->
+//    function myMap() {
+//     var mapProp= {
+//       center:new google.maps.LatLng(51.508742,-0.120850),
+//       zoom:5,
+//     };
+//     var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+//     }
+
+
 // $("#pages").focusin(function(){
 //     $("#pagesicon").css("transform" , "rotate(-90deg)");
 // });
