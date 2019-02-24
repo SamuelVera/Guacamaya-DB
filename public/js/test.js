@@ -1,8 +1,8 @@
 
 // INICIALIZACION DE LOS BOTONES FLOTANTES
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {direction: "left"})});
+// document.addEventListener('DOMContentLoaded', function() {
+//     var elems = document.querySelectorAll('.fixed-action-btn');
+//     var instances = M.FloatingActionButton.init(elems, {direction: "left"})});
 
     // $(".responsive-table tr").click(function(){
     //     $(this).addClass('selected').siblings().removeClass('selected');
@@ -74,51 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // <-----------------------------------------------------------------------------------------------------------VISTA DE ADMIN--------------------------------------------------------------------------------------------------------------------->
 //cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json
-  $(document).ready(function() {
-    $.noConflict();//AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
-    var table =$('#flights').DataTable( {
-        columnDefs: [
-            {
-                targets: [ 0, 1, 2 ],
-                className: 'mdl-data-table__cell--non-numeric'
-            }
-        ],
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-        },
-        "pagingType": "full",
-        "dom": '<"#filter"f>rt<"footer-wrapper"<"#entries"l><"pagination-info"ip>><"clear">'
-    } );
-    // document.getElementsByTagName("input").setAttribute('placeholder', 'Bucar');
 
-    // var elems = document.querySelectorAll('select');
-    // var instances = M.FormSelect.init(elems);
-    // .placeholder = "Buscar";
-} );
 
-function applyWhenElementExists(selector, myFunction, intervalTime) {
-    var interval = setInterval(function() {
-      if (jQuery(selector).length > 0) {
-         myFunction();
-         clearInterval(interval);
-      }
-    }, intervalTime);
-  };
+     // <-----------------------------------------------------------------------------------------------------------MODAL EN MAPA PARA SELECCIONAR SEDE DE AEREOLINEA--------------------------------------------------------------------------------------------------------------------->
 
- applyWhenElementExists("input", function(){
-    var inputs = document.getElementsByTagName('input');
-    for (index = 0; index < inputs.length; ++index) {
-        inputs[index].setAttribute('placeholder', 'Buscar');
-    }
-    $('#flights_length').addClass('input-field col s12');
-    $('.paginate_button').addClass('waves-effect');
-
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems);
-
-    // var buttonPrevious = '<i class="material-icons">skip_previous<i>'
-    // $('.flights_first').before(buttonPrevious);
-   }, 50);
 
   // <-----------------------------------------------------------------------------------------------------------MAPA EN VISTA DE AEREOLINEA--------------------------------------------------------------------------------------------------------------------->
 //    function myMap() {

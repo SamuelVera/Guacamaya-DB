@@ -15,8 +15,8 @@ router.get('/home-admin', (req, res, next) => {
 });
 
 /* GET airline page. */
-router.get('/airline', (req, res, next) => {
-  res.render(require.resolve('../views/admin/home-admin/airline.pug'), { title: 'Guacamaya Airlines' });
+router.get('/headquarter', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/headquarter.pug'), { title: 'Guacamaya Airlines' });
 });
 
   /* GET Flights Administration page. */
