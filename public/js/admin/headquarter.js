@@ -1,7 +1,13 @@
 $(document).ready(function() {
     $.noConflict();//AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
-    // $('.tabs').tabs();
-    var table =$('#flights').DataTable( {
+    var elems = document.querySelectorAll('.tabs');
+    var options = {
+        duration: 300,
+        onShow: null,
+        swipeable: false
+    };
+    var instance = M.Tabs.init(elems, options);
+    var table =$('#flights-table').DataTable( {
         columnDefs: [
             {
                 targets: [ 0, 1, 2 ],
