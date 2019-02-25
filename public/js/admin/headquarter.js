@@ -20,6 +20,19 @@ $(document).ready(function() {
         "pagingType": "full",
         "dom": '<"#filter"f>rt<"footer-wrapper"<"#entries"l><"pagination-info"ip>><"clear">'
     } );
+    var table2 =$('#employees-table').DataTable( {
+        columnDefs: [
+            {
+                targets: [ 0, 1, 2 ],
+                className: 'mdl-data-table__cell--non-numeric'
+            }
+        ],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+        "pagingType": "full",
+        "dom": '<"#filter"f>rt<"footer-wrapper"<"#entries"l><"pagination-info"ip>><"clear">'
+    } );
     // document.getElementsByTagName("input").setAttribute('placeholder', 'Bucar');
 
     // var elems = document.querySelectorAll('select');
@@ -50,3 +63,4 @@ function applyWhenElementExists(selector, myFunction, intervalTime) {
     // var buttonPrevious = '<i class="material-icons">skip_previous<i>'
     // $('.flights_first').before(buttonPrevious);
    }, 50);
+

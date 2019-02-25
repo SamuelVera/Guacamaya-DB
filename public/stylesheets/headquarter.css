@@ -5,14 +5,22 @@
     src: url(https://fonts.gstatic.com/s/materialicons/v43/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
   }
 
-  #title{
+  #title-flights{
     font-size: 3.56rem;
     line-height: 110%;
-    margin: 2.3733333333rem 0 1.424rem 0;
+    /* margin: 2.3733333333rem 0 1.424rem 0; */
+    padding-top: 70px;
     color: whitesmoke;
     float: initial;
 }
-
+  #title-employees{
+    font-size: 3.56rem;
+    line-height: 110%;
+    padding-top: 70px;
+    color: whitesmoke;
+    float: initial;
+}
+  
 div.dataTables_wrapper div.dataTables_filter {
     padding-right: 18px;
     float: right;
