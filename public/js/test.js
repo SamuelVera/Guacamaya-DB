@@ -32,16 +32,21 @@ if(mm<10) {
 today = mm + '/' + dd + '/' + yyyy;
 return today;
 }
-
 // INICIALIZACION DEL SIDENAV
-$(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
-
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems);
 // INICIALIZACIOON DE LOS COLLAPSIBLES
-$(document).ready(function(){
-    $('.collapsible').collapsible();
- });
+  var elems1 = document.querySelectorAll('.collapsible');
+  var instances1 = M.Collapsible.init(elems1);
+});
+
+// $(document).ready(function(){
+//     // $.noConflict();
+//     $('.sidenav').sidenav();
+
+//     $('.collapsible').collapsible();
+//   });
 
 //CUANDO SE LE DE CLICK A UN TITULO DEL SIDENAV CAMBIARÁ EL ESTILO DE SU COLLAPSIBLE QUE TIENE ADENTRO
 $(".collapsible-header").click(function(){
