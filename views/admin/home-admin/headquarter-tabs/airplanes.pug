@@ -1,0 +1,36 @@
+extends ../../template-admin/layout
+
+block content
+	//- --------------------------------------------------------------------------------------------------------------------------HEADER, LINKS E IMPORTACIONES----------------------------------------------------------------------------------------------------------------------------//
+	link(rel='stylesheet', href='/stylesheets/headquarter.css')
+	script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js')
+	script(src='https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js', defer)
+	script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js', defer)
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css')
+	link(rel='stylesheet', href='https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css')
+	script(type='text/javascript', src='/js/admin/headquarter.js', defer)
+	//- script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBOPsZ8F4zfrxnwrPrMNmFnP_04u31ObUY&callback=initMap', type='text/javascript')
+	link(href='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css', rel='stylesheet', type='text/css')
+
+	#headquarter.col.s12
+
+	//- -------------------------------------------------------------------------------------------------------------------------MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
+	.row
+		.col.s12(style="padding: 0px")
+			ul.tabs
+				li.tab.col.s3
+					a(href='/headquarter/general') General
+				li.tab.col.s3
+					a(href='/headquarter/flights') Vuelos
+				li.tab.col.s3
+					a.active(href='/headquarter/airplanes') Aviones
+				li.tab.col.s3
+					a(href='/headquarter/employees') Empleados
+		//- --------------------------------------------------------------------------------------------------------------FIN DE MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
+
+		//- ---------------------------------------------------------------------------------------------------------------------APARTADO DE AVIONES----------------------------------------------------------------------------------------------------------------------------//
+		#airplanes.container
+
+
+		//- -----------------------------------------------------------------------------------------------------------------FIN DE APARTADO DE AVIONES----------------------------------------------------------------------------------------------------------------------------//

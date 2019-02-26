@@ -1,0 +1,139 @@
+extends ../../template-admin/layout
+
+block content
+	//- --------------------------------------------------------------------------------------------------------------------------HEADER, LINKS E IMPORTACIONES----------------------------------------------------------------------------------------------------------------------------//
+	link(rel='stylesheet', href='/stylesheets/headquarter.css')
+	script(src='https://code.jquery.com/jquery-3.3.1.min.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js')
+	script(src='https://cdn.datatables.net/1.10.19/js/dataTables.material.min.js', defer)
+	script(src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js', defer)
+	link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css')
+	//- link(rel='stylesheet', href='https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css')
+	script(type='text/javascript', src='/js/admin/headquarter.js', defer)
+	//- script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBOPsZ8F4zfrxnwrPrMNmFnP_04u31ObUY&callback=initMap', type='text/javascript')
+	link(href='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css', rel='stylesheet', type='text/css')
+
+	#headquarter.col.s12
+
+	//- -------------------------------------------------------------------------------------------------------------------------MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
+	.row
+		.col.s12(style="padding: 0px")
+			ul.tabs
+				li.tab.col.s3
+					a.active(href='/headquarter/general') General
+				li.tab.col.s3
+					a(href='/headquarter/flights') Vuelos
+				li.tab.col.s3
+					a(href='/headquarter/airplanes') Aviones
+				li.tab.col.s3
+					a(href='/headquarter/employees') Empleados
+		//- --------------------------------------------------------------------------------------------------------------FIN DE MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
+
+	//- ---------------------------------------------------------------------------------------------------------------------APARTADO DE GENERAL----------------------------------------------------------------------------------------------------------------------------//
+	#general.container
+		.row
+			.col.s8
+				.card.z-depth-3
+					//- #googleMap(style='width:100%;height:400px;')
+					#map(style='width:100%;height:300px;')
+						script(type='text/javascript', src='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.js')
+						script(type='text/javascript', src='https://tiles.unwiredmaps.com/js/leaflet-unwired.js')
+						script(type='text/javascript').
+							// Maps access token goes here
+							var key = 'pk.a5c3fbf2119bfb2275b62eddbccd76b3';
+							// Add layers that we need to the map
+							var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+							// Initialize the map
+							var map = L.map('map', {
+							center: [10.597522, -67.005316], // Map loads with this location as center
+							zoom: 14,
+							scrollWheelZoom: false,
+							layers: [streets] // Show 'streets' by default
+							});
+							var marker = L.marker([10.597522, -67.005316]).addTo(map);
+							// Add the 'scale' control
+							//- L.control.scale().addTo(map);
+							marker.bindPopup(" <b style='font-family: Roboto '>Sede Caracas</b><br><p style='font-family: Roboto; font-size: 12px '>Aereopuerto Internacional de Maiquetia Simón Bolívar.</p>").openPopup();
+			.col.s4
+				.card.z-depth-3(style="height:301px; overflow: hidden;")
+					a.weatherwidget-io(href='https://forecast7.com/es/10d60n66d99/maiquetia/', data-label_1='MAIQUETÍA', data-label_2='VARGAS', data-font='Roboto', data-icons='Climacons Animated', data-days='3', data-theme='pure') MAIQUETÍA VARGAS
+					script.
+						!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+			.col.m6.s12
+				.card.z-depth-3
+					.card-content
+						.card-title(style="margin-bottom: 15px;") Número de Pistas
+						.chart-wrapper
+							canvas#myChart(width='400', height='400')
+								script.
+									var ctx = document.getElementById("myChart").getContext('2d');
+									var myChart = new Chart(ctx, {
+										type: 'bar',
+										data: {
+											labels: ["#1", "#2"],
+											datasets: [{
+												data: [3.6, 3.2],
+												backgroundColor: [
+													'rgba(255, 99, 132, 1)',
+													'rgba(54, 162, 235, 1)'
+												],
+												borderColor: [
+													'rgba(255,99,132,1)',
+													'rgba(54, 162, 235, 1)'
+												],
+												borderWidth: 1
+											}]
+										},
+										options: {
+											scales: {
+												yAxes: [{
+													ticks: {
+														beginAtZero:true,
+														callback: function(value, index, values) {
+															return value + ' km   ';
+														}
+													},
+													gridLines:{
+														tickMarkLength:15,
+														drawTicks: false
+													},
+													scaleLabel:{
+														display: true,
+														labelString: 'Distancia'
+													}
+												}],
+												xAxes: [{
+													gridLines:{
+														drawOnChartArea: false,
+														display: false
+													},
+													scaleLabel:{
+														display: true,
+														labelString: 'Pista'
+													}
+												}]
+											},
+											legend: {
+												display: false,
+												labels: {
+													// This more specific font property overrides the global property
+													fontColor: '#666',
+													fontFamily: "Roboto"
+												}
+											}
+										}
+									});
+
+			.col.m6.s12
+				.card.z-depth-3
+					.card-content(style="overflow: hidden;")
+						.col.s12
+							i.material-icons flight_takeoff
+							h4 Cantidad de Vuelos:
+						.col.s12
+							i.material-icons group
+							h4 Cantidad de Empleados:
+
+	//- ---------------------------------------------------------------------------------------------------------------------FIN APARTADO DE GENERAL----------------------------------------------------------------------------------------------------------------------------//
+
+
