@@ -2,22 +2,22 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const proveedor_alquiler = db.define('proveedor_alquiler',{
-    nombre:{
-        type: sequelize.STRING,
+const tarifas_alquiler = db.define('tarifas_alquiler',{
+    activo:{
+        type: sequelize.TINYINT,
+        defaultValue: 1,
         allowNull: false,
-        primaryKey: true,
         validate:{
-            isAlphanumeric: true,
             notEmpty: true
         }
     },
-    tiem_resp:{
+    precio:{
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
             isNumeric: true,
-            notEmpty: true
+            notEmpty: true,
+            min: 0
         }
     }
 },{
@@ -25,4 +25,4 @@ const proveedor_alquiler = db.define('proveedor_alquiler',{
     freezeTableName: true
 })
 
-module.exports = proveedor_alquiler;
+module.exports = tarifas_alquiler;
