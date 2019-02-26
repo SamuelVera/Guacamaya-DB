@@ -1,12 +1,17 @@
 $(document).ready(function () {
     $.noConflict(); //AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
+    // INICIALIZACIÓN DE TABS
     var elems = document.querySelectorAll('.tabs');
-    var options = {
-        duration: 300,
-        onShow: null,
-        swipeable: false
-    };
     // var instance = M.Tabs.init(elems, options);
+    // INICIALIZACIÓN DE FLOATING ACTION BUTTONS
+    var elems = document.querySelectorAll('.fixed-action-btn');
+    var instances = M.FloatingActionButton.init(elems);
+
+    //INICIALIZACION DE MODALES
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+
+
     var table = $('#flights-table').DataTable({
         columnDefs: [{
             targets: [0, 1, 2],
@@ -71,3 +76,15 @@ applyWhenElementExists("input", function () {
     // var buttonPrevious = '<i class="material-icons">skip_previous<i>'
     // $('.flights_first').before(buttonPrevious);
 }, 50);
+
+
+// PARA LA SELECCION DE FILAS DE LA TABLA
+$("table tr").click(function(){
+    $(this).toggleClass('selected').siblings().removeClass('selected');    
+    var value=$(this).find('td:first').html();
+    alert(value);    
+ });
+ 
+ $('.ok').on('click', function(e){
+     alert($("table tr.selected td:first").html());
+ });

@@ -455,8 +455,25 @@ block content
 								th Start date
 								th Salary
 	
-			a.btn-floating.btn-large.waves-effect.waves-light.red
+			a#add.btn-floating.btn-large.modal-trigger.waves-effect.waves-light.white(href="#add-flight")
 				i.material-icons add
+
+			a#edit.btn-floating.btn-large.modal-trigger.waves-effect.waves-light.white(href="#add-flight")
+				i.material-icons edit
+
+			a#delete.btn-floating.btn-large.modal-trigger.waves-effect.waves-light.white(href="#add-flight")
+				i.material-icons delete
 		//- --------------------------------------------------------------------------------------------------------------FIN APARTADO DE VUELOS----------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+		//- --------------------------------------------------------------------------------------------------------------MODAL DE AGREGAR VUELO----------------------------------------------------------------------------------------------------------------------------//
+	#add-flight.modal
+		.modal-content
+			h4 Agregar Vuelo
+			p A bunch of text
+		.modal-footer
+			a.modal-close.waves-effect.waves-green.btn-flat(href='#!') Agregar
 
 
