@@ -1,18 +1,12 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');    
+const aeropueto = require('./aeropuertosModel');
 
-const aero_pista = db.define('aero_pista', {
-    iata:{ //Hacer, de ser necesarias, validaciones de longitud en el front-end SOLO 3
-        type: sequelize.STRING,
-        allowNull: false,
-        validate: {
-            isAlpha: true,
-            notEmpty: true,
-        }
-    },
-    n_pista:{
+const aero_pista = db.define('aero_pistas', {
+    nro_pista:{
         type: sequelize.INTEGER,
+        primaryKey: true,
         allowNull: false,
         validate:{
             isNumeric: true,
@@ -28,8 +22,8 @@ const aero_pista = db.define('aero_pista', {
             min: 0
         }
     },
-    desp_arran:{
-        type: sequelize.TINYINT, //True para despegue y False para arranque
+    despgue_aterrizaje:{
+        type: sequelize.TINYINT, //True para despegue y False para aterrizaje
         allowNull: false,
         validate:{
             notEmpty: true
@@ -40,5 +34,11 @@ const aero_pista = db.define('aero_pista', {
     freezeTableName: true
 }
 )
+
+    //Pista pertenece a un aeropuerto (FK del aeropuerto)
+aero_pista.belongsTo(aeropueto, {
+    foreignKey: 'iata', targetKey: 'iata',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
 
 module.exports = aero_pista;

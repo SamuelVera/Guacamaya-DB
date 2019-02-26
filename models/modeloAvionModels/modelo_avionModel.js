@@ -1,11 +1,28 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
+const avion = require('../avionesModels/avionesModel');
 
 const modelo_avion = db.define('modelo_avion',{
-    modelo:{
+    numero:{
         type: sequelize.INTEGER,
         primaryKey: true,
+        allowNull: false,
+        validate:{
+            isNumeric: true,
+            notEmpty: true
+        }
+    },
+    cantidad_asientos_eje:{ //Cantidad de asientos de clase ejecutivo
+        type: sequelize.INTEGER,
+        allowNull: false,
+        validate:{
+            isNumeric: true,
+            notEmpty: true
+        }
+    },
+    cantidad_asientos_eco:{ //Cantidad de asientos de clase económica
+        type: sequelize.INTEGER,
         allowNull: false,
         validate:{
             isNumeric: true,
@@ -52,7 +69,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    dist_desp_car:{ //Distancia de despegue con la carga máxima
+    dist_despgue_qmax:{ //Distancia de despegue con la carga máxima
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -68,7 +85,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    t_combs:{ //Tipo de combustible
+    tipo_combustible:{ //Tipo de combustible
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -76,7 +93,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    cap_combs:{ //Capacidad del combustible
+    capacidad_combustible:{ //Capacidad del combustible
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -84,7 +101,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    nro_baño:{ //Cantidad de baños
+    nro_baios:{ //Cantidad de baños
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -92,7 +109,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    nro_sal:{ //Cantidad de salidas de emergencia
+    nro_salidas:{ //Cantidad de salidas de emergencia
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -116,33 +133,23 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    nro_eco:{ //Cantidad de asientos de clase económica
-        type: sequelize.INTEGER,
+    activo:{
+        type: sequelize.TINYINT,
         allowNull: false,
+        defaultValue: 1,
         validate:{
-            isNumeric: true,
-            notEmpty: true
-        }
-    },
-    nro_eje:{ //Cantidad de asientos de clase ejecutivo
-        type: sequelize.INTEGER,
-        allowNull: false,
-        validate:{
-            isNumeric: true,
-            notEmpty: true
-        }
-    },
-    fabricante:{
-        type: sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlphanumeric: true,
-            notEmpty: true
+            notEmpty
         }
     }
 },{
     timestamps: false,
     freezeTableName: true
+})
+
+    //Un modelo da especificaciones de varios aviones (La FK va al avión)
+modelo_avion.hasMany(avion, {
+    foreignKey: 'modelo', sourceKey: 'numero',
+    onDelete: 'SET NULL', onUpdate: 'CASCADE'
 })
 
 module.exports = modelo_avion;
