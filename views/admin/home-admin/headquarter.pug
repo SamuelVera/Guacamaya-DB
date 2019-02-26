@@ -14,6 +14,8 @@ block content
 	link(href='https://leafletjs-cdn.s3.amazonaws.com/content/leaflet/master/leaflet.css', rel='stylesheet', type='text/css')
 	//- --------------------------------------------------------------------------------------------------------------------FIN HEADER, LINKS E IMPORTACIONES----------------------------------------------------------------------------------------------------------------------------//
 
+	#headquarter.col.s12
+
 	//- -------------------------------------------------------------------------------------------------------------------------MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
 	.row
 		.col.s12(style="padding: 0px")
@@ -21,9 +23,9 @@ block content
 				li.tab.col.s3
 					a.active(href='#general') General
 				li.tab.col.s3
-					a.active(href='#flights') Vuelos
+					a(href='#flights') Vuelos
 				li.tab.col.s3
-					a.active(href='#airplanes') Aviones
+					a(href='#airplanes') Aviones
 				li.tab.col.s3
 					a(href='#employees') Empleados
 		//- --------------------------------------------------------------------------------------------------------------FIN DE MENÚ DE NAVEGACIÓN----------------------------------------------------------------------------------------------------------------------------//
@@ -62,46 +64,67 @@ block content
 				.col.m6.s12
 					.card.z-depth-3
 						.card-content
-							.card-title Número de Pistas
-							canvas#myChart(width='400', height='400')
-								script.
-									var ctx = document.getElementById("myChart").getContext('2d');
-									var myChart = new Chart(ctx, {
-										type: 'bar',
-										data: {
-											labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-											datasets: [{
-												label: '# of Votes',
-												data: [12, 19, 3, 5, 2, 3],
-												backgroundColor: [
-													'rgba(255, 99, 132, 0.2)',
-													'rgba(54, 162, 235, 0.2)',
-													'rgba(255, 206, 86, 0.2)',
-													'rgba(75, 192, 192, 0.2)',
-													'rgba(153, 102, 255, 0.2)',
-													'rgba(255, 159, 64, 0.2)'
-												],
-												borderColor: [
-													'rgba(255,99,132,1)',
-													'rgba(54, 162, 235, 1)',
-													'rgba(255, 206, 86, 1)',
-													'rgba(75, 192, 192, 1)',
-													'rgba(153, 102, 255, 1)',
-													'rgba(255, 159, 64, 1)'
-												],
-												borderWidth: 1
-											}]
-										},
-										options: {
-											scales: {
-												yAxes: [{
-													ticks: {
-														beginAtZero:true
-													}
+							.card-title(style="margin-bottom: 15px;") Número de Pistas
+							.chart-wrapper
+								canvas#myChart(width='400', height='400')
+									script.
+										var ctx = document.getElementById("myChart").getContext('2d');
+										var myChart = new Chart(ctx, {
+											type: 'bar',
+											data: {
+												labels: ["#1", "#2"],
+												datasets: [{
+													data: [3.6, 3.2],
+													backgroundColor: [
+														'rgba(255, 99, 132, 1)',
+														'rgba(54, 162, 235, 1)'
+													],
+													borderColor: [
+														'rgba(255,99,132,1)',
+														'rgba(54, 162, 235, 1)'
+													],
+													borderWidth: 1
 												}]
+											},
+											options: {
+												scales: {
+													yAxes: [{
+														ticks: {
+															beginAtZero:true,
+															callback: function(value, index, values) {
+																return value + ' km   ';
+															}
+														},
+														gridLines:{
+															tickMarkLength:15,
+															drawTicks: false
+														},
+														scaleLabel:{
+															display: true,
+															labelString: 'Distancia'
+														}
+													}],
+													xAxes: [{
+														gridLines:{
+															drawOnChartArea: false,
+															display: false
+														},
+														scaleLabel:{
+															display: true,
+															labelString: 'Pista'
+														}
+													}]
+												},
+												legend: {
+													display: false,
+													labels: {
+														// This more specific font property overrides the global property
+														fontColor: '#666',
+														fontFamily: "Roboto"
+													}
+												}
 											}
-										}
-									});
+										});
 		//- ---------------------------------------------------------------------------------------------------------------------FIN APARTADO DE GENERAL----------------------------------------------------------------------------------------------------------------------------//
 
 		//- ---------------------------------------------------------------------------------------------------------------------APARTADO DE VUELOS----------------------------------------------------------------------------------------------------------------------------//
@@ -111,7 +134,7 @@ block content
 						h5(style="margin-top:10px") A continación se muestran todos los vuelos de la sede
 
 			.card.z-depth-3
-				.card-content
+				.card-content.table
 					table#flights-table.mdl-data-table(style='width:100%;')
 						thead
 							tr
@@ -546,7 +569,7 @@ block content
 			#title-employees.col.s12 Empleados
 				h5(style="margin-top:10px") A continación se muestran todos los empleados de la sede
 			.card.z-depth-3
-				.card-content
+				.card-content.table
 					table#employees-table.mdl-data-table(style='width:100%;')
 						thead
 							tr
