@@ -80,9 +80,30 @@ applyWhenElementExists("input", function () {
 
 // PARA LA SELECCION DE FILAS DE LA TABLA
 $("table tr").click(function(){
-    $(this).toggleClass('selected').siblings().removeClass('selected');    
-    var value=$(this).find('td:first').html();
-    alert(value);    
+
+    if(!$(this).hasClass('selected')){
+        $(this).addClass('selected').siblings().removeClass('selected');    
+        var value=$(this).find('td:first').html();
+        alert(value);    
+        
+        var btnEdit = $('#edit');
+        var btnDelete = $('#delete');
+    
+        btnEdit.css('transform', 'translateX(0%)');
+        btnDelete.css('transform', 'translateX(0%)');
+    }else{
+        $(this).removeClass('selected').siblings().removeClass('selected');    
+        var value=$(this).find('td:first').html();
+        alert(value);    
+        
+        var btnEdit = $('#edit');
+        var btnDelete = $('#delete');
+    
+        btnEdit.css('transform', 'translateX(200%)');
+        btnDelete.css('transform', 'translateX(200%)');
+    }
+
+
  });
  
  $('.ok').on('click', function(e){
