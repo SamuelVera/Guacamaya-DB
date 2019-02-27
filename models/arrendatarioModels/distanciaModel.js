@@ -2,7 +2,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const distancia = db.define('distancias',{
+const distancias = db.define('distancias',{
     distancia_min:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -30,15 +30,15 @@ const distancia = db.define('distancias',{
 })
 
     //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-distancia.belongsToMany(arrendatario,{
+distancia.belongsToMany(arrendatarios,{
     through: [tarifas_alquiler], foreignKey: 'distancia_min',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
     //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-distancia.belongsToMany(arrendatario,{
+distancia.belongsToMany(arrendatarios,{
     through: [tarifas_alquiler], foreignKey: 'distancia_max',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
-module.exports = distancia;
+module.exports = distancias;

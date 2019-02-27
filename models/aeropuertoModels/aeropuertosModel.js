@@ -4,7 +4,7 @@ const db = require('../../config/guacamaya_db');
 const aero_pista = require('./aero_pistaModel');
 const ruta = require('../rutaModels/rutaModel');
 
-const aeropuerto = db.define('aeropuertos',
+const aeropuertos = db.define('aeropuertos',
 {
     iata:{ //Hacer validaciones de longitud en el front-end SOLO 3
         type: sequelize.STRING,
@@ -64,4 +64,4 @@ aeropuerto.hasMany(ruta, {
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
-module.exports = aeropuerto
+module.exports = aeropuertos;

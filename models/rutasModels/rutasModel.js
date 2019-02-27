@@ -3,7 +3,7 @@ const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const aeropuerto = require('../aeropuertoModels/aeropuertosModel');
 
-const ruta = db.define('rutas', {
+const rutas = db.define('rutas', {
     numero:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -13,27 +13,19 @@ const ruta = db.define('rutas', {
             notEmpty: true
         }
     },
-    /*origen:{
-        type: sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlpha: true,
-            notEmpty: true,
-        }
-    },
-    destino:{
-        type: sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlpha: true,
-            notEmpty: true,
-        }
-    },*/
     distancia:{
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
             isNumeric: true,
+            notEmpty: true
+        }
+    },
+    activo:{
+        type: sequelize.TINYINT,
+        allowNull: false,
+        defaultValue: 1,
+        validate:{
             notEmpty: true
         }
     }
@@ -52,4 +44,4 @@ onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 ruta.belongsTo(aeropuerto, {foreignKey: 'destino', targetKey: 'iata',
 onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 
-module.exports = ruta;
+module.exports = rutas;

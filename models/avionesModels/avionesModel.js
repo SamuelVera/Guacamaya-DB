@@ -6,7 +6,7 @@ const modelo = require('../modeloAvionModels/modelo_avionModel');
 const avion_alquilado = require('./avion_alquiladoModel');
 const avion_mantenimiento = require('./avion_mantenimientoModel');
 
-const avion = db.define('aviones',{
+const aviones = db.define('aviones',{
     nro_fab:{
         type:sequelize.INTEGER,
         primaryKey: true,
@@ -84,4 +84,4 @@ avion.hasMany(avion_alquilado, {
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
-module.exports = avion;
+module.exports = aviones;

@@ -3,7 +3,7 @@ const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const avion_mantenimiento = require('./avion_mantenimientoModel');
 
-const mantenimiento = db.define('mantenimientos',{
+const mantenimientos = db.define('mantenimientos',{
     codigo:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -32,4 +32,4 @@ mantenimiento.hasMany(avion_mantenimiento, {
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
-module.exports = mantenimiento;
+module.exports = mantenimientos;

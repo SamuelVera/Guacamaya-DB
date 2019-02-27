@@ -1,9 +1,9 @@
     //Importaciones
 const sequelize = require('sequelize');
-const db = require('../config/guacamaya_db');
+const db = require('../../config/guacamaya_db');
 
-const empleado = db.define('empleados',{
-    cedula:{
+const compras = db.define('compras',{
+    numero_factura:{
         type: sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -12,37 +12,27 @@ const empleado = db.define('empleados',{
             notEmpty: true
         }
     },
-    apellido:{
-        type: sequelize.STRING,
+    cantidad_pasajes:{
+        type: sequelize.INTEGER,
         allowNull: false,
         validate:{
-            isAlpha: true,
+            isNumeric: true,
             notEmpty: true
         }
     },
-    nombre:{
-        type: sequelize.STRING,
+    fecha:{
+        type: sequelize.DATE,
         allowNull: false,
         validate:{
-            isAlpha: true,
-            notEmpty: true
-        }
-    }
-    /*nro_departamento*/
-    ,
-    profesion:{
-        type: sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlpha: true,
+            isDate: true,
             notEmpty: true
         }
     },
-    cargo:{
-        type: sequelize.STRING,
+    monto:{
+        type: sequelize.INTEGER,
         allowNull: false,
         validate:{
-            isAlpha: true,
+            isNumeric: true,
             notEmpty: true
         }
     },
@@ -54,9 +44,10 @@ const empleado = db.define('empleados',{
             notEmpty: true
         }
     }
+    /*Cédula comprador*/
 },{
     timestamps: false,
     freezeTableName: true
 })
 
-module.exports = empleado;
+module.exports = compras;

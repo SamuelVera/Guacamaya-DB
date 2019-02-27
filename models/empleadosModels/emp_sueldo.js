@@ -3,16 +3,10 @@ const sequelize = require('sequelize');
 const db = require('../config/guacamaya_db');
 
 const emp_sueldo = db.define('emp_sueldos',{
-    ci:{
-        type: sequelize.INTEGER,
-        allowNull: false,
-        validate:{
-            isNumeric: true,
-            notEmpty: true
-        }
-    },
+    /*cedula*/
     fecha:{
         type: sequelize.DATE,
+        primaryKey: true,
         allowNull: false,
         validate:{
             isDate: true,

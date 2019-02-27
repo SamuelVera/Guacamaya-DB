@@ -3,17 +3,10 @@ const sequelize = require('sequelize');
 const db = require('../config/guacamaya_db');
 
 const emp_telefono = db.define('emp_telefono',{
-    ci:{
-        type: sequelize.INTEGER,
-        allowNull: false,
-        validate:{
-            isNumeric: true,
-            notEmpty: true
-        }
-    },
+    /*cedula*/
     telefono:{
         type: sequelize.INTEGER,
-        unique: true,
+        primaryKey: true,
         allowNull: false,
         validate:{
             isNumeric: true,

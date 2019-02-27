@@ -2,23 +2,16 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const departamentos = db.define('departamentos',{
-    /*iata*/
-    numero:{
+const temporada_tarifa = db.define('temporada-tarifa',{
+    /*codigo_tarifa
+    codigo_temporada*/
+    monto:{
         type: sequelize.INTEGER,
-        primaryKey: true,
         allowNull: false,
         validate:{
             isNumeric: true,
-            notEmpty: true
-        }
-    },
-    nombre:{
-        type: sequelize.STRING,
-        allowNull: false,
-        validate:{
-            isAlpha,
-            notEmpty: true
+            notEmpty: true,
+            min: 0
         }
     },
     activo:{
@@ -34,4 +27,4 @@ const departamentos = db.define('departamentos',{
     freezeTableName: true
 })
 
-module.exports = departamentos;
+module.exports = temporada_tarifa;
