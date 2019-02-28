@@ -3,8 +3,6 @@ const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
 const temporada_tarifa = db.define('temporada-tarifa',{
-    /*codigo_tarifa
-    codigo_temporada*/
     monto:{
         type: sequelize.INTEGER,
         allowNull: false,

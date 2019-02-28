@@ -30,15 +30,15 @@ const arrendatarios = db.define('arrendatarios',{
 })
 
     //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-arrendatario.belongsToMany(distancias, {
-    through: [tarifas_alquiler], foreignKey: 'nombre_arrendatario' ,
+arrendatarios.belongsToMany(distancias, {
+    through: tarifas_alquiler, foreignKey: 'nombre_arrendatario' ,
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
     //Arrendatario alquila varios aviones (La FK va al avión)
-arrendatario.hasMany(avion_alquilado, { 
+arrendatarios.hasMany(avion_alquilado, { 
     foreignKey: 'nombre_arrendatario', sourceKey: 'nombre',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+    onDelete: 'CASCADE', onUpdate: 'CASCADE', on
 })
 
 module.exports = arrendatarios;

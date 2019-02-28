@@ -2,6 +2,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const avion_mantenimiento = require('./avion_mantenimientoModel');
+const aviones = require('./avionesModel');
 
 const mantenimientos = db.define('mantenimientos',{
     codigo:{
@@ -26,9 +27,10 @@ const mantenimientos = db.define('mantenimientos',{
     freezeTableName: true
 })
 
-    //Un mantenimiento se le aplica a varios aviones (FK va al avión)
-mantenimiento.hasMany(avion_mantenimiento, {
-    foreignKey: 'codigo_mantenimiento', sourceKey: 'codigo',
+    //Se agrega la PK como FK a avion_mantenimiento
+    //M:N aviones-mantenimientos
+mantenimientos.belongsToMany(aviones,{
+    through: avion_mantenimiento, foreignKey: 'codigo_mantenimiento',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 

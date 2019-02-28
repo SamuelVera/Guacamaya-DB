@@ -2,6 +2,8 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const aeropuerto = require('../aeropuertoModels/aeropuertosModel');
+const vuelos = require('../vuelosModels/vuelosModel');
+const aviones = require('../avionesModels/avionesModel');
 
 const rutas = db.define('rutas', {
     numero:{
@@ -36,12 +38,26 @@ const rutas = db.define('rutas', {
 
     //La ruta tiene un origen que es un aeropuerto
     //(La FK se coloca en la ruta)
-ruta.belongsTo(aeropuerto, {foreignKey: 'origen', targetKey: 'iata',
+rutas.belongsTo(aeropuerto, {foreignKey: 'origen', targetKey: 'iata',
 onDelete: 'CASCADE', onUpdate: 'CASCADE'})
 
     //La ruta tiene un destino que es un aeropuerto
     //(La FK se coloca en la ruta)
-ruta.belongsTo(aeropuerto, {foreignKey: 'destino', targetKey: 'iata',
-onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+rutas.belongsTo(aeropuerto, {
+    foreignKey: 'destino', targetKey: 'iata',
+onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+    //Se agrega el codigo de ruta como FK al vuelo
+rutas.hasMany(vuelos, {
+    foreignKey: 'nro_ruta', sourceKey: 'numero',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+    //Se agrega el codigo de ruta como FK al avion
+rutas.hasMany(aviones, {
+    foreignKey: 'nro_ruta', sourceKey: 'numero',
+    onDelete: 'SET NULL', onUpdate: 'CASCADE'
+})
 
 module.exports = rutas;

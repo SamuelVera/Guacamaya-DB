@@ -1,9 +1,9 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
+const vuelos = require('./vuelosModel');
 
 const vuelo_salida = db.define('vuelo_salida',{
-    /*Código Vuelo*/
     peso_avion:{
         type: sequelize.INTEGER,
         allowNull: false,
@@ -24,6 +24,12 @@ const vuelo_salida = db.define('vuelo_salida',{
 },{
     timestamps: false,
     freezeTableName: true
+})
+
+    //Se agrega la PK de vuelo como FK del vuelo_salida
+vuelo_salida.belongsTo(vuelos, {
+    foreignKey: 'codigo_vuelo', targetKey: 'codigo_vuelo',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
 module.exports = vuelo_salida;

@@ -30,14 +30,14 @@ const distancias = db.define('distancias',{
 })
 
     //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-distancia.belongsToMany(arrendatarios,{
-    through: [tarifas_alquiler], foreignKey: 'distancia_min',
+distancias.belongsToMany(arrendatarios,{
+    through: tarifas_alquiler, foreignKey: 'distancia_min',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
     //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-distancia.belongsToMany(arrendatarios,{
-    through: [tarifas_alquiler], foreignKey: 'distancia_max',
+distancias.belongsToMany(arrendatarios,{
+    through: tarifas_alquiler, foreignKey: 'distancia_max',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 

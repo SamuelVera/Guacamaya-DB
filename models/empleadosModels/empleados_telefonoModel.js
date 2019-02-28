@@ -1,9 +1,9 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../config/guacamaya_db');
+const empleados = require('./empleadosModel');
 
-const emp_telefono = db.define('emp_telefono',{
-    /*cedula*/
+const empleados_telefono = db.define('empleados_telefono',{
     telefono:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -18,4 +18,10 @@ const emp_telefono = db.define('emp_telefono',{
     freezeTableName: true
 })
 
-module.exports = emp_telefono;
+    //El empleado_sueldo adquiere la PK de empleados como FK
+empleados_telefono.belongsTo(empleados, {
+    foreignKey: 'cedula', targetKey: 'cedula',
+onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+module.exports = empleados_telefono;

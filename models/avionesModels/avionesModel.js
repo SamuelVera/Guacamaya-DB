@@ -5,6 +5,7 @@ const ruta = require('../rutaModels/rutaModel');
 const modelo = require('../modeloAvionModels/modelo_avionModel');
 const avion_alquilado = require('./avion_alquiladoModel');
 const avion_mantenimiento = require('./avion_mantenimientoModel');
+const mantenimientos = require('./mantenimientoModel');
 
 const aviones = db.define('aviones',{
     nro_fab:{
@@ -59,28 +60,28 @@ const aviones = db.define('aviones',{
 })
 
     //Un avión tiene un modelo (FK del modelo)
-avion.belongsTo(modelo, {
+aviones.belongsTo(modelo, {
     foreignKey: 'modelo', targetKey: 'numero',
     onDelete: 'SET NULL', onUpdate:'CASCADE',
 })
 
     //Un avión tiene una ruta (FK de la ruta)
-avion.belongsTo(ruta, {
+aviones.belongsTo(ruta, {
     foreignKey: 'nro_ruta', targetKey: 'numero',
     onDelete: 'SET NULL', onUpdate:'CASCADE'
 })
 
-    //Resulta de la normalización de avión para evitar redundancia
-    //(FK va a la relación avion_mantenimiento)
-avion.hasMany(avion_mantenimiento, {
-    foreignKey: 'nro_avion', sourceKey: 'nro_fab',
+    //Resulta de la normalización de avión para evitar nulls y redundancia
+    //(FK va a la relación avion_alquilado)
+aviones.hasMany(avion_alquilado, {
+    foreignKey: 'avion', sourceKey: 'nro_fab',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
-    //Resulta de la normalización de avión para evitar nulls y redundancia
-    //(FK va a la relación avion_alquilado)
-avion.hasMany(avion_alquilado, {
-    foreignKey: 'avion', sourceKey: 'nro_fab',
+    //Se agrega la PK como FK a avion_mantenimiento
+    //M:N aviones-mantenimientos
+aviones.belongsToMany(mantenimientos,{
+    through: avion_mantenimiento, foreignKey: 'nro_avion',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 

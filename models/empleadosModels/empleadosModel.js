@@ -1,8 +1,11 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../config/guacamaya_db');
+const departamentos = require('../departamentosModels/departamentosModel');
+const empleados_sueldo = require('./empleados_sueldoModel');
+const empleados_telefono = require('./empleados_telefonoModel');
 
-const empleado = db.define('empleados',{
+const empleados = db.define('empleados',{
     cedula:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -27,9 +30,7 @@ const empleado = db.define('empleados',{
             isAlpha: true,
             notEmpty: true
         }
-    }
-    /*nro_departamento*/
-    ,
+    },
     profesion:{
         type: sequelize.STRING,
         allowNull: false,
@@ -59,4 +60,22 @@ const empleado = db.define('empleados',{
     freezeTableName: true
 })
 
-module.exports = empleado;
+    //El empleado adquiere la PK de departamento como FK
+empleados.belongsTo(departamentos, {
+    foreignKey: 'nro_departamento', targetKey: 'numero',
+onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+    //La PK de empelado se pone como FK del empleado_sueldo
+empleados.hasMany(empleados_sueldo, {
+    foreignKey: 'cedula', sourceKey: 'cedula',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+    //La PK de empelado se pone como FK del empleado_telefono
+empleados.hasMany(empleados_telefono, {
+    foreignKey: 'cedula', sourceKey: 'cedula',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+
+module.exports = empleados;

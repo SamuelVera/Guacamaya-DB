@@ -1,9 +1,9 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
+const tarifas = require('./tarifasModel');
 
 const tarifa_mano = db.define('tarifa_mano',{
-    /*codigo*/
     cantidad_equipaje_mano:{
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -33,6 +33,12 @@ const tarifa_mano = db.define('tarifa_mano',{
 },{
     timestamps: false,
     freezeTableName: true
+})
+
+    //Agregar la PK de tarifas como FK
+tarifa_mano.belongsTo(tarifas, {
+    foreignKey: 'codigo', targetKey: 'codigo',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
 module.exports = tarifa_mano;
