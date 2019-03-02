@@ -9,3 +9,40 @@
     color: whitesmoke;
 }
 
+
+#world-map{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+#us-map{
+    position: relative;
+    /* width: 100%; */
+    transform: scale(0.7);
+    top: -80px;
+    left: -115px;
+    margin-bottom: -165px;
+}
+
+#GA, #FL, #NY {
+    fill: #ef5350!important;
+    transition: fill 1s;
+}
+
+
+#GA:hover, #FL:hover, #NY:hover {
+    cursor: pointer;
+    fill: #b71c1c!important;
+}
+
+.ve, .us, .fr, .ae {
+    fill: #ef5350!important;
+    transition: fill 1s;
+}
+
+
+.ve:hover, .us:hover, .fr:hover, .ae:hover {
+    cursor: pointer;
+    fill: #b71c1c!important;
+}

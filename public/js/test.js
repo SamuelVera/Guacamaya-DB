@@ -1,8 +1,8 @@
 
 // INICIALIZACION DE LOS BOTONES FLOTANTES
-document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.fixed-action-btn');
-    var instances = M.FloatingActionButton.init(elems, {direction: "left"})});
+// document.addEventListener('DOMContentLoaded', function() {
+//     var elems = document.querySelectorAll('.fixed-action-btn');
+//     var instances = M.FloatingActionButton.init(elems, {direction: "left"})});
 
     // $(".responsive-table tr").click(function(){
     //     $(this).addClass('selected').siblings().removeClass('selected');
@@ -32,16 +32,21 @@ if(mm<10) {
 today = mm + '/' + dd + '/' + yyyy;
 return today;
 }
-
 // INICIALIZACION DEL SIDENAV
-$(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
-
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.sidenav');
+  var instances = M.Sidenav.init(elems);
 // INICIALIZACIOON DE LOS COLLAPSIBLES
-$(document).ready(function(){
-    $('.collapsible').collapsible();
- });
+  var elems1 = document.querySelectorAll('.collapsible');
+  var instances1 = M.Collapsible.init(elems1);
+});
+
+// $(document).ready(function(){
+//     // $.noConflict();
+//     $('.sidenav').sidenav();
+
+//     $('.collapsible').collapsible();
+//   });
 
 //CUANDO SE LE DE CLICK A UN TITULO DEL SIDENAV CAMBIARÁ EL ESTILO DE SU COLLAPSIBLE QUE TIENE ADENTRO
 $(".collapsible-header").click(function(){
@@ -74,17 +79,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // <-----------------------------------------------------------------------------------------------------------VISTA DE ADMIN--------------------------------------------------------------------------------------------------------------------->
 
-  $(document).ready(function() {
-    $.noConflict();//AAAAAAAAAAAAAAAHHHHHHHHHHHHHH LA SOLUCION A TODOS MIS PROBLEMAS
-    var table =$('#flights').DataTable( {
-        columnDefs: [
-            {
-                targets: [ 0, 1, 2 ],
-                className: 'mdl-data-table__cell--non-numeric'
-            }
-        ]
-    } );
-} );
+
+
+     // <-----------------------------------------------------------------------------------------------------------MODAL EN MAPA PARA SELECCIONAR SEDE DE AEREOLINEA--------------------------------------------------------------------------------------------------------------------->
+
+
+  // <-----------------------------------------------------------------------------------------------------------MAPA EN VISTA DE AEREOLINEA--------------------------------------------------------------------------------------------------------------------->
+//    function myMap() {
+//     var mapProp= {
+//       center:new google.maps.LatLng(51.508742,-0.120850),
+//       zoom:5,
+//     };
+//     var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+//     }
 
 
 // $("#pages").focusin(function(){
