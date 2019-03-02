@@ -3,14 +3,31 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
-/* GET home page. */
+/* GET home user page. */
 router.get('/', (req, res, next) => {
   res.render(require.resolve('../views/user/home-user/index.pug'), { title: 'Guacamaya Airlines' });
 });
 
-/* GET home page. */
+/* GET home-admin page. */
 router.get('/home-admin', (req, res, next) => {
   res.render(require.resolve('../views/admin/home-admin/index.pug'), { title: 'Guacamaya Airlines' });
+});
+
+/* GET headquarter general page. */
+router.get('/headquarter/general', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/headquarter-tabs/general.pug'), { title: 'Guacamaya Airlines' });
+});
+/* GET headquarter flights page. */
+router.get('/headquarter/flights', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/headquarter-tabs/flights.pug'), { title: 'Guacamaya Airlines' });
+});
+/* GET headquarter airplanes page. */
+router.get('/headquarter/airplanes', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/headquarter-tabs/airplanes.pug'), { title: 'Guacamaya Airlines' });
+});
+/* GET headquarter employees page. */
+router.get('/headquarter/employees', (req, res, next) => {
+  res.render(require.resolve('../views/admin/home-admin/headquarter-tabs/employees.pug'), { title: 'Guacamaya Airlines' });
 });
 
   /* GET Flights Administration page. */
