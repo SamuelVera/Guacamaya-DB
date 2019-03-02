@@ -6,6 +6,7 @@ const modelo = require('../modeloAvionModels/modelo_avionModel');
 const avion_alquilado = require('./avion_alquiladoModel');
 const avion_mantenimiento = require('./avion_mantenimientoModel');
 const mantenimientos = require('./mantenimientoModel');
+const vuelo_salida = require('../vuelosModels/vuelo_salidaModel');
 
 const aviones = db.define('aviones',{
     nro_fab:{
@@ -77,6 +78,13 @@ aviones.hasMany(avion_alquilado, {
     foreignKey: 'avion', sourceKey: 'nro_fab',
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
+
+    //Avión con vuelos que han salido, la PK del avión va a la FK de vuelo_salida
+aviones.hasMany(vuelo_salida, {
+    foreignKey: 'nro_avion', sourceKey: 'nro_fab',
+    onDelete: 'CASCADE', onUpdate: 'CASCADE'
+})
+    
 
     //Se agrega la PK como FK a avion_mantenimiento
     //M:N aviones-mantenimientos

@@ -5,15 +5,6 @@ const arrendatarios = require('../arrendatarioModels/arrendatariosModel');
 const aviones = require('./avionesModel');
 
 const avion_alquilado = db.define('avion_alquilado',{
-    gasto:{
-        tpye: sequelize.INTEGER,
-        allowNull: false,
-        validate:{
-            notEmpty: true,
-            isNumeric: true,
-            min: 0
-        }
-    },
     fecha:{
         type: sequelize.DATE,
         primaryKey: true,
