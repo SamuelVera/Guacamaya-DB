@@ -81,14 +81,18 @@ app.use(
   app.use(errorHandlers.notFound);
 
   // Si el error es del cliente le advertimos con un flash
- app.use(errorHandlers.flashValidationErrors);
+  app.use(errorHandlers.flashValidationErrors);
 
  // Si estamos desarrollando y la app falla veamos donde esta el error
- if(app.get("env") === "development") {
-  app.use(errorHandlers.developmentErrors);
- }
+  if(app.get("env") === "development") {
+    app.use(errorHandlers.developmentErrors);
+  }
 
 // Si la app falla y estamos en produccion los errores cambian
-app.use(errorHandlers.productionErrors);
+  app.use(errorHandlers.productionErrors);
+
+  app.use((req, res, next) => {
+    res.locals.mensajeError = req.flash('mensajeError')
+  })
 
 module.exports = app;

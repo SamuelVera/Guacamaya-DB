@@ -2,8 +2,8 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const aero_pistas = db.define('aero_pistas', {
-    nro_pista:{
+const pasajes = db.define('pasajes',{
+    serial_num:{
         type: sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -12,20 +12,27 @@ const aero_pistas = db.define('aero_pistas', {
             notEmpty: true
         }
     },
-    longitud:{
+    abordado:{
+        type: sequelize.TINYINT,
+        allowNull: false,
+        defaultValue: 0,
+        validate:{
+            notEmpty: true
+        }
+    },
+    numero_asiento:{
+        type: sequelize.INTEGER,
+        validate:{
+            isNumeric: true,
+        }
+    },
+    cantidad_equipaje:{
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
             isNumeric: true,
             notEmpty: true,
             min: 0
-        }
-    },
-    despegue_aterrizaje:{
-        type: sequelize.TINYINT, //True para despegue y False para aterrizaje
-        allowNull: false,
-        validate:{
-            notEmpty: true
         }
     },
     activo:{
@@ -41,4 +48,4 @@ const aero_pistas = db.define('aero_pistas', {
     freezeTableName: true
 })
 
-module.exports = aero_pistas;
+module.exports = pasajes;

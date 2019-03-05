@@ -2,23 +2,21 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const avion_mantenimiento = db.define('avion_mantenimiento',{
-    fecha_entrada:{
+const empleados_sueldo = db.define('empleados_sueldo',{
+    fecha:{
         type: sequelize.DATE,
         primaryKey: true,
         allowNull: false,
         validate:{
             isDate: true,
-            isAfter: new Date(),
             notEmpty: true
         }
     },
-    fecha_salida:{
-        type: sequelize.DATE,
+    sueldo:{
+        type: sequelize.INTEGER,
         allowNull: false,
         validate:{
-            isDate: true,
-            isAfter: new Date(),
+            isNumeric: true,
             notEmpty: true
         }
     }
@@ -27,4 +25,4 @@ const avion_mantenimiento = db.define('avion_mantenimiento',{
     freezeTableName: true
 })
 
-module.exports = avion_mantenimiento;
+module.exports = empleados_sueldo ;

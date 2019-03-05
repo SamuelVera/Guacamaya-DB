@@ -1,7 +1,6 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
-const avion = require('../avionesModels/avionesModel');
 
 const modelo_avion = db.define('modelo_avion',{
     numero:{
@@ -138,18 +137,12 @@ const modelo_avion = db.define('modelo_avion',{
         allowNull: false,
         defaultValue: 1,
         validate:{
-            notEmpty
+            notEmpty: true
         }
     }
 },{
     timestamps: false,
     freezeTableName: true
-})
-
-    //Un modelo da especificaciones de varios aviones (La FK va al avión)
-modelo_avion.hasMany(avion, {
-    foreignKey: 'modelo', sourceKey: 'numero',
-    onDelete: 'SET NULL', onUpdate: 'CASCADE'
 })
 
 module.exports = modelo_avion;

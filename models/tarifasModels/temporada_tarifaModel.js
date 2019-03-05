@@ -1,22 +1,22 @@
     //Importaciones
 const sequelize = require('sequelize');
-const db = require('../config/guacamaya_db');
+const db = require('../../config/guacamaya_db');
 
-const emp_telefono = db.define('emp_telefono',{
-    ci:{
+const temporada_tarifa = db.define('temporada_tarifa',{
+    monto:{
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
             isNumeric: true,
-            notEmpty: true
+            notEmpty: true,
+            min: 0
         }
     },
-    telefono:{
-        type: sequelize.INTEGER,
-        unique: true,
+    activo:{
+        type: sequelize.TINYINT,
         allowNull: false,
+        defaultValue: 1,
         validate:{
-            isNumeric: true,
             notEmpty: true
         }
     }
@@ -25,4 +25,4 @@ const emp_telefono = db.define('emp_telefono',{
     freezeTableName: true
 })
 
-module.exports = emp_telefono;
+module.exports = temporada_tarifa;

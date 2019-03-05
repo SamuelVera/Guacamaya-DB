@@ -1,35 +1,36 @@
     //Importaciones
 const sequelize = require('sequelize');
-const db = require('../config/guacamaya_db');
+const db = require('../../config/guacamaya_db');
 
-const emp_sueldo = db.define('emp_sueldos',{
-    ci:{
+const temporadas = db.define('temporadas',{
+    codigo:{
         type: sequelize.INTEGER,
+        primaryKey: true,
         allowNull: false,
         validate:{
             isNumeric: true,
             notEmpty: true
         }
     },
-    fecha:{
-        type: sequelize.DATE,
+    tipo:{
+        type: sequelize.STRING,
         allowNull: false,
         validate:{
-            isDate: true,
+            isAlpha: true,
             notEmpty: true
         }
     },
-    sueldo:{
-        type: sequelize.FLOAT,
+    activo:{
+        type: sequelize.TINYINT,
         allowNull: false,
+        defaultValue: 1,
         validate:{
-            isNumeric: true,
             notEmpty: true
         }
     }
 },{
-    timestamps: false,
+    timestamps:false,
     freezeTableName: true
 })
 
-module.exports = emp_sueldo;
+module.exports = temporadas;
