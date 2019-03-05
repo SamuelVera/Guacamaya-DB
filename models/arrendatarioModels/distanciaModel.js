@@ -32,16 +32,18 @@ const distancias = db.define('distancias',{
             notEmpty: true,
             isNumeric: true
         }
+    },
+    activo:{
+        type: sequelize.TINYINT,
+        allowNull: false,
+        defaultValue: 1,
+        validate:{
+            notEmpty: true
+        }
     }
 },{
     timestamps: false,
     freezeTableName: true
-})
-
-    //Arrendatario N:M Distancias, en el model de tarifa_alquiler se agrega la FK
-distancias.belongsToMany(arrendatarios,{
-    through: tarifas_alquiler, foreignKey: 'codigo_distancia',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
 module.exports = distancias;

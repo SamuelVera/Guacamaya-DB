@@ -2,7 +2,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const temporada_tarifa = db.define('temporada-tarifa',{
+const temporada_tarifa = db.define('temporada_tarifa',{
     monto:{
         type: sequelize.INTEGER,
         allowNull: false,

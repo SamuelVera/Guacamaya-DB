@@ -1,8 +1,6 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
-const mantenimientos = require('./mantenimientoModel');
-const aviones = require('./avionesModel');
 
 const avion_mantenimiento = db.define('avion_mantenimiento',{
     fecha_entrada:{

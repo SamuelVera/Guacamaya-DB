@@ -1,9 +1,6 @@
     //Importaciones
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
-const aero_pista = require('./aero_pistaModel');
-const ruta = require('../rutaModels/rutaModel');
-const departamentos = require('../departamentosModels/departamentosModel');
 
 const aeropuertos = db.define('aeropuertos',
 {
@@ -38,37 +35,12 @@ const aeropuertos = db.define('aeropuertos',
         allowNull: false,
         defaultValue: 1,
         validate:{
-            notEmpty
+            notEmpty: true
         }
     }
 }, {
     timestamps: false,
     freezeTableName: true
-})
-
-    //Un aeropuerto tiene múltiples pistas (Resulta de mapear el multivaluado)
-    //(La FK va a la pista)
-aeropuertos.hasMany(aero_pista, {
-    sourceKey: 'iata', foreignKey: 'iata',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
-})
-
-    //Un aeropuerto es origen de varias rutas (La FK va a la ruta)
-aeropuertos.hasMany(ruta, {
-    foreignKey: 'origen', sourceKey: 'iata',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
-})
-
-    //Un aeropuerto es destino de varias rutas (La FK va a la ruta)
-aeropuertos.hasMany(ruta, {
-    foreignKey: 'destino', sourceKey: 'iata',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
-})
-
-    //Un aeropuerto tiene varios departamentos (La FK va al departamento)
-aeropuertos.hasMany(departamentos, {
-    foreignKey: 'iata', sourceKey: 'iata',
-    onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
 module.exports = aeropuertos;
