@@ -2,7 +2,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 
-const vuelo_salida = db.define('vuelo_salida',{
+const vuelo_salida = db.define('vuelos_salida',{
     peso_avion:{
         type: sequelize.INTEGER,
         allowNull: false,

@@ -3,7 +3,7 @@ const aeropuertos = require('../../aeropuertoModels/aeropuertosModel');
 const empleados = require('../../empleadosModels/empleadosModel')
 
     //Un departamento tiene varios empleados (La FK va al empleado)
-departamentos.hasMany(empleados, {
+departamentos.hasMany(empleados, {as: 'Empleados',
     foreignKey: 'nro_departamento', sourceKey: 'numero',
     onDelete: 'SET NULL', onUpdate: 'CASCADE'
 })
