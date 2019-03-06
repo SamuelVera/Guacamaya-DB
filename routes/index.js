@@ -3,9 +3,11 @@ const router = express.Router();
 const userController = require('../controllers/authControllers/userController');
 const authController = require('../controllers/authControllers/authController');
 const aeropuertosController = require('../controllers/aeropuertosControllers/aeropuertosController');
+const empleadosController = require('../controllers/empleadosControllers/empleadosController');
+const departamentosController = require('../controllers/departamentosControllers/departamentosController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/asco', catchErrors(aeropuertosController.getVuelosVisitas))
+//router.get('/asco', catchErrors())
 
 /* GET home user page. */
 router.get('/', (req, res, next) => {
