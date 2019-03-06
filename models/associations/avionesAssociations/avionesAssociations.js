@@ -23,7 +23,7 @@ const vuelos = require('../../vuelosModels/vuelosModel');
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })
         //Avión con vuelos que han salido, la PK del avión va a la FK de vuelo_salida
-    aviones.hasMany(vuelos, {
+    aviones.hasMany(vuelos, {as: 'Vuelos',
         foreignKey: 'nro_avion', sourceKey: 'nro_fab',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })
