@@ -1,12 +1,11 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
-const aeropuertos = require('../../models/associations/aeropuertoAssociations/aeropuertosAssociations');
+const aeropuertosModel = require('../../models/associations/aeropuertoAssociations/aeropuertosAssociations');
 
 const controller = {}
 
     //Fetch de todos los aeropuertos
-controller.getAll = async (callback) =>{
-    try{
+controller.getAll = async (res) =>{
         let response = await aeropuertosModel.findAll({
             where:{
                 activo: 1
@@ -14,54 +13,66 @@ controller.getAll = async (callback) =>{
         });
         let aeropuertos = response.map(result => result.dataValues);
         console.log(aeropuertos);
-        callback(aeropuertos, null);
-    }catch(err){
-        callback(null, err);
-    }
+        if(!!aeropuertos){
+            //Renderización
+        }
+        //Mensajito de error no se pudo
 };
 
-    //Fetch de vuelos que fueron a este aeropuerto entre estas 2 fechas
-controller.getVuelosVisitas = async (req, res) => {
-    try{
+    //Visitas al aeropuerto en el mes determinado
+controller.getVisitasAeropuerto = async (req, res) => {
             //Aeropuerto, fechas de inicio y final
-        const {inicio, final, aeropuerto} = req.body;
+        const {fecha, aeropuerto} = req.body
 
-        console.log('getting');
+        let fechaC = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
 
-        /*let response = await aeropuertos.findOne({
-            where:{
-                iata: 'MIA'
-            }
-        });
-        let r2 = await response.getIsOrigen();
-        let resultados = r2.map(results => results.dataValues);
-        console.log(resultados);
-        r2 = await response.getIsDestino();
-        resultados = r2.map(results => results.dataValues);
-        console.log(resultados);
-        r2 = await response.getDepartamentos();
-        resultados = r2.map(results => results.dataValues);
-        console.log(resultados);
-        r2 = await response.getPistas();
-        resultados = r2.map(results => results.dataValues);
-        console.log(resultados);
-        */
-       
-        /*let response = await db.query(`
-        SELECT COUNT(*) as result FROM aeropuertos AS a
-        INNER JOIN rutas AS r
-        ON a.iata = r.origen
-        INNER JOIN 
-        WHERE a.iata = ${aeropuerto} AND 
+        let response = await db.query(`
+            SELECT COUNT(*) as result 
+            FROM aeropuertos AS a
+            INNER JOIN rutas AS r
+            ON a.iata = r.destino
+            INNER JOIN vuelos AS v
+            ON r.numero = v.nro_ruta
+            INNER JOIN vuelos_salida AS vs
+            ON v.codigo_vuelo = vs.codigo_vuelo
+            WHERE a.iata = '${aeropuerto}' 
+            AND (DATE_FORMAT(vs.fecha_salida, '%m-%y') = DATE_FORMAT('${fechaC}', '%m-%y'))
         `, {
         type: sequelize.QueryTypes.SELECT, nest: true
         })
-        let resultado = response[0].result
-        console.log(resultado)*/
 
-    }catch(err){
-        console.log(err);
-    }
+            //Resultados es la cantidad de visitas a ese aeropuerto en el mes
+        let resultados = response[0].result
+
+        if(!!resultados){
+            //Acá irá el render rendersote con resultados como un atributo
+        }
+        //Mensajito de error no se pudo
+}
+
+    //No terminado aún
+controller.getVisitasFromAll = async (req, res) => {
+        //const {fecha} = req.body
+        const fecha = new Date()
+        let fechaC = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+
+        let response = await db.query(`
+            SELECT a.iata AS aeropuerto, COUNT(*) AS visitas
+            FROM aeropuertos AS a
+            INNER JOIN rutas AS r
+            ON a.iata = r.destino
+            INNER JOIN vuelos AS v
+            ON r.numero = v.nro_ruta
+            INNER JOIN vuelos_salida AS vs
+            ON v.codigo_vuelo = vs.codigo_vuelo
+            WHERE (DATE_FORMAT(vs.fecha_salida, '%m-%y') = DATE_FORMAT('${fechaC}', '%m-%y'))
+            GROUP BY aeropuerto
+            ORDER BY visitas DESC
+        `,{
+            type: sequelize.QueryTypes.SELECT, nest: true
+        })
+        
+
 }
 
 module.exports = controller;
