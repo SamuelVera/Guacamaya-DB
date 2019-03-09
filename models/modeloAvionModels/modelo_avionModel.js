@@ -68,7 +68,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    dist_despgue_qmax:{ //Distancia de despegue con la carga máxima
+    dist_despegue_qmax:{ //Distancia de despegue con la carga máxima
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{
@@ -100,7 +100,7 @@ const modelo_avion = db.define('modelo_avion',{
             notEmpty: true
         }
     },
-    nro_baios:{ //Cantidad de baños
+    nro_banios:{ //Cantidad de baños
         type: sequelize.INTEGER,
         allowNull: false,
         validate:{

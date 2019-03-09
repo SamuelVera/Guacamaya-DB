@@ -9,6 +9,7 @@ const clientes = require('../../clientesModels/clientesModel');
     })
         //Se agrega la PK del cliente como FK de la compra
     compras.belongsTo(clientes, {
+        as: 'Cliente',
         foreignKey: 'cedula', targetKey: 'cedula',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })
