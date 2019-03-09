@@ -18,11 +18,13 @@ const pasajes = require('../../pasajesModels/pasajesModel');
     })
         //Se agrega la PK de rutas como FK del vuelo
     vuelos.belongsTo(rutas, {
+        as: 'Ruta',
         foreignKey: 'nro_ruta', targetKey: 'numero',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })
         //Se agrega la PK del avión como FK del vuelo
     vuelos.belongsTo(aviones, {
+        as: 'Avion',
         foreignKey: 'nro_avion', targetKey: 'nro_fab',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })

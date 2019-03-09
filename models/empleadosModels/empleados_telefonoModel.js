@@ -4,7 +4,7 @@ const db = require('../../config/guacamaya_db');
 
 const empleados_telefono = db.define('empleados_telefono',{
     telefono:{
-        type: sequelize.INTEGER,
+        type: sequelize.STRING,
         primaryKey: true,
         allowNull: false,
         validate:{
