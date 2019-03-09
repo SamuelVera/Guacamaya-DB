@@ -1,6 +1,9 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const aeropuertosModel = require('../../models/associations/aeropuertoAssociations/aeropuertosAssociations');
+const rutasModel = require('../../models/associations/rutasAssociations/rutasAssociations');
+const vuelosModel = require('../../models/associations/vuelosAssociations/vuelosAssociations');
+const vuelosSalidaModel = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
 
 const controller = {}
 
@@ -17,61 +20,131 @@ controller.getAll = async (res) =>{
             //Renderización
         }
         //Mensajito de error no se pudo
-};
+}
 
-    //Visitas al aeropuerto en el mes determinado
-controller.getVisitasAeropuerto = async (req, res) => {
+    //Vuelos al aeropuerto en el mes determinado
+controller.getVuelosAeropuerto = async (req, res) => {
             //Aeropuerto, fechas de inicio y final
-        const {fecha, aeropuerto} = req.body
+        let {fecha, aeropuerto} = req.body
+        const Op = sequelize.Op
 
-        let fechaC = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+        fecha.setDate(1)
+        const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+        fecha.setMonth(fecha.getMonth()+1)
+        fecha.setDate(0)
+        const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
 
-        let response = await db.query(`
-            SELECT COUNT(*) as result 
-            FROM aeropuertos AS a
-            INNER JOIN rutas AS r
-            ON a.iata = r.destino
-            INNER JOIN vuelos AS v
-            ON r.numero = v.nro_ruta
-            INNER JOIN vuelos_salida AS vs
-            ON v.codigo_vuelo = vs.codigo_vuelo
-            WHERE a.iata = '${aeropuerto}' 
-            AND (DATE_FORMAT(vs.fecha_salida, '%m-%y') = DATE_FORMAT('${fechaC}', '%m-%y'))
-        `, {
-        type: sequelize.QueryTypes.SELECT, nest: true
+        let response = await vuelosModel.count({
+            include:[{
+                model: rutasModel,
+                as: 'Ruta',
+                where:{
+                    activo: 1,
+                    destino: aeropuerto
+                },
+                required: true
+            }],
+            where:{
+                fecha: {[Op.between]: [fechaI, fechaF]},
+                activo: 1,
+                cancelado: 0
+            },
+            group: sequelize.literal('`Ruta`.`destino`')
         })
 
-            //Resultados es la cantidad de visitas a ese aeropuerto en el mes
-        let resultados = response[0].result
+        if(!!response){
+                //Resultados es la cantidad de visitas a es
+            let resultados = {
+                aeropuerto: aeropuerto,
+                mes: (fechaI.getMonth()+1)+'-'+fechaI.getFullYear(),
+                cantidadVuelos: response[0].count
+            }
 
-        if(!!resultados){
-            //Acá irá el render rendersote con resultados como un atributo
+            //Render
         }
+        
+
+        console.log(resultados)
+
+        //if(!!resultados){
+            //Acá irá el render rendersote con resultados como un atributo
+        //}
         //Mensajito de error no se pudo
 }
 
-    //No terminado aún
-controller.getVisitasFromAll = async (req, res) => {
-        //const {fecha} = req.body
-        const fecha = new Date()
-        let fechaC = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
-
-        let response = await db.query(`
-            SELECT a.iata AS aeropuerto, COUNT(*) AS visitas
-            FROM aeropuertos AS a
-            INNER JOIN rutas AS r
-            ON a.iata = r.destino
-            INNER JOIN vuelos AS v
-            ON r.numero = v.nro_ruta
-            INNER JOIN vuelos_salida AS vs
-            ON v.codigo_vuelo = vs.codigo_vuelo
-            WHERE (DATE_FORMAT(vs.fecha_salida, '%m-%y') = DATE_FORMAT('${fechaC}', '%m-%y'))
-            GROUP BY aeropuerto
-            ORDER BY visitas DESC
-        `,{
-            type: sequelize.QueryTypes.SELECT, nest: true
-        })
+    //Get Cantidad de vuelos a los aeropuertos en un mes determinado
+controller.getVuelosFromAll = async (req, res) => {
         
+        let {fecha} = req.body
+        const Op = sequelize.Op
+
+        fecha.setDate(1)
+        const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+        fecha.setMonth(fecha.getMonth()+1)
+        fecha.setDate(0)
+        const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+
+        let response = await aeropuertosModel.findAll({
+            attributes: {include: [[sequelize.fn('COUNT',sequelize.col('*')), 'nroVuelos']], exclude: ['activo']},
+            include:[{
+                model: rutasModel,
+                as: 'IsDestino',
+                include:[{
+                    model: vuelosModel,
+                    as: 'Vuelos',
+                    include:[{
+                        model: vuelosSalidaModel,
+                        as: 'Salida',
+                        required: true
+                    }],
+                    where:{
+                        fecha: {[Op.between]: [fechaI, fechaF]},
+                        activo: 1
+                    },
+                    required: true
+                }],
+                where:{
+                    activo: 1
+                },
+                required: true
+            }],
+            group: 'iata',
+            order: [[sequelize.literal('`nroVuelos`'),'DESC']]
+        })
+
+        let resultado = response.map(result => result.dataValues)
+
+        if(!!resultado){    //Esto tiene un atributo IsDestino que no importa
+            console.log(resultado) //Resultado tiene el iata, pais, ciudad y nroVuelos
+        }
+
+}
+
+    //NO TERMINADO (Pasajes abordados a un destino en un mes)
+controller.getVisitasFromAerpuerto = async (req, res) => {
+    
+    let {fecha, aeropuerto} = req.body
+    const Op = sequelize.Op
+
+    fecha.setDate(1)
+    const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    fecha.setMonth(fecha.getMonth()+1)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+
+}
+
+    ////NO TERMINADO (Pasajes abordados a todos los destinos en un mes)
+controller.getVisitasFromAll = async (req, res) => {
+    
+    let {fecha} = req.body
+    const Op = sequelize.Op
+
+    fecha.setDate(1)
+    const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    fecha.setMonth(fecha.getMonth()+1)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
 
 }
 

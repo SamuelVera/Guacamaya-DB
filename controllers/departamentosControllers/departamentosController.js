@@ -14,7 +14,8 @@ controller.getAll =  async (res) => {
         }
     })
 
-    var resultado = response.map(result => result.dataValues)
+    let resultado = response.map(result => result.dataValues)
+
     if(!!resultado){
         //Renderizar con los departamentos
     }
@@ -25,6 +26,7 @@ controller.getAll =  async (res) => {
 
     //Get el personal del departamento tal ubicado en el iata tal
 controller.getAllPersonal = async (req, res) => {
+        
         const { numero } = req.body
         
         let response = await departamentosModel.findOne({
@@ -33,7 +35,8 @@ controller.getAllPersonal = async (req, res) => {
                 as: 'Empleados',
                 where:{
                     activo: 1
-                }
+                },
+                required: true
             }],
             where:{
                 numero,
@@ -41,31 +44,18 @@ controller.getAllPersonal = async (req, res) => {
             }
         })
 
-        /*let response = await departamentosModel.findOne({
-            where:{
-                iata,
-                nombre,
-                activo: 1
-            }
-        })
-
-        response = await response.getEmpleados({
-            where:{
-                activo: 1
-            }
-        })*/
-
             //Información de cada empleado
-        let resultado = response.Empleados.map(result => result.dataValues)
+        
+        let departamento = response.dataValues
+        let empleadosDepartamento = response.Empleados.map(result => result.dataValues)
 
-        console.log(resultado)
-
-        if(!!resultado){
-            console.log(resultado.length) //Cantidad de empleados
+        if(!!departamento && !!empleadosDepartamento){
+            console.log(departamento) //Departamento en cuestión
+            console.log(empleadosDepartamento) //Cantidad de empleados
         }
 
         //No entró, error
 
-};
+}
 
 module.exports =  controller;
