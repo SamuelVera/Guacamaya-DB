@@ -5,9 +5,13 @@ const authController = require('../controllers/authControllers/authController');
 const aeropuertosController = require('../controllers/aeropuertosControllers/aeropuertosController');
 const empleadosController = require('../controllers/empleadosControllers/empleadosController');
 const departamentosController = require('../controllers/departamentosControllers/departamentosController');
+const avionesController = require('../controllers/avionesControllers/avionesController');
+const clientesController = require('../controllers/clientesControllers/clientesControllers');
+const vuelosController = require('../controllers/vuelosControllers/vuelosController');
+const alquileresController = require('../controllers/alquileresControllers/alquileresAvionController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-//router.get('/asco', catchErrors())
+router.get('/asco', catchErrors())
 
 /* GET home user page. */
 router.get('/', (req, res, next) => {
