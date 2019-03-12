@@ -122,7 +122,7 @@ controller.getAvionesEstado = async (req, res) => {
 
     let response = await avionesModel.findAll({
         where:{
-            estado
+            estado: 0
         }
     })
 
@@ -136,7 +136,7 @@ controller.getAvionesEstado = async (req, res) => {
     //Get el último mantenimiento de un avión
 controller.getUltimoMantenimiento = async (req, res) => {
 
-    //const { nro_fab } = req.body
+    const { nro_avion } = req.body
 
     let response = await avionMantenimientoModel.findOne({
         attributes: ['nro_avion',[sequelize.fn('MAX',sequelize.col('fecha_salida')), 'salidaDelUltimoMantenimiento']],
@@ -148,7 +148,8 @@ controller.getUltimoMantenimiento = async (req, res) => {
             }
         }],
         where:{
-            nro_avion: 1
+            nro_avion,
+            activo: 1
         },
         group: [sequelize.literal('`avion_mantenimiento`.`nro_avion`')]
     })
@@ -158,8 +159,13 @@ controller.getUltimoMantenimiento = async (req, res) => {
     let resultadoMantenimiento = resultadoFecha.Mantenimiento.dataValues
 
     if(!!resultadoFecha && !!resultadoMantenimiento){
-        console.log(resultadoFecha)
-        console.log(resultadoMantenimiento)
+        let resultadoFinal = {
+            nro_avion: resultadoFecha.nro_avion,
+            salidaDelUltimoMantenimiento: resultadoFecha.salidaDelUltimoMantenimiento,
+            codigo_mantenimiento: resultadoMantenimiento.codigo,
+            tipo_mantenimiento: resultadoMantenimiento.tipo
+        }
+        console.log(resultadoFinal)
     }
 
     
@@ -171,7 +177,64 @@ controller.addAlquilado = async (req, res) => {
     const { nro_fab, nro_tripulantes, modelo, nro_ruta } = req.body
     const alquilado = 1
 
-    //avionesModel.create()
+    await avionesModel.create({
+        nro_fab,
+        nro_tripulantes,
+        modelo,
+        nro_ruta,
+        alquilado
+    })
+
+}
+
+    //Get Cantidad de vuelos de los aviones en un año
+controller.getVuelosAnuales = async (req, res) =>{
+
+    let { fecha } = req.body
+    const Op = sequelize.Op
+
+    fecha.setMonth(0)
+    fecha.setDate(1)
+    const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    fecha.setFullYear(fecha.getFullYear() + 1)
+    fecha.setMonth(0)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+
+    let response = await avionesModel.findAll({
+        attributes:[
+            'nro_fab',
+            [sequelize.fn('COUNT',sequelize.col('*')), 'cantidadVuelos']
+        ],
+        include:[{
+            model: vuelosModel,
+            as: 'Vuelos',
+            where:{
+                fecha:{
+                    [Op.between]: ['2018-01-01', '2019-12-31']
+                },
+                activo: 1
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        },
+        group: 'nro_fab',
+        order: [[sequelize.literal('cantidadVuelos'),'DESC'],['nro_fab','ASC']]
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+
+}
+
+    //Get Promedio de vuelos mensuales de un avión (NO TERMINADO)
+controller.getPromedioVuelosMensuales = async (req, res) => {
+    
 }
 
 module.exports = controller;
