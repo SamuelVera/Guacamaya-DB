@@ -1,13 +1,13 @@
 const tarifa_maletas = require('../../tarifasModels/tarifa_maletasModel');
 const tarifa_mano = require('../../tarifasModels/tarifa_manoModel');
 const tarifas = require('../../tarifasModels/tarifasModel');
-const temporadas = require('../../tarifasModels/temporadasModel');
 const temporada_tarifa = require('../../tarifasModels/temporada_tarifaModel');
 const pasajes = require('../../pasajesModels/pasajesModel');
 
 //Se agrega la PK como FK a codigo_temporada
-    tarifas.belongsToMany(temporadas,{
-        through: temporada_tarifa, foreignKey: 'codigo_tarifa',
+    tarifas.hasMany(temporada_tarifa,{
+        as: 'Temporadas',
+        foreignKey: 'codigo_tarifa', sourceKey: 'codigo',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })
     

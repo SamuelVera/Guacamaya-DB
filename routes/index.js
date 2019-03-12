@@ -9,6 +9,8 @@ const avionesController = require('../controllers/avionesControllers/avionesCont
 const clientesController = require('../controllers/clientesControllers/clientesControllers');
 const vuelosController = require('../controllers/vuelosControllers/vuelosController');
 const alquileresController = require('../controllers/alquileresControllers/alquileresAvionController');
+const comprasController = require('../controllers/comprasControllers/comprasController');
+const modeloAvionController = require('../controllers/modeloAvionControllers/modeloAvionControllers');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/asco', catchErrors())

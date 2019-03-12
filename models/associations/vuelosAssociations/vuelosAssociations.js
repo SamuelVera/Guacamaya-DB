@@ -6,7 +6,7 @@ const pasajes = require('../../pasajesModels/pasajesModel');
 
     //Se agrega el codigo de vuelo como FK al pasaje
     vuelos.hasMany(pasajes, {
-        as: 'Pasajes',
+        as: 'Pasajeros',
         foreignKey: 'codigo_vuelo', sourceKey: 'codigo_vuelo',
         onDelete: 'CASCADE', onUpdate: 'CASCADE'
     })

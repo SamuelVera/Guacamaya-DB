@@ -60,16 +60,11 @@ controller.getVuelosAeropuerto = async (req, res) => {
                 cantidadVuelos: response[0].count
             }
 
+            console.log(resultados)
+
             //Render
         }
         
-
-        console.log(resultados)
-
-        //if(!!resultados){
-            //Acá irá el render rendersote con resultados como un atributo
-        //}
-        //Mensajito de error no se pudo
 }
 
     //Get Cantidad de vuelos a los aeropuertos en un mes determinado
