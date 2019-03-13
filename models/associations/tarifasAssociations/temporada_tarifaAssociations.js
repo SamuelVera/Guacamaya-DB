@@ -14,4 +14,7 @@ temporada_tarifa.belongsTo(temporadas,{
     onDelete: 'CASCADE', onUpdate: 'CASCADE'
 })
 
+    //Peligroson
+temporada_tarifa.removeAttribute('id')
+
 module.exports = temporada_tarifa;
