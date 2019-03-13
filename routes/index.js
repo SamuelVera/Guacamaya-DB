@@ -11,6 +11,8 @@ const vuelosController = require('../controllers/vuelosControllers/vuelosControl
 const alquileresController = require('../controllers/alquileresControllers/alquileresAvionController');
 const comprasController = require('../controllers/comprasControllers/comprasController');
 const modeloAvionController = require('../controllers/modeloAvionControllers/modeloAvionControllers');
+const pasajesControllers = require('../controllers/pasajesControllers/pasajesController');
+const demograficoControllers = require('../controllers/demograficosControllers/demograficosController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 router.get('/asco', catchErrors())

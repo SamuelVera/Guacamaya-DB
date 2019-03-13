@@ -19,7 +19,9 @@ const aviones = db.define('aviones',{
         defaultValue: 0,
         validate:{
             isNumeric: true,
-            notEmpty: true
+            notEmpty: true,
+            min: 0,
+            max: 3
         }
     },
     equipo_medico:{ //Todos los aviones por defecto tienen su equipo médico

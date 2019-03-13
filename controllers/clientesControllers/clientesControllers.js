@@ -24,6 +24,25 @@ controller.getOne = async (req, res) => {
     //Connect-flash
 }
 
+    //Get al clientes emails
+controller.getAllEmails = async (res) => {
+
+    let response = await clientesModels.findAll({
+            attributes: ['cedula','email'],
+            where:{
+                activo: 1
+            }
+        }
+    )
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+
+}
+
     //Top 10 clientes con más compras en un mes (NO TESTEADO NO HAY DATA)
 controller.getMasComprasMensual = async (req, res) => {
     
@@ -145,14 +164,14 @@ controller.getMillasViajadasTrimestre = async (req, res) =>{
 
 }
 
-    //No terminado
+    //No testeado
 controller.addPasaje = async (req, res) => {
 
-    const { cedula_pasajero, cantidad_equipaje, numero_asiento, serial_num, codigo_vuelo, numero_factura } = req.body
+    const { cedula_pasajero, numero_asiento, serial_num, codigo_vuelo, numero_factura } = req.body
 
     await pasajesModels.create({
         cedula_pasajero,
-        cantidad_equipaje,
+        cantidad_equipaje: 0,
         numero_asiento,
         serial_num,
         codigo_vuelo,
@@ -164,14 +183,18 @@ controller.addPasaje = async (req, res) => {
     //No terminado
 controller.addPasajeConEscalas = async (req, res) => {
 
+    //const { cedula_pasajero, codigo_vuelo }
+    let pasajes = [] //Introducir pasajes desde el req.body (Necesita serial_num, )
 }
 
+    //Hacer el abordaje
 controller.abordaje = async (req, res) => {
 
-    const { num_serial, codigo_vuelo, cedula_pasajero } = req.body
+    const { num_serial, codigo_vuelo, cedula_pasajero, cantidad_equipaje } = req.body
 
     await pasajesModels.update({
-        abordado: 1
+        abordado: 1,
+        cantidad_equipaje
     },{
         where:{
             num_serial,
@@ -179,6 +202,16 @@ controller.abordaje = async (req, res) => {
             cedula_pasajero
         }
     })
+}
+
+    //Get clientes que no han comprado (OUTER JOIN)(NO TERMINADO)
+controller.getSoloPasajeros = async (res) => {
+
+}
+
+    //Get clientes que han comprado pero no son pasajeros (OUTER JOIN)(NO TERMINADO)
+controller.getSoloCompradores = async (res) => {
+    
 }
 
 module.exports = controller;

@@ -42,6 +42,15 @@ const clientes = db.define('clientes',{
             notEmpty: true
         }
     },
+    sexo:{
+        type: sequelize.INTEGER,
+        allowNull: true,
+        validate:{
+            isNumeric: true,
+            min: 0,
+            max: 2
+        }
+    },
     activo:{
         type: sequelize.TINYINT,
         allowNull: false,

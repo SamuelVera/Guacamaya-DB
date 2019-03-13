@@ -28,6 +28,7 @@ const pasajes = db.define('pasajes',{
     },
     cantidad_equipaje:{
         type: sequelize.INTEGER,
+        defaultValue: 0,
         allowNull: false,
         validate:{
             isNumeric: true,
