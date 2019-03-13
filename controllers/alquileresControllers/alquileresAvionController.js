@@ -36,7 +36,7 @@ controller.getCantidadAlquiladosEnMes = async (req, res) => {
 }
 
     //Get info de los arredatarios
-controller.getArrendatarios = async (req, res) => {
+controller.getArrendatarios = async (res) => {
 
     let response = await arrendatariosModel.findAll({
         attributes: {exclude: ['activo']},
@@ -55,7 +55,7 @@ controller.getArrendatarios = async (req, res) => {
 }
 
     //Get info de las tarifas de alquiler ofrecidas
-controller.getTarifasAlquiler = async (req, res) => {
+controller.getTarifasAlquiler = async (res) => {
     
     let response = await db.query(`
         SELECT a.nombre, a.tiempo_respuesta, ta.monto, d.distancia_minima, d.distancia_maxima

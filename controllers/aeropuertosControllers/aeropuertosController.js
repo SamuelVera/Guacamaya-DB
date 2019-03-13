@@ -4,6 +4,7 @@ const aeropuertosModel = require('../../models/associations/aeropuertoAssociatio
 const rutasModel = require('../../models/associations/rutasAssociations/rutasAssociations');
 const vuelosModel = require('../../models/associations/vuelosAssociations/vuelosAssociations');
 const vuelosSalidaModel = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
+const pasajesModel = require('../../models/associations/pasajesAssociations/pasajesAssociations');
 
 const controller = {}
 
@@ -104,7 +105,7 @@ controller.getVuelosFromAll = async (req, res) => {
                 required: true
             }],
             group: 'iata',
-            order: [[sequelize.literal('`nroVuelos`'),'DESC']]
+            order: [[sequelize.literal('`nroVuelos`'),'DESC'],['iata','ASC']]
         })
 
         let resultado = response.map(result => result.dataValues)
@@ -127,19 +128,113 @@ controller.getVisitasFromAerpuerto = async (req, res) => {
     fecha.setDate(0)
     const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
 
+
+    let response = await aeropuertosModel.findOne({
+        attributes: ['`aeropuertos`.`iata`',[sequelize.fn('COUNT','*'),'Visitas']],
+        include:[{
+            model: rutasModel,
+            as: 'isDestino',
+            include:[{
+                model: vuelosModel,
+                as: 'Vuelos',
+                include: [{
+                    model: vuelosSalidaModel,
+                    as: 'Salida',
+                    required: true
+                },{
+                    model: pasajesModel,
+                    as: 'Pasajeros',
+                    where:{
+                        activo: 1,
+                        abordado: 1
+                    },
+                    required: true
+                }],
+                where:{
+                    fecha: {
+                        [Op.between]: [fechaI, fechaF]
+                    },
+                    activo: 1
+                },
+                required: true
+            }],
+            where:{
+                activo: 1
+            },
+            required: true
+        }],
+        where:{
+            aeropuerto,
+            activo: 1
+        }
+    })
+
+    let resultado = response.dataValues
+
+    if(!!resultado){
+        console.log(resultado)
+    }
+
 }
 
     ////NO TERMINADO (Pasajes abordados a todos los destinos en un mes)
 controller.getVisitasFromAll = async (req, res) => {
     
-    let {fecha} = req.body
+    let { fecha } = req.body
     const Op = sequelize.Op
 
-    fecha.setDate(1)
+    /*fecha.setDate(1)
     const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
     fecha.setMonth(fecha.getMonth()+1)
     fecha.setDate(0)
-    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()*/
+
+    let response = await aeropuertosModel.findAll({
+        attributes: ['`aeropuertos`.`iata`',[sequelize.fn('COUNT','*'),'Visitas']],
+        include:[{
+            model: rutasModel,
+            as: 'isDestino',
+            include:[{
+                model: vuelosModel,
+                as: 'Vuelos',
+                include: [{
+                    model: vuelosSalidaModel,
+                    as: 'Salida',
+                    required: true
+                },{
+                    model: pasajesModel,
+                    as: 'Pasajeros',
+                    where:{
+                        activo: 1,
+                        abordado: 1
+                    },
+                    required: true
+                }],
+                where:{
+                    /*fecha: {
+                        [Op.between]: [fechaI, fechaF]
+                    },*/
+                    activo: 1
+                },
+                required: true
+            }],
+            where:{
+                activo: 1
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        },
+        group: 'iata',
+        order: [[sequelize.literal('`Visitas`'),'DESC'],['iata','ASC']]
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
 
 }
 

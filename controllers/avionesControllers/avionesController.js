@@ -2,13 +2,15 @@ const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const avionesModel = require('../../models/associations/avionesAssociations/avionesAssociations');
 const vuelosModel = require('../../models/associations/vuelosAssociations/vuelosAssociations');
-const modelosAvionModel = require('../../models/modeloAvionModels/modelo_avionModel');
+const vueloSalidaModel = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
+const modelosAvionModel = require('../../models/associations/modeloAvionAssociations/modeloAvionAssociations');
 const mantenimientosModel = require('../../models/associations/avionesAssociations/mantenimientoAssociations');
 const avionMantenimientoModel = require('../../models/associations/avionesAssociations/avion_mantenimientoAssociations');
 
 const controller = {}
 
-controller.getAllAviones = async (req, res) => {
+    //TODO
+controller.getAllAviones = async (res) => {
     let response = await avionesModel.findAll({
         where:{
             activo: 1
@@ -22,42 +24,143 @@ controller.getAllAviones = async (req, res) => {
     //Error
 }
 
-    //Get los vuelos de un avión en un mes determinado
+    //Get los aviones registrados como alquilados
+controller.getAllAlquilados = async (res) => {
+
+    let response = await avionesModel.findAll({
+        where:{
+            alquilado: 1,
+            activo: 1
+        }
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+
+}
+
+    //Poner equipo médico a un avión
+controller.setEquipoMedico = async (req, res) => {
+
+    const { nro_fab } = req.body
+
+    await avionesModel.update({
+        equipo_medico: 1
+    },{
+        where:{
+            nro_fab,
+            activo: 1
+        }
+    })
+}
+
+    //Poner avión como dañado
+controller.setDamaged = async (req, res) => {
+
+    const { nro_fab } = req.body
+
+    await avionesModel.update({
+        estado: 3
+    },{
+        where:{
+            nro_fab
+        }
+    })
+
+}
+
+    //Poner avión en servicio
+controller.setEnServicio = async (req, res) => {
+    const { nro_fab } = req.body
+
+    await avionesModel.update({
+        estado: 0
+    },{
+        where:{
+            nro_fab
+        }
+    })
+}
+
+    //Poner avión es espera
+controller.setEnEspera = async (req, res) => {
+    const { nro_fab } = req.body
+
+    await avionesModel.update({
+        estado: 1
+    },{
+        where:{
+            nro_fab
+        }
+    })
+}
+
+    //Enviar a mantenimiento al avión (NO TESTEADO)
+controller.sendToMantenimiento = async (req, res) => {
+
+    const { nro_avion, codigo_mantenimiento } = req.body
+    const fecha_entrada = new Date()
+    let fecha_salida
+
+    if(codigo_mantenimiento = 0){
+        fecha_salida = fecha_entrada
+    }else if(codigo_mantenimiento = 1){
+        fecha_salida = fecha_entrada
+        fecha_salida.setDate(fecha_entrada.getDate()+7)
+    }else{
+        fecha_salida = fecha_entrada
+        fecha_salida.setDate(fecha_entrada.getDate()+3)
+    }
+
+    await avionMantenimientoModel.create({
+        nro_avion, 
+        fecha_entrada,
+        fecha_salida,
+        codigo_mantenimiento
+    })
+    
+}
+
+    //Get la cantidad de vuelos de un avión en un mes determinado
 controller.getVuelosAvionMensual = async (req, res) => {
             //Se require de la fecha con el mes y el número del avión
-        //const { nro_fab, fecha } = req.body
+        const { nro_fab, fecha } = req.body
         const Op = sequelize.Op;
 
             //Formateo de las fechas
-        //let fechaInicio = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate(1)
+        let fechaInicio = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate(1)
         fecha.setMonth(fechaF.getMonth()+1);
         let fechaFinal = fechaF.getFullYear()+'-'+(fechaF.getMonth()+1)+'-'+fechaF.getDate(0)
 
-        let response = await avionesModel.findAll({
+        let response = await avionesModel.count({
             include:[{ //Inner join
                 model: vuelosModel,
                 as: 'Vuelos',
+                include:[{
+                    model: vueloSalidaModel,
+                    as: 'Salida',
+                    where:{
+                        fecha_salida:{
+                            [Op.between]: [fechaInicio, fechaFinal] //Este entre ambas fechas
+                        }
+                    },
+                    required: true
+                }],
                 where: {
-                    fecha: {[Op.between]: [fechaInicio, fechaFinal]}, //Este entre ambas fechas
-                    fecha: {[Op.lt]: new Date()}, //Sea menor a la fecha actual
                     cancelado: 0, //No haya sido cancelado el vuelo
                     activo: 1 //No este 'eliminado'
                 }
             }],
             where:{
                 nro_fab, //Avión seleccionado
-                activo: 1 //No este como 'eliminado'
+                activo: 1 //No este 'eliminado'
             }
         })
 
         console.log(response);
-
-        //let resultado = response.Vuelos.map(result => result.dataValues)
-        //console.log(resultado); //El length del array sería la cantidad de vuelos
-
-        if(!!resultado){
-            //Si entra lo consiguio detener el flujo con un render
-        }
 
         //No entra, error
         
@@ -77,7 +180,7 @@ controller.getAvionModelo = async (req, res) => {
             }
         }],
         where:{
-            nro_fab: 1,
+            nro_fab,
             activo: 1
         }
     })
@@ -122,7 +225,7 @@ controller.getAvionesEstado = async (req, res) => {
 
     let response = await avionesModel.findAll({
         where:{
-            estado: 0
+            estado
         }
     })
 
@@ -171,7 +274,7 @@ controller.getUltimoMantenimiento = async (req, res) => {
     
 }
 
-    //Registrar un avión como alquilado (NO TERMINADO)
+    //Registrar un avión como alquilado (NO TESTEADO)
 controller.addAlquilado = async (req, res) => {
 
     const { nro_fab, nro_tripulantes, modelo, nro_ruta } = req.body
@@ -183,6 +286,21 @@ controller.addAlquilado = async (req, res) => {
         modelo,
         nro_ruta,
         alquilado
+    })
+
+}
+
+    //Registrar un nuevo avión comprado (NO TESTEADO)
+controller.addNewAvion = async (req, res) => {
+
+    const { nro_fab, modelo, nro_ruta } = req.body
+    const alquilado = 0
+
+    await avionesModel.create({
+        nro_fab,
+        alquilado,
+        nro_ruta,
+        modelo
     })
 
 }
@@ -235,6 +353,36 @@ controller.getVuelosAnuales = async (req, res) =>{
     //Get Promedio de vuelos mensuales de un avión (NO TERMINADO)
 controller.getPromedioVuelosMensuales = async (req, res) => {
     
+}
+
+    //Eliminar un avión del sistema
+controller.deleteAvion = async (req, res) => {
+
+    const { nro_fab } = req.body
+
+    await avionesModel.update({
+        activo: 0
+    },{
+        where:{
+            nro_fab
+        }
+    })
+
+}
+
+    //Set el número de tripulantes
+controller.setTripulacion = async (req, res) => {
+
+    const { nro_fab, nro_tripulantes } = req.body
+
+    await avionesModel.update({
+        nro_tripulantes
+    },{
+        where:{
+            nro_fab
+        }
+    })
+
 }
 
 module.exports = controller;

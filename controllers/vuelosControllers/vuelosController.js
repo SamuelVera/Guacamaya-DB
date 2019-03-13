@@ -179,4 +179,39 @@ controller.getVuelosSobreventa = async (req, res) => {
 
 }
 
+    //Get cantidad de cancelados vs cantidad de abordados en un mes determinada
+controller.getCanceladosVsAbordados = async (req, res) => {
+
+    let { fecha } = req.body
+    const Op =  sequelize.Op
+
+    fecha.setDate(1)
+    const fechaI = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate()
+    fecha.setMonth(fecha.getMonth()+1)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate()
+
+    let response = await vuelosModel.findAll({
+        attributes: [[sequelize.fn('COUNT', '*'),'Cantidad'], 'cancelado' ],
+        include: [{
+            model: vuelosSalidaModel,
+            as: 'Salida',
+            required: true
+        }],
+        where:{
+            fecha: {
+                [Op.between]: [fechaI, fechaF]
+            }
+        },
+        group: 'cancelado'
+    })
+
+    let resultado = response.map(result => result.dataValues)
+
+    if(!!resultado){
+        console.log(resultado)
+    }
+
+}
+
 module.exports = controller;
