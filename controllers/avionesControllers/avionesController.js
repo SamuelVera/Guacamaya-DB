@@ -288,9 +288,11 @@ controller.addAlquilado = async (req, res) => {
         alquilado
     })
 
+    console.log('Lo lograste Yonbiton');
+    
 }
 
-    //Registrar un nuevo avión comprado (NO TESTEADO)
+    //Registrar un nuevo avión comprado
 controller.addNewAvion = async (req, res) => {
 
     const { nro_fab, modelo, nro_ruta } = req.body
@@ -302,6 +304,8 @@ controller.addNewAvion = async (req, res) => {
         nro_ruta,
         modelo
     })
+
+    console.log('Lo lograste Yonbiton');
 
 }
 

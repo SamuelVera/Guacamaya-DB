@@ -8,13 +8,19 @@ const vuelos = require('../../vuelosModels/vuelosModel');
         //Un avión tiene un modelo (FK del modelo)
     aviones.belongsTo(modelo, {
         as: 'Modelo',
-        foreignKey: 'modelo', targetKey: 'numero',
+        foreignKey: {
+            name:'modelo',
+            allowNull: true
+        }, targetKey: 'numero',
         onDelete: 'SET NULL', onUpdate:'CASCADE',
     })
         //Un avión tiene una ruta (FK de la ruta)
     aviones.belongsTo(rutas, {
         as: 'Ruta',
-        foreignKey: 'nro_ruta', targetKey: 'numero',
+        foreignKey: {
+            name:'nro_ruta',
+            allowNull: true
+        }, targetKey: 'numero',
         onDelete: 'SET NULL', onUpdate:'CASCADE'
     })
         //Resulta de la normalización de avión para evitar nulls y redundancia
