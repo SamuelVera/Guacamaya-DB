@@ -91,7 +91,7 @@ controller.getPasajesPorSexo = async (req, res) => {
 }
 
     //Get cantidad de pasajes con cliente en un rango de edad en un mes (NO TESTADO)(NO HAY DATA)
-controller.getPesajesPorEdadesMensual = async (req, res) => {
+controller.getPasajesPorEdadesMensual = async (req, res) => {
 
     let { fecha } = req.body
     const Op = sequelize.Op
@@ -170,7 +170,7 @@ controller.getPesajesPorEdadesMensual = async (req, res) => {
 }
 
     //Get cantidad de pasajes con cliente en un rango de edad (NO TESTADO)(NO HAY DATA)
-controller.getPesajesPorEdades = async (res) => {
+controller.getPasajesPorEdades = async (res) => {
 
     const Op = sequelize.Op
 
