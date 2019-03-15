@@ -288,6 +288,8 @@ controller.addAlquilado = async (req, res) => {
         alquilado
     })
 
+    console.log('Lo lograste Yonbiton');
+    
 }
 
     //Registrar un nuevo avión comprado
@@ -299,7 +301,7 @@ controller.addNewAvion = async (req, res) => {
     await avionesModel.create({
         nro_fab,
         alquilado,
-        nro_ruta: null,
+        nro_ruta,
         modelo
     })
 
