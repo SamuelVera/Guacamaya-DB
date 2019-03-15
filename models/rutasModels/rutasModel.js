@@ -20,6 +20,14 @@ const rutas = db.define('rutas', {
             notEmpty: true
         }
     },
+    frecuencia:{
+        type: sequelize.INTEGER,
+        allowNull: false,
+        validate:{
+            isNumeric: true,
+            notEmpty: true
+        }
+    },
     activo:{
         type: sequelize.TINYINT,
         allowNull: false,

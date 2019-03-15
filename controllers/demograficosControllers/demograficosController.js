@@ -6,11 +6,12 @@ const vuelosModel = require('../../models/associations/vuelosAssociations/vuelos
 const vuelosSalidaModel = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
 const pasajesModel = require('../../models/associations/pasajesAssociations/pasajesAssociations');
 const clientesModel = require('../../models/associations/clientesAssociations/clientesAssociations');
+const comprasModel = require('../../models/associations/comprasAssociations/comprasAssociations');
 
 const controller = {}
 
     //Get cantidad de pasajes por sexo del pasajero en un mes (NO TESTEADO)(NO HAY DATA)
-controller.getVentasPorSexo = async (req, res) => {
+controller.getPasajesPorSexoMensual = async (req, res) => {
 
     let { fecha } = req.body
     const Op = sequelize.Op
@@ -26,6 +27,19 @@ controller.getVentasPorSexo = async (req, res) => {
         include:[{
             model: pasajesModel,
             as: 'Pasajes',
+            include:[{
+                model: vuelosModel,
+                as: 'Vuelo',
+                where:{
+                    activo: 1,
+                    /*
+                        fecha: {
+                            [Op.betwween]: [fechaI, fechaF]
+                        }
+                    */
+                },
+                required: true
+            }],
             where:{
                 activo: 1
             },
@@ -46,8 +60,38 @@ controller.getVentasPorSexo = async (req, res) => {
 
 }
 
-    //Get cantidad de ventas por rango de edad en un mes (NO TERMINADO)
-controller.getVentasPorEdades = async (req, res) => {
+    //Get cantidad de pasajes por sexo del pasajero en un mes (NO TESTEADO)(NO HAY DATA)
+controller.getPasajesPorSexo = async (req, res) => {
+
+        const Op = sequelize.Op
+    
+        let response = await clientesModel.findAll({
+            attributes: [['sexo'],[sequelize.fn('COUNT','*'),'`CantidadDePasajes`']],
+            include:[{
+                model: pasajesModel,
+                as: 'Pasajes',
+                where:{
+                    activo: 1
+                },
+                required: true
+            }],
+            where:{
+                activo: 1
+            },
+            group: 'cedula',
+            order: [['`CantidadDePasajes`','DESC'],['sexo','ASC']]
+        })
+    
+        let resultados = response.map(result => result.dataValues)
+    
+        if(!!resultados){
+            console.log(resultados)
+        }
+    
+}
+
+    //Get cantidad de pasajes con cliente en un rango de edad en un mes (NO TESTADO)(NO HAY DATA)
+controller.getPesajesPorEdadesMensual = async (req, res) => {
 
     let { fecha } = req.body
     const Op = sequelize.Op
@@ -58,7 +102,132 @@ controller.getVentasPorEdades = async (req, res) => {
     fecha.setDate(0)
     const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()*/
 
+        //Menores de 20 años
+    const fechaI020 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF020 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Entre 20 y 40 años
+    const fechaI2040 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF2040 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Entre 40 y 60 años
+    const fechaI4060 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF4060 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Mas de 60 años
+    const fechaI60 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+
+    let response = await clientesModel.findAll({
+        attributes: [
+            [sequelize.literal(
+                `CASE
+                    WHEN fecha_nac BETWEEN '${fechaF020}' AND '${fechaI020}' THEN 'Menores de 20 años'
+                    WHEN fecha_nac BETWEEN '${fechaF2040}' AND '${fechaI2040}' THEN 'Entre 20 y 40 años'
+                    WHEN fecha_nac BETWEEN '${fechaF4060}' AND '${fechaI4060}' THEN 'Entre 40 y 60 años'
+                    WHEN fecha_nac < '${fechaI60}' THEN 'Mayores de 60 años'
+                END`
+                ),
+                'rangoEdades'
+            ],
+            [
+                sequelize.fn('COUNT','*'), 'cantidadPasajes'
+            ]
+        ],
+        include: [{
+            model: pasajesModel,
+            as: 'Pasajes',
+            include:[{
+                model: vuelosModel,
+                as: 'Vuelo',
+                where:{
+                    activo: 1,
+                    /*
+                        fecha: {
+                            [Op.betwween]: [fechaI, fechaF]
+                        }
+                    */
+                },
+                required: true
+            }],
+            where:{
+                activo: 1
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        },
+        group: sequelize.literal('rangoEdades'),
+        order: [[sequelize.literal('cantidadPasajes'),'DESC']]
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+
 }
+
+    //Get cantidad de pasajes con cliente en un rango de edad (NO TESTADO)(NO HAY DATA)
+controller.getPesajesPorEdades = async (res) => {
+
+    const Op = sequelize.Op
+
+        //Menores de 20 años
+    const fechaI020 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF020 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Entre 20 y 40 años
+    const fechaI2040 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF2040 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Entre 40 y 60 años
+    const fechaI4060 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+    fechaBase.setFullYear(fechaBase.getFullYear()-20)
+    const fechaF4060 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+            //Mas de 60 años
+    const fechaI60 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
+
+    let response = await clientesModel.findAll({
+        attributes: [
+            [sequelize.literal(
+                `CASE
+                    WHEN fecha_nac BETWEEN '${fechaF020}' AND '${fechaI020}' THEN 'Menores de 20 años'
+                    WHEN fecha_nac BETWEEN '${fechaF2040}' AND '${fechaI2040}' THEN 'Entre 20 y 40 años'
+                    WHEN fecha_nac BETWEEN '${fechaF4060}' AND '${fechaI4060}' THEN 'Entre 40 y 60 años'
+                    WHEN fecha_nac < '${fechaI60}' THEN 'Mayores de 60 años'
+                END`
+                ),
+                'rangoEdades'
+            ],
+            [
+                sequelize.fn('COUNT','*'), 'cantidadPasajes'
+            ]
+        ],
+        include: [{
+            model: pasajesModel,
+            as: 'Pasajes',
+            where:{
+                activo: 1
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        },
+        group: sequelize.literal('rangoEdades'),
+        order: [[sequelize.literal('cantidadPasajes'),'DESC']]
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+
+}
+
 
     //Get destino más visitados por un sexo dado (NO TERMINADO)
 controller.getDestinoMasVisitadoSexo = async (req, res) => {
@@ -120,23 +289,34 @@ controller.getCantidadClientesPorEdad = async (req) => {
         //Mas de 60 años
     const fechaI60 = fechaBase.getFullYear() +'-'+ (fechaBase.getMonth()+1)+'-'+fechaBase.getDate()
 
-    let response = await db.query(`
-        SELECT
-            CASE
-                WHEN fecha_nac BETWEEN '${fechaF020}' AND '${fechaI020}' THEN 'Menores de 20 años'
-                WHEN fecha_nac BETWEEN '${fechaF2040}' AND '${fechaI2040}' THEN 'Entre 20 y 40 años'
-                WHEN fecha_nac BETWEEN '${fechaF4060}' AND '${fechaI4060}' THEN 'Entre 40 y 60 años'
-                WHEN fecha_nac < '${fechaI60}' THEN 'Mayores de 60 años'
-            END AS rangosEdades,
-            COUNT(*) AS cantidadClientes
-        FROM clientes
-        GROUP BY rangosEdades
-        ORDER BY cantidadClientes DESC;
-    `,{
-        type: sequelize.QueryTypes.SELECT
+    let response = await clientesModel.findAll({
+        attributes:[
+            [
+                sequelize.literal(
+                `CASE
+                    WHEN fecha_nac BETWEEN '${fechaF020}' AND '${fechaI020}' THEN 'Menores de 20 años'
+                    WHEN fecha_nac BETWEEN '${fechaF2040}' AND '${fechaI2040}' THEN 'Entre 20 y 40 años'
+                    WHEN fecha_nac BETWEEN '${fechaF4060}' AND '${fechaI4060}' THEN 'Entre 40 y 60 años'
+                    WHEN fecha_nac < '${fechaI60}' THEN 'Mayores de 60 años'
+                END`
+                ),
+                'rangoEdades'
+            ]
+            ,
+            [sequelize.fn('COUNT','*'),'cantidadClientes']
+        ],
+        where:{
+            activo: 1
+        },
+        group: sequelize.literal('rangoEdades'),
+        order: [[sequelize.literal('cantidadClientes'),'DESC']]
     })
 
-    console.log(response)
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
 }
 
     //Get empleados que son clientes

@@ -7,6 +7,7 @@ const rutasModels = require('../../models/associations/rutasAssociations/rutasAs
 const vuelosModels = require('../../models/associations/vuelosAssociations/vuelosAssociations');
 const vuelosSalidaModels = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
 
+
 const controller = {}
 
 controller.getOne = async (req, res) => {
@@ -24,7 +25,7 @@ controller.getOne = async (req, res) => {
     //Connect-flash
 }
 
-    //Get al clientes emails
+    //Get all clientes emails
 controller.getAllEmails = async (res) => {
 
     let response = await clientesModels.findAll({
@@ -41,6 +42,47 @@ controller.getAllEmails = async (res) => {
         console.log(resultados)
     }
 
+}
+
+    //Get emails de los clientes de un sexo
+controller.getEmailPorSexo = async (req, res) => {
+    const { sexo } = req.body
+    
+    let response = await clientesModels.findAll({
+        attributes:['cedula', 'email'],
+        where:{
+            sexo: 0,
+            activo: 1
+        }
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+}
+
+    //Get emails por un rango de edades
+controller.getEmailPorEdad = async (req, res) => {
+    const { fechaI, fechaF } = req.body
+    const Op = sequelize.Op
+
+    let response = await clientesModels.findAll({
+        where:{
+            fecha_nac: {
+                [Op.between]: [fechaI, fechaF]
+            },
+            activo: 1
+        }
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
+    
 }
 
     //Top 10 clientes con más compras en un mes (NO TESTEADO NO HAY DATA)
@@ -175,7 +217,8 @@ controller.addPasaje = async (req, res) => {
         numero_asiento,
         serial_num,
         codigo_vuelo,
-        numero_factura
+        numero_factura,
+        abordado: 0
     })
 
 }
@@ -183,25 +226,66 @@ controller.addPasaje = async (req, res) => {
     //No terminado
 controller.addPasajeConEscalas = async (req, res) => {
 
-    //const { cedula_pasajero, codigo_vuelo }
-    let pasajes = [] //Introducir pasajes desde el req.body (Necesita serial_num, )
+        //essential_Pasaje mándalo como un arreglo de los serial_num, los codigo_vuelo, numero_asiento
+    const { cedula_pasajero, essential_Pasaje, numero_factura } = req.body
+    let pasajes = [] //Introducir pasajes desde el req.body
+
+    essential_Pasaje.forEach(element => {
+        pasajes.push({
+            serial_num: element.serial_num,
+            codigo_vuelo: element.codigo_vuelo,
+            numero_asiento: element.numero_asiento,
+        })
+    })
+
+    await pasajes.forEach(element => {
+            pasajesModels.create({
+            serial_num: element.serial_num,
+            cedula_pasajero,
+            codigo_vuelo: element.codigo_vuelo,
+            numero_factura,
+            numero_asiento: element.numero_asiento,
+            cantidad_equipaje:0,
+            abordado:0
+        })
+    })
+
+}
+
+    //Hacer el check-In
+controller.checkIn = async (req, res) => {
+
+    const { serial_num, codigo_vuelo, cedula_pasajero, numero_asiento, cantidad_equipaje } = req.body
+
+    await pasajesModels.update({
+        cantidad_equipaje,
+        numero_asiento
+    },{
+        where:{
+            cedula_pasajero,
+            serial_num,
+            codigo_vuelo,
+            activo: 1
+        }
+    })
 }
 
     //Hacer el abordaje
 controller.abordaje = async (req, res) => {
 
-    const { num_serial, codigo_vuelo, cedula_pasajero, cantidad_equipaje } = req.body
+    const { serial_num, codigo_vuelo, cedula_pasajero } = req.body
 
     await pasajesModels.update({
-        abordado: 1,
-        cantidad_equipaje
+        abordado: 1
     },{
         where:{
-            num_serial,
+            serial_num,
             codigo_vuelo,
-            cedula_pasajero
+            cedula_pasajero,
+            activo: 1
         }
     })
+
 }
 
     //Get clientes que no han comprado (OUTER JOIN)(NO TERMINADO)
