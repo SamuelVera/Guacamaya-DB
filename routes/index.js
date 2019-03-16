@@ -13,9 +13,10 @@ const comprasController = require('../controllers/comprasControllers/comprasCont
 const modeloAvionController = require('../controllers/modeloAvionControllers/modeloAvionControllers');
 const pasajesController = require('../controllers/pasajesControllers/pasajesController');
 const demograficoController = require('../controllers/demograficosControllers/demograficosController');
+const rutasController = require('../controllers/rutasControllers/rutasController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/asco', catchErrors(demograficoController.getCantidadClientesPorEdad))
+router.get('/asco', catchErrors())
 
 /* GET home user page. */
 router.get('/', (req, res, next) => {

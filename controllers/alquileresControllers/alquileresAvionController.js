@@ -75,7 +75,7 @@ controller.getTarifasAlquiler = async (res) => {
 
 }
 
-    //Añadir un alquiler (NO TERMINADO)
+    //Añadir un alquiler
 controller.addAlquiler = async (req, res) => {
 
     const { avion, nombre_arrendatario, fecha} = req.body

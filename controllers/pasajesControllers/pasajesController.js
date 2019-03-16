@@ -6,6 +6,7 @@ const temporadasModel = require('../../models/associations/tarifasAssociations/t
 const temporadaTarifaModel = require('../../models/associations/tarifasAssociations/temporada_tarifaAssociations');
 const tarifaMaletasModel = require('../../models/associations/tarifasAssociations/tarifa_maletasAssociations');
 const tarifaManoModel = require('../../models/associations/tarifasAssociations/tarifa_manoAssociations');
+const compraModel = require('../../models/associations/comprasAssociations/comprasAssociations');
 
 const controller = {}
 
@@ -30,9 +31,9 @@ controller.getTarifaPasaje = async (req, res) => {
     })
 
     let resultadoPasaje = response.dataValues
-    let resultadoTarifa = resultadoPasaje.Tarifa.dataValues
 
-    if(!!resultadoPasaje && !!resultadoTarifa){
+    if(!!resultadoPasaje){
+        let resultadoTarifa = resultadoPasaje.Tarifa.dataValues
         console.log(resultadoPasaje)
         console.log(resultadoTarifa)
     }
@@ -176,6 +177,91 @@ controller.getTarifasDisponiblesInfo = async ( res ) => {
         console.log(tarifas) //Cada tarifa con la estructura anterior
     }
 
+}
+
+    //Get cantidad pasajes con asientos del tipo económico vendidos en un mes(NO TESTEADO)(NO DATA)
+controller.getEconomicosPorMes = async (req, res) => {
+
+    let { fecha } = req.body
+    const Op = sequelize.Op
+
+    /*fecha.setDate(1)
+    const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    fecha.setMonth(fecha.getMonth()+1)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()*/
+
+    let response = await pasajesModel.count({
+        include:[{
+            model: tarifasModel,
+            as: 'Tarifa',
+            where:{
+                activo: 1,
+                tipo_asiento: 0
+            },
+            required: true
+        },{
+            model: compraModel,
+            as: 'Compra',
+            where:{
+                activo: 1,
+                /*
+                fecha: {
+                    [Op.between]: [fechaI, fechaF]
+                }
+                */
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        }
+    })
+
+    console.log(response)
+    
+}
+
+    //Get cantidad pasajes con asientos del tipo ejecutivo vendidos en un mes(NO TESTEADO)(NO DATA)
+controller.getEjecutivosPorMes = async (req, res) => {
+
+    let { fecha } = req.body
+    const Op = sequelize.Op
+
+    /*fecha.setDate(1)
+    const fechaI = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()
+    fecha.setMonth(fecha.getMonth()+1)
+    fecha.setDate(0)
+    const fechaF = fecha.getFullYear()+'-'+(fecha.getMonth()+1)+'-'+fecha.getDate()*/
+
+    let response = await pasajesModel.count({
+        include:[{
+            model: tarifasModel,
+            as: 'Tarifa',
+            where:{
+                activo: 1,
+                tipo_asiento: 1
+            },
+            required: true
+        },{
+            model: compraModel,
+            as: 'Compra',
+            where:{
+                activo: 1,
+                /*
+                fecha: {
+                    [Op.between]: [fechaI, fechaF]
+                }
+                */
+            },
+            required: true
+        }],
+        where:{
+            activo: 1
+        }
+    })
+
+    console.log(response)
 }
 
 module.exports = controller;

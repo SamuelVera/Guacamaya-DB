@@ -24,6 +24,29 @@ controller.getAll =  async (res) => {
 
 }
 
+controller.addDepartamento = async (req, res) => {
+    const { iata, nombre } = req.body
+    const numero = await departamentosModel.count() + 1
+
+    await departamentosModel.create({
+        numero,
+        iata,
+        nombre
+    })
+
+}
+
+controller.deshabilitarDepartamento = async (req, res) => {
+    const { numero } = req.body
+    await departamentosModel.update({
+        activo: 0
+    },{
+        where:{
+            numero
+        }
+    })
+}
+
     //Get el personal del departamento tal ubicado en el iata tal
 controller.getAllPersonal = async (req, res) => {
         

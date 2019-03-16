@@ -12,7 +12,7 @@ const tarifas = db.define('tarifas',{
             notEmpty: true
         }
     },
-    tipo_asiento:{
+    tipo_asiento:{ //0 Económico, 1 Ejecutivo
         type: sequelize.TINYINT,
         allowNull: false,
         defaultValue: 1,

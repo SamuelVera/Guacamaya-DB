@@ -7,7 +7,6 @@ const rutasModels = require('../../models/associations/rutasAssociations/rutasAs
 const vuelosModels = require('../../models/associations/vuelosAssociations/vuelosAssociations');
 const vuelosSalidaModels = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
 
-
 const controller = {}
 
 controller.getOne = async (req, res) => {
@@ -23,6 +22,46 @@ controller.getOne = async (req, res) => {
         //Render
     }
     //Connect-flash
+}
+
+controller.addCliente = async (req, res) => {
+    const { cedula, fecha_nac, email, apellido, nombre, sexo} = body.req
+
+    await clientesModels.create({
+        cedula,
+        fecha_nac,
+        email,
+        apellido,
+        nombre,
+        sexo
+    })
+}
+
+controller.deshabilitarCliente = async (req, res) => {
+    const { cedula } = req.body
+    await clientesModels.update({
+        activo: 0
+    },{
+        where:{
+            cedula
+        }
+    })
+}
+
+controller.actualizarCliente = async (req, res) => {
+    const { cedula, fecha_nac, email, apellido, nombre, sexo} = body.req
+
+    await clientesModels.update({
+        fecha_nac,
+        email,
+        apellido,
+        nombre,
+        sexo
+    },{
+        where:{
+            cedula
+        }
+    })
 }
 
     //Get all clientes emails
@@ -157,7 +196,7 @@ controller.getMasMillasViajadas = async (req, res) => {
 
 }
 
-    //Millas viajadas por un pasajero en un trimestre del año (NO TESTEADO)
+    //Millas viajadas por un pasajero en un trimestre del año (NO TESTEADO NO HAY DATA)
 controller.getMillasViajadasTrimestre = async (req, res) =>{
 
     let { cedula, fechaInicio, fechaFinal } = req.body
@@ -209,7 +248,7 @@ controller.getMillasViajadasTrimestre = async (req, res) =>{
     //No testeado
 controller.addPasaje = async (req, res) => {
 
-    const { cedula_pasajero, numero_asiento, serial_num, codigo_vuelo, numero_factura } = req.body
+    const { cedula_pasajero, numero_asiento, serial_num, codigo_vuelo, numero_factura, codigo_tarifa } = req.body
 
     await pasajesModels.create({
         cedula_pasajero,
@@ -218,7 +257,8 @@ controller.addPasaje = async (req, res) => {
         serial_num,
         codigo_vuelo,
         numero_factura,
-        abordado: 0
+        abordado: 0,
+        codigo_tarifa
     })
 
 }
@@ -227,7 +267,7 @@ controller.addPasaje = async (req, res) => {
 controller.addPasajeConEscalas = async (req, res) => {
 
         //essential_Pasaje mándalo como un arreglo de los serial_num, los codigo_vuelo, numero_asiento
-    const { cedula_pasajero, essential_Pasaje, numero_factura } = req.body
+    const { cedula_pasajero, essential_Pasaje, numero_factura, codigo_tarifa } = req.body
     let pasajes = [] //Introducir pasajes desde el req.body
 
     essential_Pasaje.forEach(element => {
@@ -246,7 +286,8 @@ controller.addPasajeConEscalas = async (req, res) => {
             numero_factura,
             numero_asiento: element.numero_asiento,
             cantidad_equipaje:0,
-            abordado:0
+            abordado:0,
+            codigo_tarifa
         })
     })
 
@@ -288,14 +329,40 @@ controller.abordaje = async (req, res) => {
 
 }
 
-    //Get clientes que no han comprado (OUTER JOIN)(NO TERMINADO)
+    //Get clientes que no han comprado (LEFT OUTER JOIN)
 controller.getSoloPasajeros = async (res) => {
+    
+    let response = await clientesModels.findAll({
+        include:[{
+            model: comprasModels,
+            as: 'Compras',
+            required: false
+        }]
+    })
 
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
 }
 
-    //Get clientes que han comprado pero no son pasajeros (OUTER JOIN)(NO TERMINADO)
+    //Get clientes que han comprado pero no son pasajeros (LEFT OUTER JOIN)
 controller.getSoloCompradores = async (res) => {
     
+    let response = await clientesModels.findAll({
+        include:[{
+            model: pasajesModels,
+            as: 'Pasajes',
+            required: false
+        }]
+    })
+
+    let resultados = response.map(result => result.dataValues)
+
+    if(!!resultados){
+        console.log(resultados)
+    }
 }
 
 module.exports = controller;

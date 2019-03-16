@@ -1,6 +1,7 @@
 const sequelize = require('sequelize');
 const db = require('../../config/guacamaya_db');
 const aeropuertosModel = require('../../models/associations/aeropuertoAssociations/aeropuertosAssociations');
+const aeroPistasModel = require('../../models/associations/aeropuertoAssociations/aero_pistasAssociations');
 const rutasModel = require('../../models/associations/rutasAssociations/rutasAssociations');
 const vuelosModel = require('../../models/associations/vuelosAssociations/vuelosAssociations');
 const vuelosSalidaModel = require('../../models/associations/vuelosAssociations/vuelos_salidaAssociations');
@@ -21,6 +22,60 @@ controller.getAll = async (res) =>{
             //Renderización
         }
         //Mensajito de error no se pudo
+}
+
+controller.addAeropuerto = async (req, res) => {
+    const { iata, pais, ciudad } = req.body
+
+    await aeropuertosModel.create({
+        iata,
+        pais,
+        ciudad
+    })
+}
+
+controller.deshabilitarAeropuerto = async (req, res) => {
+    const { iata } = req.body
+    await aeropuertosModel.update({
+        activo: 0
+    },{
+        where:{
+            iata
+        }
+    })
+}
+
+controller.getAllPistas = async (req, res) => {
+    const { iata } = req.body
+    let response = await aeroPistasModel.findAll({
+        where:{
+            activo: 1,
+            iata
+        }
+    })
+}
+
+controller.addPista = async (req, res) => {
+    const { iata, longitud, despegue_aterrizaje } = req.body
+    const nro_pista = await aeroPistasModel.count({where:{iata}}) + 1
+    await aeroPistasModel.create({
+        nro_pista,
+        iata,
+        longitud,
+        despegue_aterrizaje
+    })
+}
+
+controller.deshabilitarPista = async (req, res) => {
+    const { iata, nro_pista } = req.body
+    await aeroPistasModel.update({
+        activo: 0
+    },{
+        where:{
+            iata,
+            nro_pista
+        }
+    })
 }
 
     //Vuelos al aeropuerto en el mes determinado
@@ -116,7 +171,7 @@ controller.getVuelosFromAll = async (req, res) => {
 
 }
 
-    //NO TERMINADO (Pasajes abordados a un destino en un mes)
+    //NO TESTEADO NO HAY DATA (Pasajes abordados a un destino en un mes)
 controller.getVisitasFromAerpuerto = async (req, res) => {
     
     let {fecha, aeropuerto} = req.body
@@ -177,7 +232,7 @@ controller.getVisitasFromAerpuerto = async (req, res) => {
 
 }
 
-    ////NO TERMINADO (Pasajes abordados a todos los destinos en un mes)
+    ////NO TESTEADO NO HAY DATA (Pasajes abordados a todos los destinos en un mes)
 controller.getVisitasFromAll = async (req, res) => {
     
     let { fecha } = req.body

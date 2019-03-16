@@ -9,6 +9,54 @@ const modeloAvionModel = require('../../models/associations/modeloAvionAssociati
 
 const controller = {}
 
+controller.addVuelo = async (req, res) => {
+    const { codigo_vuelo, nro_ruta, nro_avion, fecha } = req.body
+
+    await vuelosModel.create({
+        codigo_vuelo,
+        nro_ruta,
+        nro_avion,
+        fecha
+    })
+}
+
+controller.cancelarVuelo = async (req, res) => {
+    const { codigo_vuelo } = req.body
+    const Op = sequelize.Op
+
+    await vuelosModel.update({
+        cancelado: 1
+    },{
+        where:{
+            codigo_vuelo,
+            fecha: {
+                [Op.lt]: new Date()
+            }
+        }
+    })
+}
+
+controller.deshabilitarVuelo = async (req, res) => {
+    const { codigo_vuelo } = req.body
+
+    await vuelosModel.update({
+        activo: 0
+    },{
+        where:{
+            codigo_vuelo
+        }
+    })
+}
+
+controller.despegueVuelo = async (req, res) => {
+    const { codigo_vuelo, peso_avion, fecha_salida } = req.body
+    await vuelosSalidaModel.create({
+        codigo_vuelo,
+        fecha_salida,
+        peso_avion
+    })
+}
+
     //Próximos vuelos a este destino (NO TESTEADO FALTA DATA)
 controller.getProximosVuelosA = async (req, res) => {
 
@@ -74,7 +122,7 @@ controller.getProximosVuelosDesde = async (req, res) => {
     }
 }
 
-    //Pasajes abordados versus vendidos (NO TERMINADO)
+    //Pasajes abordados versus vendidos (NO TESTEADO/TERMINADO)
 controller.getAbordados = async (req, res) => {
     
         const { codigo_vuelo } = req.body
@@ -118,16 +166,18 @@ controller.getVuelosSobreventa = async (req, res) => {
     let { fecha } = req.body
     const Op =  sequelize.Op
 
-    fecha.setDate(1)
+    /*fecha.setDate(1)
     const fechaI = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate()
     fecha.setMonth(fecha.getMonth()+1)
     fecha.setDate(0)
-    const fechaF = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate()
+    const fechaF = fecha.getFullYear() + '-' + (fecha.getMonth()+1) + '-' + fecha.getDate()*/
 
     let response = await vuelosModel.findAll({
         attributes: [
             'codigo_vuelo',
-            [sequelize.fn('COUNT',sequelize.col('*')), 'Vendidos']
+            [sequelize.fn('COUNT',sequelize.col('*')), 'Vendidos'],
+            [sequelize.literal('`Avion->Modelo`.`cantidad_asientos_eje`'), 'asientosEjecutivos'],
+            [sequelize.literal('`Avion->Modelo`.`cantidad_asientos_eco`'), 'asientosEconomicos']
     ],
         include:[{
             model: pasajesModel,
@@ -152,30 +202,26 @@ controller.getVuelosSobreventa = async (req, res) => {
             },
             required: true
         }],
-        group: 'codigo_vuelo'
-        ,
         where:{
-            fecha:{
+            /*fecha:{
                 [Op.between]: [fechaI, fechaF]
-            },
+            },*/
             cancelado: 0,
             activo: 1
+        },
+        group: 'codigo_vuelo',
+        having:{
+            Vendidos:{
+                [Op.gt]: (sequelize.literal('asientosEjecutivos')+sequelize.literal('asientosEconomicos'))
+            } 
         }
     })
 
     let resultados = response.map(result => result.dataValues)
+
     if(!!resultados){
-        let resultadosFinales = resultados.filter(item => {
-            let vendidos = resultados.Pasajeros.map(result => result.dataValues)
-            let modelo = item.Avion.dataValues.Modelo.dataValues
-
-            return (vendidos.length > (modelo.cantidad_asientos_eje + modelo.cantidad_asientos_eco))
-        })
-
-        console.log(resultadosFinales) //Vuelos con sobreventa
+        console.log(resultados)
     }
-
-    
 
 }
 
