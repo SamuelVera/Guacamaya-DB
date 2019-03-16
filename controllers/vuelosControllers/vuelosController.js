@@ -122,7 +122,7 @@ controller.getProximosVuelosDesde = async (req, res) => {
     }
 }
 
-    //Pasajes abordados versus vendidos (NO TERMINADO)
+    //Pasajes abordados versus vendidos (NO TESTEADO/TERMINADO)
 controller.getAbordados = async (req, res) => {
     
         const { codigo_vuelo } = req.body
