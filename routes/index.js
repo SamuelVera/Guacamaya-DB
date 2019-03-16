@@ -16,7 +16,7 @@ const demograficoController = require('../controllers/demograficosControllers/de
 const rutasController = require('../controllers/rutasControllers/rutasController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
-router.get('/asco', catchErrors(vuelosController.getVuelosSobreventa))
+router.get('/asco', catchErrors())
 
 /* GET home user page. */
 router.get('/', (req, res, next) => {
