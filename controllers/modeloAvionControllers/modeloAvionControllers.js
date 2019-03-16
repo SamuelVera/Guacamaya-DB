@@ -43,4 +43,32 @@ controller.getOne = async (req, res) => {
 
 }
 
+controller.addModelo = async (req, res) => {
+    const {
+        numero, cantidad_asientos_eje, cantidad_asientos_eco,
+        v_crucero, v_max, p_vacio, cap_max_cab, peso_max,
+        dist_despegue_qmax, cap_max_eq, tipo_combustible, capacidad_combustible,
+        nro_banios, nro_salidas, television, internet
+    } = req.body
+
+    await modeloAvionesModel.create({
+        numero, cantidad_asientos_eje, cantidad_asientos_eco,
+        v_crucero, v_max, p_vacio, cap_max_cab, peso_max,
+        dist_despegue_qmax, cap_max_eq, tipo_combustible, capacidad_combustible,
+        nro_banios, nro_salidas, television, internet
+    })
+
+}
+
+controller.deshabilitarModelo = async (req, res) => {
+    const { numero } = req.body
+    await modeloAvionesModel.update({
+        activo: 0
+    },{
+        where:{
+            numero
+        }
+    })
+}
+
 module.exports =  controller;
